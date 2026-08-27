@@ -1,68 +1,114 @@
 # ESP32 Coursework
 
-Drop each week's files into a week folder, then ask Claude Code to process it. The result is a separate Arduino sketch, wiring diagram, and explanation for each in-class problem and homework task.
+Drop each workshop's files into one folder and ask Claude Code to process it.
+The result is a separate Arduino sketch, wiring diagram, and explanation for
+each in-class problem and homework task.
 
 ## Weekly routine
 
-1. Create a week folder:
+1. Point the dropper at the workshop you are working on:
 
    ```bash
-   ./scripts/new-week.sh Week02
+   ./scripts/set-workshop.sh Workshop02
    ```
 
-2. Put supplied files here (keep the categories):
+   This creates the workshop folder if it does not exist yet.
+
+2. Drop the supplied files into `dropper/`. **No sorting, no renaming.**
+
+   ```bash
+   open dropper/
+   ```
+
+   PDFs, slides, images, `.ino`, `.cpp`, `.h`, `.txt` — mixed together is fine.
+
+3. In Claude Code, say:
 
    ```text
-   Week02/materials/
-   ├── 01_lecture-notes/
-   ├── 02_example-code/
-   ├── 03_in-class-exercises/
-   └── 04_homework/
+   do Workshop02
    ```
 
-   PDFs, slides, images, `.ino`, `.cpp`, `.h`, `.txt`, and other instructor-provided files are fine. Do not rename the category folders.
+   Claude converts each file, sorts it into the right category, files it under
+   `Workshop02/materials/`, then generates the solutions.
 
-3. From this repository, run:
+4. Review `Workshop02/generated/INDEX.md`, especially every
+   `NEEDS CLARIFICATION` item, before using a sketch.
 
-   ```bash
-   ./scripts/process-week.sh Week02
-   ```
+## Naming
 
-   The command starts Claude Code with a focused processing prompt. It reads the permanent rules in `CLAUDE.md` too. To work interactively instead, run `claude` and say `Process Week02 according to CLAUDE.md.`
-
-4. Review `Week02/generated/INDEX.md`, especially every `NEEDS CLARIFICATION` item, before using a sketch.
+Workshops are `Workshop01`, `Workshop02`, … in course order. **The workshop
+number does not necessarily match the lecture number** — `Workshop01` uses
+`Lecture Note 3`. Each `generated/INDEX.md` records the mapping for its
+workshop.
 
 ## Results
 
 ```text
-Week02/generated/
-├── INDEX.md                 # task list, evidence, open questions
-├── P1/                      # first in-class task
-│   ├── solution.ino
-│   ├── wiring.md
-│   └── README.md
-└── HW1/                     # first homework task
-    ├── solution.ino
-    ├── wiring.md
-    └── README.md
+Workshop02/
+├── materials/
+│   ├── INTAKE.md              # what was filed where, and how well it converted
+│   ├── 01_lecture-notes/
+│   │   ├── Lecture Note 4.pdf # the original, always preserved
+│   │   └── .converted/        # extracted text Claude reads
+│   ├── 02_example-code/
+│   ├── 03_in-class-exercises/
+│   └── 04_homework/
+└── generated/
+    ├── INDEX.md               # task list, sourced facts, open questions
+    ├── P1/                    # first in-class task
+    │   ├── P1.ino
+    │   ├── wiring.md
+    │   └── README.md
+    └── HW1/                   # first homework task
+        ├── HW1.ino
+        ├── wiring.md
+        └── README.md
 ```
 
-`P` means in-class problem; `HW` means homework. The generator should create `QUESTIONS.md` in any task folder that cannot be completed from the supplied material. It must not guess pins or wiring.
+`P` means in-class problem; `HW` means homework. Each sketch is named after its
+folder (`P1/P1.ino`) because the Arduino IDE will not open a sketch whose
+filename differs from its folder.
 
-## One-command behavior
+A `QUESTIONS.md` appears in any task folder that could not be completed from the
+supplied material. Pins and wiring are never guessed.
 
-`process-week.sh` validates the folder shape and launches the Claude Code CLI using the processing prompt. It intentionally does not parse PDFs or generate code itself: Claude Code can inspect the mixed source materials and follow the evidence rules in `CLAUDE.md`.
+## Requirements
 
-Use `--dry-run` to inspect the exact prompt without launching Claude Code:
+| Tool | Purpose | Install |
+| --- | --- | --- |
+| `markitdown` | converts PDF/PPTX/DOCX to markdown | `pipx install 'markitdown[all]'` |
+| `pdftotext`, `pdftoppm` | fallback extraction and page rendering | `brew install poppler` |
+| `tesseract` | OCR for scanned PDFs | `brew install tesseract` |
+| `arduino-cli` | optional compile check | `brew install arduino-cli` |
 
-```bash
-./scripts/process-week.sh Week02 --dry-run
-```
+## How intake decides
 
-## Week 01 example
+Each dropped file is converted, then graded:
 
-`Week01` demonstrates the expected output for the interrupt exercise discussed in the supplied conversation. Its material is labeled as a reconstruction; replace it with the original lecture PDF when you have it. The example preserves the stated GPIO 34 button, GPIO 16 LED1, GPIO 17 LED2, external 10 kΩ pull-up, and 2-second `millis()` pattern.
+| Grade | Meaning |
+| --- | --- |
+| `NATIVE` | already text (`.ino`, `.md`, `.txt`) — read directly |
+| `CLEAN` | converted well by markitdown |
+| `REDUCED` | fell back to `pdftotext`; layout and tables lost |
+| `OCR` | scanned page recovered by tesseract |
+| `FAILED` | unconvertible — parked in `dropper/_unsorted/` for you |
+
+`REDUCED` and `OCR` facts are treated as unreliable: any GPIO number, resistor
+value, or timing drawn from them is raised as a question rather than written
+into a sketch as fact.
+
+Note that a `CLEAN` grade only means the text layer extracted well. Slide decks
+often hold their code listings and circuit diagrams as **images**, which text
+extraction misses entirely; in that case Claude renders the pages and reads them
+directly, citing slide numbers in `INDEX.md`.
+
+Files are tracked by content hash, so re-dropping the same file does nothing,
+and a different file with an existing name is saved alongside rather than
+overwriting it.
 
 ## Before uploading
 
-Generated work is a starting point, not proof that it matches the instructor's intent or works on your exact board. Check the questions, inspect the wiring against your board, compile in Arduino IDE, and test safely with the hardware.
+Generated work is a starting point, not proof that it matches the instructor's
+intent or works on your exact board. Check the questions, inspect the wiring
+against your board, compile in the Arduino IDE, and test safely with the
+hardware.
