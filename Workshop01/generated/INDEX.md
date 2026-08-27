@@ -1,0 +1,93 @@
+# Workshop01 — generated work
+
+**Workshop 01 corresponds to Lecture Note 3.** The workshop numbering and the
+lecture numbering differ; the supplied lecture file for this workshop is
+`Lecture Note 3 - Introduction to ESP32.pdf`.
+
+Course: CSS452 Internet of Things · Dr. Seksan Laitrakun · School of ICT, SIIT,
+Thammasat University.
+
+## Tasks
+
+| ID | Type | Source | Based on | Status |
+| --- | --- | --- | --- | --- |
+| `P1` | In-class | `CSS452 - Exercise 1.pdf` | Lecture Note 3, Example 1 (slides 26–27) | READY FOR REVIEW |
+| `HW1` | Homework | `CSS452 - Homework 1.pdf`, Problem 1 | Lecture Note 3, Example 3 (slides 35–36) | READY FOR REVIEW |
+| `HW2` | Homework | `CSS452 - Homework 1.pdf`, Problem 2 | Lecture Note 3, Example 8 (slides 54–56) | READY FOR REVIEW |
+| `HW3` | Homework | `CSS452 - Homework 1.pdf`, Problem 3 | Examples 4 + 6 + section 3.6 (slides 39–40, 48, 43) | **NEEDS CLARIFICATION** |
+
+### Video naming — read this before submitting
+
+The instructor asks for homework videos named `P1`, `P2`, `P3`. This repository
+uses `P` for in-class problems, so the folders differ from the video names:
+
+| Folder here | Submit video as | Task |
+| --- | --- | --- |
+| `P1` | (video name not specified) | Exercise 1, in-class |
+| `HW1` | `P1` | Homework 1, Problem 1 |
+| `HW2` | `P2` | Homework 1, Problem 2 |
+| `HW3` | `P3` | Homework 1, Problem 3 |
+
+## Facts taken from the materials
+
+All hardware facts below are sourced, not assumed.
+
+| Fact | Value | Source |
+| --- | --- | --- |
+| Board | ThaiEasyElec's ESPino32 | Lecture Note 3, slide 18 |
+| Serial baud | 115200 (explicitly "not 9600") | slides 19, 21 |
+| Example 1 button pin | GPIO 34, with external 10 kΩ pull-up to 3v3, switch to GND | slide 26 |
+| Example 1 LED pin | GPIO 17, 330 Ω to GND | slide 26 |
+| Example 3 potentiometer | wiper to A0, ends to 3v3 and GND | slide 35 |
+| Example 3 LED pin | GPIO 17, 330 Ω to GND | slide 35 |
+| PWM settings | `freq = 5000`, `ledChannel = 0`, `resolution = 8` | slides 33, 36 |
+| Analog input range | 0–3.3 V maps to 0–4095 | slide 28 |
+| PWM-capable pins | GPIO 0–19, 21–23, 25–27, 32–33 | slide 32 |
+| Touch pins | GPIO 0, 2, 4, 12, 13, 14, 15, 27, 32, 33 | slide 37 |
+| Example 4 touch pin | GPIO 32, plain wire, no other components | slides 39–40 |
+| `touchRead()` range | 0–1023; touched = low, untouched = high | slide 38 |
+| NTP server | `pool.ntp.org` | slide 54 |
+| Time zone | `gmtOffset_sec = 7*3600`, `daylightOffset_sec = 0` (Thailand) | slides 54, 57 |
+| Software reset | `ESP.restart()` | slide 43 |
+
+## Questions requiring instructor or student confirmation
+
+These are **not** facts from the materials. They are unresolved.
+
+| # | Task | Question | Detail |
+| --- | --- | --- | --- |
+| 1 | `HW3` | What touch threshold separates touched from untouched? | Not stated anywhere. Slide 40 shows only sample values: roughly 38–46 untouched, 6–9 touched. `HW3.ino` uses `20` marked `UNCONFIRMED`. See `HW3/QUESTIONS.md`. |
+| 2 | `HW3` | Homework Problem 3 says "look at Example 4 and Example 5" for restarting, but Example 5 (slide 42) is the Hall-effect sensor. `ESP.restart()` is in section 3.6 (slide 43), an unnumbered example. | Conflict between the two supplied documents; no side chosen. See `HW3/QUESTIONS.md`. |
+| 3 | `HW1` | Potentiometer resistance value | Not stated in the material; none asserted in `HW1/wiring.md`. |
+| 4 | `HW3` | The task references an attached demo video, `CSS452 - Homework 1 - Problem 3`. | Not supplied, so the demonstrated behaviour could not be checked. |
+| 5 | all | ESP32 Arduino core version | Not stated. `HW1` uses `ledcSetup`/`ledcAttachPin`, which exist in core 2.x but were replaced in core 3.x. |
+| 6 | `P1` | Exercise 1 states a due date of "20th Aug., before 11.59am" with no year. | Confirm the deadline still applies. |
+
+## Material provenance
+
+All three supplied PDFs converted cleanly to text (`markitdown`, fidelity
+`CLEAN`); no OCR fallback was needed. See `../materials/INTAKE.md`.
+
+However, **every code listing and circuit diagram in Lecture Note 3 is an
+image**, so the extracted text contains no code. The instructor's listings and
+circuits were read by rendering the relevant PDF pages and reading them
+directly: slides 26, 27, 35, 36, 39, 40, 43, 48, 54, 55, 56.
+
+## Superseded material
+
+`materials/_superseded/interrupt-and-timing-reconstruction.md` was a placeholder
+written before the real files arrived. Lecture Note 3 contains no interrupt or
+`millis()` content, so it does not belong to this workshop and was not used.
+The `P1` previously generated from it has been removed and replaced with the
+real Exercise 1. See `materials/_superseded/README.md`.
+
+## Completion status
+
+| ID | Sketch | Wiring | README | Questions | Notes |
+| --- | --- | --- | --- | --- | --- |
+| `P1` | `P1.ino` | ✅ | ✅ | — | Reproduces `Digital_InOut.ino` (slide 27). |
+| `HW1` | `HW1.ino` | ✅ | ✅ | — | Reproduces `Analog_PWM.ino` (slide 36). Core-version caveat in README. |
+| `HW2` | `HW2.ino` | ✅ | ✅ | — | Reproduces `DateTimerNTP.ino` (slides 54–56). Needs your WiFi credentials. |
+| `HW3` | `HW3.ino` | ✅ | ✅ | `QUESTIONS.md` | Composed, not copied. Threshold unconfirmed. |
+
+No sketch has been hardware-tested.

@@ -6,7 +6,7 @@
 # Dropper: in-flight files and intake scratch are transient.
 # The pointer and the quarantine folder stay tracked.
 dropper/*
-!dropper/.active-week
+!dropper/.active-workshop
 !dropper/_unsorted/
 dropper/_unsorted/*
 !dropper/_unsorted/.gitkeep
