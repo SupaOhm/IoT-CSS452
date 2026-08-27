@@ -109,8 +109,36 @@ free_path() {
   printf '%s' "$cand"
 }
 
+# Count files sitting in the dropper root that intake would act on.
+droppable_count() {
+  local f base n=0
+  for f in "$dropper"/*; do
+    [[ -f "$f" ]] || continue
+    base="$(basename "$f")"
+    case "$base" in
+      .active-workshop|_intake-proposal.tsv|.gitkeep|.DS_Store) continue ;;
+    esac
+    n=$((n + 1))
+  done
+  echo "$n"
+}
+
+# A workshop is "finished" once it has generated output.
+workshop_is_finished() {
+  [[ -f "$root/$1/generated/INDEX.md" ]]
+}
+
 cmd_scan() {
   local workshop; workshop="$(active_workshop)"
+
+  # Guard against the pointer being left on a completed workshop: new files
+  # dropped after a workshop is done almost always belong to the next one.
+  if [[ "$(droppable_count)" -gt 0 ]] && workshop_is_finished "$workshop"; then
+    echo "NOTE: $workshop already has generated output, but files are waiting in the dropper." >&2
+    "$root/scripts/advance-workshop.sh" >&2
+    workshop="$(active_workshop)"
+    echo "NOTE: filing into $workshop instead. To override, run ./scripts/set-workshop.sh <name> and scan again." >&2
+  fi
   local mdir="$root/$workshop/materials"
   local manifest="$mdir/.intake-manifest.tsv"
   mkdir -p "$staging" "$dropper/_unsorted"
