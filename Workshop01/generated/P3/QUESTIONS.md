@@ -1,11 +1,11 @@
-# HW3 — open questions
+# P3 — open questions
 
 Two facts needed for this task are not present in the supplied material.
 Confirm both before submitting.
 
 ## 1. The touch threshold is not specified
 
-**Affected line:** `HW3.ino`, `const int touchThreshold = 20;` and the
+**Affected line:** `P3.ino`, `const int touchThreshold = 20;` and the
 `if (touchValue < touchThreshold)` test in `loop()`.
 
 The task requires the ESP32 to restart "if you touch the wire", which needs a
@@ -48,7 +48,7 @@ But in `Lecture Note 3 - Introduction to ESP32.pdf`:
   an example named `Soft_Reset.ino`, which is **not** given an "Example N"
   number.
 
-`HW3.ino` uses `ESP.restart()` from slide 43, since that is the only restart
+`P3.ino` uses `ESP.restart()` from slide 43, since that is the only restart
 mechanism the lecture teaches. No side is chosen on the numbering itself.
 
 **Question for the instructor:** should "Example 5" in Homework 1 Problem 3 read

@@ -11,22 +11,17 @@ Thammasat University.
 
 | ID | Type | Source | Based on | Status |
 | --- | --- | --- | --- | --- |
-| `P1` | In-class | `CSS452 - Exercise 1.pdf` | Lecture Note 3, Example 1 (slides 26–27) | READY FOR REVIEW |
-| `HW1` | Homework | `CSS452 - Homework 1.pdf`, Problem 1 | Lecture Note 3, Example 3 (slides 35–36) | READY FOR REVIEW |
-| `HW2` | Homework | `CSS452 - Homework 1.pdf`, Problem 2 | Lecture Note 3, Example 8 (slides 54–56) | READY FOR REVIEW |
-| `HW3` | Homework | `CSS452 - Homework 1.pdf`, Problem 3 | Examples 4 + 6 + section 3.6 (slides 39–40, 48, 43) | **NEEDS CLARIFICATION** |
+| `Exercise1` | In-class | `CSS452 - Exercise 1.pdf` | Lecture Note 3, Example 1 (slides 26–27) | READY FOR REVIEW |
+| `P1` | Homework | `CSS452 - Homework 1.pdf`, Problem 1 | Lecture Note 3, Example 3 (slides 35–36) | READY FOR REVIEW |
+| `P2` | Homework | `CSS452 - Homework 1.pdf`, Problem 2 | Lecture Note 3, Example 8 (slides 54–56) | READY FOR REVIEW |
+| `P3` | Homework | `CSS452 - Homework 1.pdf`, Problem 3 | Examples 4 + 6 + section 3.6 (slides 39–40, 48, 43) | **NEEDS CLARIFICATION** |
 
-### Video naming — read this before submitting
+### Naming
 
-The instructor asks for homework videos named `P1`, `P2`, `P3`. This repository
-uses `P` for in-class problems, so the folders differ from the video names:
-
-| Folder here | Submit video as | Task |
-| --- | --- | --- |
-| `P1` | (video name not specified) | Exercise 1, in-class |
-| `HW1` | `P1` | Homework 1, Problem 1 |
-| `HW2` | `P2` | Homework 1, Problem 2 |
-| `HW3` | `P3` | Homework 1, Problem 3 |
+Homework folders carry the instructor's own video names: `P1`, `P2`, `P3` are
+Homework 1 Problems 1, 2 and 3, so the folder you open is the video you submit.
+In-class work is `Exercise1`, numbered by task within `CSS452 - Exercise 1.pdf`;
+the exercise sheet's own number follows the lecture note, not the workshop.
 
 ## Facts taken from the materials
 
@@ -56,12 +51,12 @@ These are **not** facts from the materials. They are unresolved.
 
 | # | Task | Question | Detail |
 | --- | --- | --- | --- |
-| 1 | `HW3` | What touch threshold separates touched from untouched? | Not stated anywhere. Slide 40 shows only sample values: roughly 38–46 untouched, 6–9 touched. `HW3.ino` uses `20` marked `UNCONFIRMED`. See `HW3/QUESTIONS.md`. |
-| 2 | `HW3` | Homework Problem 3 says "look at Example 4 and Example 5" for restarting, but Example 5 (slide 42) is the Hall-effect sensor. `ESP.restart()` is in section 3.6 (slide 43), an unnumbered example. | Conflict between the two supplied documents; no side chosen. See `HW3/QUESTIONS.md`. |
-| 3 | `HW1` | Potentiometer resistance value | Not stated in the material; none asserted in `HW1/wiring.md`. |
-| 4 | `HW3` | The task references an attached demo video, `CSS452 - Homework 1 - Problem 3`. | Not supplied, so the demonstrated behaviour could not be checked. |
-| 5 | all | ESP32 Arduino core version | Not stated. `HW1` uses `ledcSetup`/`ledcAttachPin`, which exist in core 2.x but were replaced in core 3.x. |
-| 6 | `P1` | Exercise 1 states a due date of "20th Aug., before 11.59am" with no year. | Confirm the deadline still applies. |
+| 1 | `P3` | What touch threshold separates touched from untouched? | Not stated anywhere. Slide 40 shows only sample values: roughly 38–46 untouched, 6–9 touched. `P3/P3.ino` uses `20` marked `UNCONFIRMED`. See `P3/QUESTIONS.md`. |
+| 2 | `P3` | Homework Problem 3 says "look at Example 4 and Example 5" for restarting, but Example 5 (slide 42) is the Hall-effect sensor. `ESP.restart()` is in section 3.6 (slide 43), an unnumbered example. | Conflict between the two supplied documents; no side chosen. See `P3/QUESTIONS.md`. |
+| 3 | `P1` | Potentiometer resistance value | Not stated in the material; none asserted in `P1/wiring.md`. |
+| 4 | `P3` | The task references an attached demo video, `CSS452 - Homework 1 - Problem 3`. | Not supplied, so the demonstrated behaviour could not be checked. |
+| 5 | all | ESP32 Arduino core version | Not stated. `P1` uses `ledcSetup`/`ledcAttachPin`, which exist in core 2.x but were replaced in core 3.x. |
+| 6 | `Exercise1` | Exercise 1 states a due date of "20th Aug., before 11.59am" with no year. | Confirm the deadline still applies. |
 
 ## Material provenance
 
@@ -78,17 +73,17 @@ directly: slides 26, 27, 35, 36, 39, 40, 43, 48, 54, 55, 56.
 `materials/_superseded/interrupt-and-timing-reconstruction.md` was a placeholder
 written before the real files arrived. Lecture Note 3 contains no interrupt or
 `millis()` content, so it does not belong to this workshop and was not used.
-The `P1` previously generated from it has been removed and replaced with the
+The in-class task previously generated from it has been removed and replaced with the
 real Exercise 1. See `materials/_superseded/README.md`.
 
 ## Completion status
 
 | ID | Sketch | Wiring | README | Questions | Notes |
 | --- | --- | --- | --- | --- | --- |
-| `P1` | `P1.ino` | ✅ | ✅ | — | Reproduces `Digital_InOut.ino` (slide 27). |
-| `HW1` | `HW1.ino` | ✅ | ✅ | — | Reproduces `Analog_PWM.ino` (slide 36). Core-version caveat in README. |
-| `HW2` | `HW2.ino` | ✅ | ✅ | — | Reproduces `DateTimerNTP.ino` (slides 54–56). Needs your WiFi credentials. |
-| `HW3` | `HW3.ino` | ✅ | ✅ | `QUESTIONS.md` | Composed, not copied. Threshold unconfirmed. |
+| `Exercise1` | `Exercise1/Exercise1.ino` | ✅ | ✅ | — | Reproduces `Digital_InOut.ino` (slide 27). |
+| `P1` | `P1/P1.ino` | ✅ | ✅ | — | Reproduces `Analog_PWM.ino` (slide 36). Core-version caveat in README. |
+| `P2` | `P2/P2.ino` | ✅ | ✅ | — | Reproduces `DateTimerNTP.ino` (slides 54–56). Needs your WiFi credentials. |
+| `P3` | `P3/P3.ino` | ✅ | ✅ | `QUESTIONS.md` | Composed, not copied. Threshold unconfirmed. |
 
 No sketch has been hardware-tested.
 

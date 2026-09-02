@@ -1,58 +1,55 @@
-# P1 — Exercise 1: Introduction to ESP32
+# P1 — Homework 1, Problem 1
 
 Status: READY FOR REVIEW
 
+> **Video name:** `"P1"` — this folder is named after the video the
+> instructor asks you to submit, so the two always match.
+
 ## Task
 
-From `CSS452 - Exercise 1.pdf`:
+From `CSS452 - Homework 1.pdf`:
 
-> Do the Example 1 in Lecture Note 3. Take a video to show circuit connection,
-> Arduino code, demonstration: pressing the switch (pressing → LED on; not
-> pressing → LED off).
-
-Deliverable is a video of about/less than 20 seconds, submitted to Google
-Classroom. Stated due date: **20th Aug., before 11.59am**.
+> Do the Example 3 in Lecture Note 3. Take a video to show circuit connection,
+> Arduino code, demonstration: adjust the brightness of the LED by rotating the
+> potentiometer. Name your video as "P1" and submit to the Google Classroom.
 
 ## Behavior
 
-- `GPIO 34` is read every loop with `digitalRead()`.
-- The value is echoed to the serial monitor at 115200 baud.
-- Pressed (reads `LOW`) → `GPIO 17` HIGH → LED on.
-- Not pressed (reads `HIGH`) → `GPIO 17` LOW → LED off.
+- `analogRead(A0)` returns 0–4095 for 0–3.3 V from the potentiometer wiper.
+- That value is mapped to 0–255 and written to LEDC channel 0 with `ledcWrite()`.
+- Channel 0 is attached to GPIO 17, so LED brightness tracks the knob.
 
 ## Source basis
 
-`P1.ino` is a verbatim transcription of the instructor's `Digital_InOut.ino`
-listing (Lecture Note 3, slide 27) — same lines, comments, and spacing. Nothing
-was added or reworded, and no syntax fix was needed.
-
-Every fact below is taken from `Lecture Note 3 - Introduction to ESP32.pdf`:
+`P1.ino` is a verbatim transcription of the instructor's `Analog_PWM.ino`
+listing (Lecture Note 3, slide 36) — same lines, comments, and spacing, including
+the misspelling `functionalitites` in the `setup()` comment. Nothing was added
+or reworded, and no syntax fix was needed.
 
 | Fact | Source |
 | --- | --- |
-| Button on GPIO 34, LED on GPIO 17 | slide 26 diagram, slide 27 code |
-| 10 kΩ pull-up to 3v3, switch to GND | slide 26 diagram |
-| 330 Ω in series with the LED | slide 26 diagram |
-| Pressed → LED on / released → LED off | slide 26 text |
-| `Serial.begin(115200)` | slide 27 code; baud rule on slide 19 |
-| Board: ThaiEasyElec's ESPino32 | slide 18 |
+| Potentiometer to A0, LED on GPIO 17 | slide 35 diagram, slide 36 code |
+| 330 Ω in series with the LED | slide 35 diagram |
+| `freq = 5000`, `ledChannel = 0`, `resolution = 8` | slide 33 and slide 36 code |
+| `ledcSetup` / `ledcAttachPin` / `ledcWrite` | slides 33–34 |
+| `map(potValue, 0, 4095, 0, 255)` | slide 36 code |
+| Analog range 0–4095 ↔ 0–3.3 V | slide 28 |
 
-The sketch reproduces the instructor's `Digital_InOut.ino` listing (slide 27),
-including its comments, because the exercise instruction is to *do Example 1*.
+The sketch reproduces the instructor's `Analog_PWM.ino` listing (slide 36).
 
 ## How to test
 
-1. Build the circuit exactly as in `wiring.md`. Check LED polarity: long leg to
-   GPIO 17, short leg through the 330 Ω to GND.
-2. Arduino IDE: Tools → Board → **ThaiEasyElec's ESPino32**; Tools → Port → your port.
-3. Open `P1.ino` and upload. If the output window shows `Connecting…`, press the
-   PROGRAM button on the ESP32 (slide 20).
-4. Serial Monitor at **115200** baud.
-5. Expect `1` printed while released and `0` while pressed, with the LED
-   following: pressed → on, released → off.
+1. Build the circuit in `wiring.md`.
+2. Board → **ThaiEasyElec's ESPino32**, select your port, upload `P1/P1.ino`.
+3. Rotate the potentiometer: the LED should dim smoothly at one end and reach
+   full brightness at the other.
 
 ## Limitations
 
 - Not hardware-tested.
-- No debounce is used. The instructor's Example 1 does not debounce, and the
-  task is a level-driven on/off, so debouncing is not required here.
+- The instructor's Example 3 does not call `Serial.begin()`, so this sketch
+  prints nothing. Nothing in the task asks for serial output.
+- `ledcSetup()` and `ledcAttachPin()` are the ESP32 Arduino core 2.x API used
+  throughout Lecture Note 3. On ESP32 core 3.x these were replaced by
+  `ledcAttach()` and the sketch will not compile unmodified. Install the core
+  version your course uses; the material does not state a version.

@@ -1,4 +1,4 @@
-# HW3 wiring — Homework 1 Problem 3 (Lecture Note 3, Example 4)
+# P3 wiring — Homework 1 Problem 3 (Lecture Note 3, Example 4)
 
 Source: `Lecture Note 3 - Introduction to ESP32.pdf`, slide 39.
 

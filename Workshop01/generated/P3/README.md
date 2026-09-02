@@ -1,12 +1,12 @@
-# HW3 — Homework 1, Problem 3
+# P3 — Homework 1, Problem 3
 
 Status: NEEDS CLARIFICATION
 
 See `QUESTIONS.md`. Two facts are missing from the supplied material: the touch
 threshold, and which lecture example the homework's "Example 5" refers to.
 
-> **Naming:** submit this problem's **video** as `"P3"` per the instructor.
-> The folder is `HW3` because this repository reserves `P` for in-class problems.
+> **Video name:** `"P3"` — this folder is named after the video the
+> instructor asks you to submit, so the two always match.
 
 ## Task
 
@@ -25,7 +25,7 @@ From `CSS452 - Homework 1.pdf`:
 > demonstration video is shown in the attached video "CSS452 - Homework 1 -
 > Problem 3".
 
-Unlike HW1 and HW2, this problem is **not** a straight copy of a lecture
+Unlike P1 and P2, this problem is **not** a straight copy of a lecture
 example — it composes three of them.
 
 ## Behavior
@@ -67,7 +67,7 @@ const char* password = "Your_Password";
 
 1. Connect one wire to GPIO 32 and leave its far end bare.
 2. Fill in your SSID and password.
-3. Board → **ThaiEasyElec's ESPino32**, select your port, upload `HW3.ino`.
+3. Board → **ThaiEasyElec's ESPino32**, select your port, upload `P3/P3.ino`.
 4. Serial Monitor at **115200** baud.
 5. Watch the printed `touchRead()` values while *not* touching the wire; note
    the typical range. Touch the wire and note the lower range.

@@ -1,9 +1,9 @@
-# HW2 — Homework 1, Problem 2
+# P2 — Homework 1, Problem 2
 
 Status: READY FOR REVIEW
 
-> **Naming:** submit this problem's **video** as `"P2"` per the instructor.
-> The folder is `HW2` because this repository reserves `P` for in-class problems.
+> **Video name:** `"P2"` — this folder is named after the video the
+> instructor asks you to submit, so the two always match.
 
 ## Task
 
@@ -30,7 +30,7 @@ Output format is `%A, %B %d %Y %H:%M:%S`, e.g. `Sunday, August 01 2021 10:38:35`
 
 ## Source basis
 
-`HW2.ino` is a verbatim transcription of the instructor's `DateTimerNTP.ino`
+`P2.ino` is a verbatim transcription of the instructor's `DateTimerNTP.ino`
 listing (Lecture Note 3, slides 54–56) — same lines, comments, and spacing.
 Nothing was added or reworded, and no syntax fix was needed. The WiFi
 placeholders `"Your SSID"` / `"Your Password"` are the instructor's own; see
@@ -65,7 +65,7 @@ supplies no credentials, so none are guessed here.
 ## How to test
 
 1. Fill in your SSID and password.
-2. Board → **ThaiEasyElec's ESPino32**, select your port, upload `HW2.ino`.
+2. Board → **ThaiEasyElec's ESPino32**, select your port, upload `P2/P2.ino`.
 3. Serial Monitor at **115200** baud.
 4. Expect `Connecting to <ssid> ..... CONNECTED`, then a date-and-time line
    appearing once per second.
