@@ -1,18 +1,3 @@
-// HW2 — Homework 2, Problem 2  (instructor's video name: "P2")
-// Task: "Do the Example 9 in Lecture Note 4."
-//   The serial monitor shows that ESP32 is in the deep sleep.
-//   Pressing the switch (SW) wakes ESP32 up.
-//
-// Circuit (Lecture Note 4, Example 9, slide 57):
-//   3v3 --- 10K --+--- GPIO 32
-//                 |
-//                 SW --- GND     (pressing closes SW, giving LOW at the pin)
-//   No LEDs in this problem.
-//
-// ext0 wakes the board when GPIO 32 goes LOW, i.e. when SW is pressed.
-//
-// Board: ThaiEasyElec's ESPino32. Serial baud 115200.
-
 RTC_DATA_ATTR int bootCount = 0;
 
 void setup(){

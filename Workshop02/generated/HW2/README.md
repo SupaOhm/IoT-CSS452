@@ -32,6 +32,10 @@ execution restarts from the beginning each time (slide 44).
 
 ## Source basis
 
+`HW2.ino` is a verbatim transcription of the instructor's `Ex_ext0WakeUp.ino`
+listing (Lecture Note 4, slide 58) — same lines, comments, and spacing. Nothing
+was added or reworded, and no syntax fix was needed.
+
 | Fact | Source |
 | --- | --- |
 | Switch on GPIO 32, 10 kΩ pull-up to 3v3, switch to GND | slide 57 diagram |
