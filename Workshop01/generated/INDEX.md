@@ -91,3 +91,9 @@ real Exercise 1. See `materials/_superseded/README.md`.
 | `HW3` | `HW3.ino` | ✅ | ✅ | `QUESTIONS.md` | Composed, not copied. Threshold unconfirmed. |
 
 No sketch has been hardware-tested.
+
+**Sketch convention.** A "do Example N" task is a verbatim transcription of the
+instructor's listing — same lines, comments, spelling, and indentation, with no
+header comment block. Task statement, circuit, board, baud, and caveats live in
+each task's `README.md` and `wiring.md`. All sketches re-verified against the
+slides and re-compiled on 2026-09-02.
