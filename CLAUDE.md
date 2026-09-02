@@ -87,14 +87,26 @@ the relevant pages to images and read them, then cite the slide numbers in
   structure, comments, and libraries.
 - If a PDF/image cannot be read reliably, say so in `INDEX.md` and
   `QUESTIONS.md`; do not infer its contents from its filename.
-- When a task says "do Example N", reproduce the instructor's listing rather
-  than writing an independent solution.
+- When a task says "do Example N", the sketch is a **verbatim transcription** of
+  the instructor's listing — same lines, same order, same comments, same spelling
+  (typos included), same indentation. Nothing added, nothing removed, nothing
+  reworded. The only permitted change is fixing a genuine syntax error that stops
+  the sketch compiling; record any such fix in that task's `README.md`.
+  If the listing is spread over several slides, or a declaration block is printed
+  only once in an earlier example, cite those slide numbers in `INDEX.md`.
+  Everything else — reasoning, sourcing, caveats, board and baud, wiring — belongs
+  in `README.md` and `wiring.md`, not in the sketch.
 
 ## Arduino/ESP32 code rules
 
 - Keep every sketch self-contained and compile-oriented: includes, constants,
   state, `setup()`, and `loop()` as needed.
-- Retain pin and behavior assumptions in comments next to the relevant code.
+- **No header comment block.** A sketch starts at its first line of code. Task
+  statement, circuit, board, baud, source slides, and assumptions live in
+  `README.md` and `wiring.md`, which every task directory already has.
+- For a task the student must write (not a "do Example N" transcription), keep
+  comments to what the taught examples themselves would carry, plus `TODO:`
+  markers for genuinely missing facts, placed next to the affected line.
 - For interrupt code, keep interrupt handlers minimal and match the taught
   approach. Flag electrical/debounce concerns only when relevant to the supplied
   circuit.
