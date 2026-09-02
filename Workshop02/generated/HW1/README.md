@@ -34,6 +34,12 @@ Note this differs from Exercise 2: here LED2 is **on while held**, not toggled.
 
 ## Source basis
 
+`HW1.ino` is a verbatim transcription of the instructor's `Ex_AssignCore.ino`
+listing — same lines, comments, and spacing. Nothing was added or reworded, and
+no syntax fix was needed. The listing spans slides 35 (lines 13–31) and 36
+(lines 33–58); its declaration block (lines 1–12) is printed only once, on
+slide 25, and is carried unchanged through Examples 3 → 4 → 5.
+
 | Fact | Source |
 | --- | --- |
 | Same circuit as Example 3 (SW 34, LED1 16, LED2 17) | slide 34, via slide 24 |
