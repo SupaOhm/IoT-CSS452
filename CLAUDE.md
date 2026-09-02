@@ -32,13 +32,21 @@ not sort them.
 3. Create or update `WorkshopXX/generated/INDEX.md` first. List every discovered
    task, its source file/page (where available), chosen output ID, source facts
    used, and unresolved items.
-4. Produce one directory per task: `P1`, `P2`, … for in-class tasks and `HW1`,
-   `HW2`, … for homework tasks. Use the order in the supplied material. Do not
-   renumber an existing task unless correcting an explicit mistake.
+4. Produce one directory per task, named for what the student submits:
+   - **Homework** tasks are `P1`, `P2`, … — the instructor's own video names, so
+     the folder you open is the video you hand in.
+   - **In-class** tasks are `Exercise1`, `Exercise2`, … numbered by task within
+     that workshop's exercise sheet. The sheet's own number follows the lecture
+     note, not the workshop, so it is not part of the folder name.
+
+   Use the order in the supplied material. Do not renumber an existing task
+   unless correcting an explicit mistake.
 5. Each task directory must contain:
-   - `<ID>.ino` — an Arduino sketch named after its folder (`P1/P1.ino`,
-     `HW1/HW1.ino`). The Arduino IDE requires the sketch filename to match its
-     parent folder, so this name is mandatory.
+   - `<ID>/<ID>.ino` — the sketch in its **own subfolder**, named after that
+     subfolder (`P1/P1/P1.ino`, `Exercise1/Exercise1/Exercise1.ino`). The
+     Arduino IDE requires the sketch filename to match its parent folder, and
+     the extra level keeps `README.md` and `wiring.md` out of the sketch folder
+     so the IDE opens the sketch alone.
    - `wiring.md` — a small text/ASCII wiring diagram, pin table, component
      values, and power/ground connections.
    - `README.md` — task summary, behavior, source basis, how to test, and limitations.

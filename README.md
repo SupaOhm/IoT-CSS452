@@ -55,19 +55,26 @@ Workshop02/
 │   └── 04_homework/
 └── generated/
     ├── INDEX.md               # task list, sourced facts, open questions
-    ├── P1/                    # first in-class task
-    │   ├── P1.ino
+    ├── Exercise1/             # first in-class task
+    │   ├── Exercise1/         # the sketch folder the Arduino IDE opens
+    │   │   └── Exercise1.ino
     │   ├── wiring.md
     │   └── README.md
-    └── HW1/                   # first homework task
-        ├── HW1.ino
+    └── P1/                    # Homework Problem 1 — submit its video as "P1"
+        ├── P1/                # the sketch folder the Arduino IDE opens
+        │   └── P1.ino
         ├── wiring.md
         └── README.md
 ```
 
-`P` means in-class problem; `HW` means homework. Each sketch is named after its
-folder (`P1/P1.ino`) because the Arduino IDE will not open a sketch whose
-filename differs from its folder.
+Homework tasks are `P1`, `P2`, `P3` — the instructor's own video names, so the
+folder you open is the video you submit. In-class tasks are `Exercise1`,
+`Exercise2`, … numbered within that workshop's exercise sheet.
+
+Each sketch sits in a subfolder of its task folder and is named after that
+subfolder (`P1/P1/P1.ino`). The Arduino IDE will not open a sketch whose
+filename differs from its folder, and the extra level keeps `README.md` and
+`wiring.md` out of the sketch folder, so the IDE opens the sketch on its own.
 
 A `QUESTIONS.md` appears in any task folder that could not be completed from the
 supplied material. Pins and wiring are never guessed.

@@ -30,10 +30,12 @@ converted text, then ./scripts/intake.sh apply. Print the classification table.
 
 Then read every file under $workshop/materials/ before producing output. Treat the
 supplied material as the source of truth. Identify each in-class exercise and homework
-task, write generated/INDEX.md, and create P1/P2/... plus HW1/HW2/... folders as required.
+task, write generated/INDEX.md, and create Exercise1/Exercise2/... for in-class tasks plus
+P1/P2/P3 (the instructor's video names) for homework tasks, as required.
 
-For every task create <ID>.ino (named after its folder, e.g. P1/P1.ino), wiring.md, and
-README.md. If any required fact is missing, ambiguous, conflicting, or unreadable, create
+For every task create <ID>/<ID>.ino (the sketch in its own subfolder, e.g. P1/P1/P1.ino),
+plus wiring.md and README.md one level above it, in the task folder itself.
+If any required fact is missing, ambiguous, conflicting, or unreadable, create
 QUESTIONS.md and mark the task NEEDS CLARIFICATION. Never guess GPIO pins, wiring, values,
 libraries, timing, or requirements. Preserve the course's terminology and code style."
 
