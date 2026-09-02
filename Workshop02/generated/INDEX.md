@@ -110,3 +110,9 @@ was correct; it was describing Workshop 02 content.
 
 Compiled with `arduino-cli` against `esp32:esp32` core 2.0.17.
 No sketch has been hardware-tested.
+
+**Sketch convention.** A "do Example N" task is a verbatim transcription of the
+instructor's listing — same lines, comments, spelling, and indentation, with no
+header comment block. Task statement, circuit, board, baud, and caveats live in
+each task's `README.md` and `wiring.md`. All sketches re-verified against the
+slides and re-compiled on 2026-09-02.
