@@ -4,6 +4,13 @@ Date: 2026-08-27
 Status: Approved (design); not yet implemented
 Repo: SupaOhm/IoT-CSS452
 
+> **Historical record.** Kept as written. Two things have changed since:
+> `Week` was renamed `Workshop`, and decision 5's flat `P1/P1.ino` layout gave
+> way to the nested `P1/P1/P1.ino` it lists as a rejected alternative, so the
+> Arduino IDE opens the sketch without `README.md` and `wiring.md` alongside it.
+> Homework folders are now `P1`–`P3` (the instructor's video names) and in-class
+> folders `Exercise1`, …. `CLAUDE.md` is the current authority.
+
 ## Problem
 
 Course material arrives as mixed files (PDF lecture slides, `.pptx` decks, `.docx`
