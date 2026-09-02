@@ -1,7 +1,7 @@
-# P1 wiring — Exercise 2 (Lecture Note 4, Example 2)
+# P1 wiring — Homework 2 Problem 1 (Lecture Note 4, Example 5)
 
-Source: `Lecture Note 4 - ESP32 - Multitasking and Deep Sleep.pdf`, slide 15
-(identical to the circuit on slides 4, 9, 24 and 34).
+Source: `Lecture Note 4 - ESP32 - Multitasking and Deep Sleep.pdf`, slide 34
+("the same circuit as shown in Example 3"), identical to slides 4, 9, 15 and 24.
 
 ## Diagram
 
@@ -34,26 +34,19 @@ Source: `Lecture Note 4 - ESP32 - Multitasking and Deep Sleep.pdf`, slide 15
 | ESP32 pin | Connects to | Notes |
 | --- | --- | --- |
 | 3v3 | top of 10 kΩ resistor | supply for the pull-up |
-| GPIO 34 | junction of 10 kΩ and SW | input only; **no internal pull-up available** |
+| GPIO 34 | junction of 10 kΩ and SW | read by the `SwitchLED` task on Core 1 |
 | GND | other side of SW | pressing pulls GPIO 34 to 0 V |
-| GPIO 16 | LED1 long leg (anode) | timing-based task |
-| GPIO 17 | LED2 long leg (anode) | event-based task, driven from the interrupt |
+| GPIO 16 | LED1 long leg (anode) | driven by the `TimerLED` task on Core 0 |
+| GPIO 17 | LED2 long leg (anode) | driven by the `SwitchLED` task on Core 1 |
 | GND | 330 Ω from each LED short leg | LED current limit |
 
 ## Components
 
 | Part | Value | Source |
 | --- | --- | --- |
-| Pull-up resistor | 10 kΩ | slide 15 |
-| LED series resistors | 330 Ω each | slide 15 |
-| Push button | SPST momentary (SW) | slide 15 |
+| Pull-up resistor | 10 kΩ | slide 34 (via Example 3, slide 24) |
+| LED series resistors | 330 Ω each | slide 34 |
+| Push button | SPST momentary (SW) | slide 34 |
 
-## Logic
-
-Slide 4 states it directly: "by connecting the switches in this way, pressing
-the switch gives the LOW logic at the ESP32 pin." The 10 kΩ is an external
-pull-up, so the pin idles HIGH and falls to 0 V on a press — which is why the
-interrupt is attached on `FALLING`.
-
-GPIO 34 is input-only and has no internal pull-up, so the external resistor is
-required. Slide 14: every GPIO except GPIO6–GPIO11 can serve as an interrupt pin.
+The wiring is unchanged from Exercise 2. Only the software differs: the two jobs
+become FreeRTOS tasks pinned to separate cores.

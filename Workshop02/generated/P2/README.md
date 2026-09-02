@@ -1,8 +1,9 @@
-# HW2 — Homework 2, Problem 2
+# P2 — Homework 2, Problem 2
 
 Status: READY FOR REVIEW
 
-> **Naming:** submit this problem's **video** as `"P2"` per the instructor.
+> **Video name:** `"P2"` — this folder is named after the video the
+> instructor asks you to submit, so the two always match.
 
 ## Task
 
@@ -32,7 +33,7 @@ execution restarts from the beginning each time (slide 44).
 
 ## Source basis
 
-`HW2.ino` is a verbatim transcription of the instructor's `Ex_ext0WakeUp.ino`
+`P2.ino` is a verbatim transcription of the instructor's `Ex_ext0WakeUp.ino`
 listing (Lecture Note 4, slide 58) — same lines, comments, and spacing. Nothing
 was added or reworded, and no syntax fix was needed.
 
@@ -55,7 +56,7 @@ The sketch reproduces the instructor's `Ex_ext0WakeUp.ino` listing (slide 58).
 
 1. Build the circuit in `wiring.md`. Note this uses **GPIO 32**, not GPIO 34 as
    in the other problems — rewire before recording.
-2. Board → **ThaiEasyElec's ESPino32**, select your port, upload `HW2.ino`.
+2. Board → **ThaiEasyElec's ESPino32**, select your port, upload `P2/P2.ino`.
 3. Serial Monitor at **115200** baud, then press the RESET button so you catch
    the first boot message.
 4. Expect `Boot number: 1`, then `ESP32 will enter the deep sleep in 10 s.`,

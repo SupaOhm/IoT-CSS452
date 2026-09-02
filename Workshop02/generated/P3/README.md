@@ -1,8 +1,9 @@
-# HW3 — Homework 2, Problem 3
+# P3 — Homework 2, Problem 3
 
 Status: READY FOR REVIEW
 
-> **Naming:** submit this problem's **video** as `"P3"` per the instructor.
+> **Video name:** `"P3"` — this folder is named after the video the
+> instructor asks you to submit, so the two always match.
 
 Every pin, resistor and timing value in this task is stated in the supplied
 material, so there is no `QUESTIONS.md`. One structural choice was not specified;
@@ -29,7 +30,7 @@ From `CSS452 - Homework 2.pdf`:
 
 ## Behavior
 
-**While awake** — unchanged from HW1:
+**While awake** — unchanged from P1:
 
 - `TimerLED` on Core 0 prints its core and blinks LED1 on 2 s / off 2 s.
 - `SwitchLED` on Core 1 prints its core and holds LED2 on while SW is pressed.
@@ -87,8 +88,8 @@ empty — without it the final message can be lost when the CPU powers down.
 
 ## How to test
 
-1. Start from the HW1 breadboard and add SW1 plus its 10 kΩ pull-up on GPIO 26.
-2. Board → **ThaiEasyElec's ESPino32**, select your port, upload `HW3.ino`.
+1. Start from the P1 breadboard and add SW1 plus its 10 kΩ pull-up on GPIO 26.
+2. Board → **ThaiEasyElec's ESPino32**, select your port, upload `P3/P3.ino`.
 3. Serial Monitor at **115200** baud.
 4. Confirm the Example 5 behaviour first: interleaved core messages, LED1
    blinking 2 s / 2 s, LED2 following SW.

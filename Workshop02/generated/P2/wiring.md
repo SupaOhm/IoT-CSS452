@@ -1,4 +1,4 @@
-# HW2 wiring — Homework 2 Problem 2 (Lecture Note 4, Example 9)
+# P2 wiring — Homework 2 Problem 2 (Lecture Note 4, Example 9)
 
 Source: `Lecture Note 4 - ESP32 - Multitasking and Deep Sleep.pdf`, slide 57.
 

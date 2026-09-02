@@ -1,4 +1,4 @@
-# HW3 wiring — Homework 2 Problem 3
+# P3 wiring — Homework 2 Problem 3
 
 Source: `CSS452 - Homework 2.pdf`, Problem 3 diagram (page 1). This is
 Example 5's circuit with one switch added.
@@ -49,10 +49,10 @@ Example 5's circuit with one switch added.
 | LED series resistors | 330 Ω × 2 | Homework 2 Problem 3 diagram |
 | Push buttons | SPST momentary × 2 (SW, SW1) | Homework 2 Problem 3 diagram |
 
-## Difference from HW1
+## Difference from P1
 
 Only SW1 and its 10 kΩ pull-up on GPIO 26 are new. Everything else is the
-Example 5 circuit unchanged, so you can add one switch to the HW1 breadboard
+Example 5 circuit unchanged, so you can add one switch to the P1 breadboard
 rather than rebuilding it.
 
 ## Notes

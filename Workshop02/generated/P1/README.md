@@ -1,72 +1,80 @@
-# P1 — Exercise 2: ESP32 Multitasking and Deep Sleep
+# P1 — Homework 2, Problem 1
 
 Status: READY FOR REVIEW
 
+> **Video name:** `"P1"` — this folder is named after the video the
+> instructor asks you to submit, so the two always match.
+
 ## Task
 
-From `CSS452 - Exercise 2.pdf`:
+From `CSS452 - Homework 2.pdf`:
 
-> Do the Example 2 in Lecture Note 4. Record a video to show circuit connection,
+> Do the Example 5 in Lecture Note 4. Take a video to show circuit connection,
 > Arduino code, demonstration:
 >
-> - LED1 is alternatively turned on for 2 seconds and turned off for 2 seconds,
-> - LED2 is toggled if we press the switch "SW".
-
-Submit the video to Google Classroom. No due date is stated in the exercise.
+> - The serial monitor shows which core is running.
+> - LED1 is alternatively turned on for 2 seconds and turned off for 2 seconds.
+> - LED2 is on if we press the switch "SW"; otherwise, LED2 is off.
 
 ## Behavior
 
-Two tasks run in parallel:
+Two FreeRTOS tasks are created in `setup()` and pinned to different cores:
 
-- **Task 1 (timing-based).** `loop()` compares `millis()` against
-  `previousMillis`. Every 2000 ms it flips `led1State` and writes it to GPIO 16.
-  No `delay()` is used, so the loop never blocks.
-- **Task 2 (event-based).** A pin-change interrupt on GPIO 34 fires on `FALLING`
-  — the moment the switch is pressed. The handler `toggle()` inverts `led2State`
-  and writes it to GPIO 17.
+- **`TimerLED` on Core 0.** Prints `TimerLED() running on core 0`, waits 100 ms,
+  then does the `millis()` comparison. Every 2000 ms it flips `led1State`;
+  `digitalWrite(led1Pin, led1State)` runs on every pass.
+- **`SwitchLED` on Core 1.** Prints `SwitchLED() running on core 1`, waits 100 ms,
+  reads GPIO 34, and drives LED2 HIGH while the switch is held down.
 
-Note the difference from Example 1: LED2 is **toggled** by a press, not held on
-while pressed. The lecture calls this out explicitly on slide 15.
+`loop()` is empty — the two tasks do all the work. Both print continuously, so
+the serial monitor interleaves lines from core 0 and core 1, which is what
+demonstrates that they run simultaneously.
+
+Note this differs from Exercise 2: here LED2 is **on while held**, not toggled.
 
 ## Source basis
 
-`P1.ino` is a verbatim transcription of the instructor's `Ex_Interrupts.ino`
-listing (Lecture Note 4, slides 16–17) — same lines, comments, and spacing.
-Nothing was added or reworded, and no syntax fix was needed.
+`P1.ino` is a verbatim transcription of the instructor's `Ex_AssignCore.ino`
+listing — same lines, comments, and spacing. Nothing was added or reworded, and
+no syntax fix was needed. The listing spans slides 35 (lines 13–31) and 36
+(lines 33–58); its declaration block (lines 1–12) is printed only once, on
+slide 25, and is carried unchanged through Examples 3 → 4 → 5.
 
 | Fact | Source |
 | --- | --- |
-| Button GPIO 34, LED1 GPIO 16, LED2 GPIO 17 | slide 15 diagram, slide 16 code |
-| 10 kΩ pull-up to 3v3, switch to GND | slide 15 diagram |
-| 330 Ω per LED | slide 15 diagram |
-| Pressing gives LOW logic at the pin | slide 4 text |
-| `interval = 2000` (2 seconds) | slide 16 code |
-| `millis()` for the timing task | slides 8, 10 |
-| `attachInterrupt(digitalPinToInterrupt(...), toggle, FALLING)` | slide 17 code |
-| `toggle()` inverts `led2State` | slide 16 code |
-| Interrupt-capable pins: all except GPIO6–11 | slide 14 |
+| Same circuit as Example 3 (SW 34, LED1 16, LED2 17) | slide 34, via slide 24 |
+| `TimerLED` body, `for(;;)`, `vTaskDelete(NULL)` | slide 35 code |
+| `SwitchLED` body | slide 36 code |
+| Declarations (lines 1–12) | slide 25 code (carried into Examples 4 and 5) |
+| `xPortGetCoreID()` to print the running core | slides 28, 30 |
+| `xTaskCreatePinnedToCore(..., 1024, NULL, 1, NULL, 0/1)` | slide 36 code |
+| Core 0 → TimerLED, Core 1 → SwitchLED | slides 34, 36 |
+| `Serial.begin(115200)` | slide 36 code |
+| `delay(100)` inside each task | slides 35, 36 |
 
-The sketch reproduces the instructor's `Ex_Interrupts.ino` listing (slides 16–17).
+The sketch reproduces the instructor's `Ex_AssignCore.ino` listing. Its
+declaration block is not reprinted on slides 35–36; it is carried over unchanged
+from Example 3 (slide 25), which slide 34 states Example 5 is built from.
 
 ## How to test
 
-1. Build the circuit in `wiring.md`. Check LED polarity on both LEDs: long leg to
-   the GPIO, short leg through the 330 Ω to GND.
-2. Arduino IDE: Tools → Board → **ThaiEasyElec's ESPino32**; select your port.
-3. Open `P1.ino` and upload. Press the PROGRAM button if the output window sits
-   at `Connecting…`.
-4. LED1 should blink on 2 s / off 2 s continuously without pausing.
-5. Press and release SW: LED2 changes state and stays there. Press again: it
-   changes back. LED1's blinking must not stutter while you do this.
+1. Build the circuit in `wiring.md` — unchanged from Exercise 2, so you can
+   record both from the same breadboard.
+2. Board → **ThaiEasyElec's ESPino32**, select your port, upload `P1/P1.ino`.
+3. Serial Monitor at **115200** baud.
+4. Expect interleaved lines: `TimerLED() running on core 0` and
+   `SwitchLED() running on core 1`.
+5. LED1 blinks 2 s on / 2 s off. Hold SW: LED2 lights and stays lit until you
+   release.
 
 ## Limitations
 
 - Not hardware-tested.
-- Example 2 does not call `Serial.begin()`, so this sketch prints nothing. The
-  exercise does not ask for serial output.
-- No debounce. A mechanical bounce on the press can fire `toggle()` more than
-  once, leaving LED2 in the opposite state to what you expect. The instructor's
-  Example 2 has the same behaviour, so it is kept unchanged — but if LED2 seems
-  to ignore a press during your recording, this is why.
-- `led2State` is written from an interrupt handler without a `volatile`
-  qualifier, exactly as in the instructor's listing.
+- The stack size is 1024 bytes per task, as in the instructor's listing. That is
+  small for tasks that call `Serial.print()`; if you hit a stack-overflow reset,
+  raise it to 10000 (the value the lecture uses for `xTaskCreate()` on slide 23)
+  and mention the change in your video.
+- `previousMillis`, `led1State` and `led2State` are shared between tasks on
+  different cores without a mutex or `volatile`, exactly as in the instructor's
+  listing. This is safe enough here because each variable is touched by only one
+  task.

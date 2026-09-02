@@ -10,35 +10,30 @@ Thammasat University.
 
 | ID | Type | Source | Based on | Status |
 | --- | --- | --- | --- | --- |
-| `P1` | In-class | `CSS452 - Exercise 2.pdf` | Lecture Note 4, Example 2 (slides 15–17) | READY FOR REVIEW |
-| `HW1` | Homework | `CSS452 - Homework 2.pdf`, Problem 1 | Lecture Note 4, Example 5 (slides 34–36) | READY FOR REVIEW |
-| `HW2` | Homework | `CSS452 - Homework 2.pdf`, Problem 2 | Lecture Note 4, Example 9 (slides 57–58) | READY FOR REVIEW |
-| `HW3` | Homework | `CSS452 - Homework 2.pdf`, Problem 3 | Example 5 revised, plus Examples 2 and 7 | READY FOR REVIEW |
+| `Exercise1` | In-class | `CSS452 - Exercise 2.pdf` | Lecture Note 4, Example 2 (slides 15–17) | READY FOR REVIEW |
+| `P1` | Homework | `CSS452 - Homework 2.pdf`, Problem 1 | Lecture Note 4, Example 5 (slides 34–36) | READY FOR REVIEW |
+| `P2` | Homework | `CSS452 - Homework 2.pdf`, Problem 2 | Lecture Note 4, Example 9 (slides 57–58) | READY FOR REVIEW |
+| `P3` | Homework | `CSS452 - Homework 2.pdf`, Problem 3 | Example 5 revised, plus Examples 2 and 7 | READY FOR REVIEW |
 
-### Video naming — read this before submitting
+### Naming
 
-The instructor asks for homework videos named `P1`, `P2`, `P3`. This repository
-uses `P` for in-class problems, so folder names and video names differ:
-
-| Folder here | Submit video as | Task |
-| --- | --- | --- |
-| `P1` | (video name not specified) | Exercise 2, in-class |
-| `HW1` | `P1` | Homework 2, Problem 1 |
-| `HW2` | `P2` | Homework 2, Problem 2 |
-| `HW3` | `P3` | Homework 2, Problem 3 |
+Homework folders carry the instructor's own video names: `P1`, `P2`, `P3` are
+Homework 2 Problems 1, 2 and 3, so the folder you open is the video you submit.
+In-class work is `Exercise1`, numbered by task within `CSS452 - Exercise 2.pdf`;
+the exercise sheet's own number follows the lecture note, not the workshop.
 
 ## Circuits at a glance
 
-Three of the four tasks share one breadboard; only HW2 differs.
+Three of the four tasks share one breadboard; only `P2` differs.
 
 | Task | Circuit |
 | --- | --- |
-| `P1` | SW on GPIO 34 (10 kΩ), LED1 on GPIO 16 (330 Ω), LED2 on GPIO 17 (330 Ω) |
-| `HW1` | identical to `P1` |
-| `HW2` | **different** — SW on GPIO 32 (10 kΩ) only, no LEDs |
-| `HW3` | `HW1` plus SW1 on GPIO 26 (10 kΩ) |
+| `Exercise1` | SW on GPIO 34 (10 kΩ), LED1 on GPIO 16 (330 Ω), LED2 on GPIO 17 (330 Ω) |
+| `P1` | identical to `Exercise1` |
+| `P2` | **different** — SW on GPIO 32 (10 kΩ) only, no LEDs |
+| `P3` | `P1` plus SW1 on GPIO 26 (10 kΩ) |
 
-Recording order that minimises rewiring: `P1` → `HW1` → `HW3` → `HW2`.
+Recording order that minimises rewiring: `Exercise1` → `P1` → `P3` → `P2`.
 
 ## Facts taken from the materials
 
@@ -61,8 +56,8 @@ Recording order that minimises rewiring: `P1` → `HW1` → `HW3` → `HW2`.
 | RTC-persistent variable | `RTC_DATA_ATTR` | LN4 slide 44 |
 | Wake-up arms before sleeping | required | LN4 slide 48, Remark 2 |
 | Waking is a reset | program restarts from the beginning | LN4 slides 44, 45 |
-| HW3 extra switch | SW1 on GPIO 26, 10 kΩ pull-up to 3v3 | Homework 2, Problem 3 diagram |
-| HW3 sleep duration | 15 seconds | Homework 2, Problem 3 text |
+| `P3` extra switch | SW1 on GPIO 26, 10 kΩ pull-up to 3v3 | Homework 2, Problem 3 diagram |
+| `P3` sleep duration | 15 seconds | Homework 2, Problem 3 text |
 
 ## Questions and notes requiring confirmation
 
@@ -72,11 +67,11 @@ missing facts.
 
 | # | Task | Item |
 | --- | --- | --- |
-| 1 | `HW3` | The task says to use a pin-change interrupt to enter deep sleep but not **where** `esp_deep_sleep_start()` should be called. The sketch sets a flag in the handler and sleeps from `loop()`, keeping the handler minimal as `CLAUDE.md` requires. Calling it inside the handler would behave identically on video. See `HW3/README.md`, *Design choice*. |
-| 2 | `HW1`, `HW3` | The instructor's Example 5 allocates a 1024-byte stack per task while both tasks call `Serial.print()`. That is tight. Kept as written; raise to 10000 (slide 23) if you see a stack-overflow reset. |
-| 3 | `HW3` | `delay(100)` before sleeping is not from the material. It lets the serial buffer empty so the final message is not lost when the CPU powers down. |
-| 4 | `P1` | Example 2 has no debounce, so a bouncy press can toggle LED2 twice. Instructor's behaviour, kept unchanged. |
-| 5 | `HW2`, `HW3` | Deep sleep can drop the USB serial connection on some adapters; the Serial Monitor may need reopening after a wake. |
+| 1 | `P3` | The task says to use a pin-change interrupt to enter deep sleep but not **where** `esp_deep_sleep_start()` should be called. The sketch sets a flag in the handler and sleeps from `loop()`, keeping the handler minimal as `CLAUDE.md` requires. Calling it inside the handler would behave identically on video. See `P3/README.md`, *Design choice*. |
+| 2 | `P1`, `P3` | The instructor's Example 5 allocates a 1024-byte stack per task while both tasks call `Serial.print()`. That is tight. Kept as written; raise to 10000 (slide 23) if you see a stack-overflow reset. |
+| 3 | `P3` | `delay(100)` before sleeping is not from the material. It lets the serial buffer empty so the final message is not lost when the CPU powers down. |
+| 4 | `Exercise1` | Example 2 has no debounce, so a bouncy press can toggle LED2 twice. Instructor's behaviour, kept unchanged. |
+| 5 | `P2`, `P3` | Deep sleep can drop the USB serial connection on some adapters; the Serial Monitor may need reopening after a wake. |
 | 6 | all | Exercise 2 states no due date; Homework 2 states none either. |
 
 ## Material provenance
@@ -103,10 +98,10 @@ was correct; it was describing Workshop 02 content.
 
 | ID | Sketch | Wiring | README | Questions | Compiles |
 | --- | --- | --- | --- | --- | --- |
-| `P1` | `P1.ino` | ✅ | ✅ | — | ✅ 18% flash |
-| `HW1` | `HW1.ino` | ✅ | ✅ | — | ✅ 20% flash |
-| `HW2` | `HW2.ino` | ✅ | ✅ | — | ✅ 21% flash |
-| `HW3` | `HW3.ino` | ✅ | ✅ | — | ✅ 21% flash |
+| `Exercise1` | `Exercise1/Exercise1.ino` | ✅ | ✅ | — | ✅ 18% flash |
+| `P1` | `P1/P1.ino` | ✅ | ✅ | — | ✅ 20% flash |
+| `P2` | `P2/P2.ino` | ✅ | ✅ | — | ✅ 21% flash |
+| `P3` | `P3/P3.ino` | ✅ | ✅ | — | ✅ 21% flash |
 
 Compiled with `arduino-cli` against `esp32:esp32` core 2.0.17.
 No sketch has been hardware-tested.
