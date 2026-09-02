@@ -30,6 +30,10 @@ while pressed. The lecture calls this out explicitly on slide 15.
 
 ## Source basis
 
+`P1.ino` is a verbatim transcription of the instructor's `Ex_Interrupts.ino`
+listing (Lecture Note 4, slides 16–17) — same lines, comments, and spacing.
+Nothing was added or reworded, and no syntax fix was needed.
+
 | Fact | Source |
 | --- | --- |
 | Button GPIO 34, LED1 GPIO 16, LED2 GPIO 17 | slide 15 diagram, slide 16 code |
