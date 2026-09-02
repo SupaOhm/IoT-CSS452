@@ -1,20 +1,3 @@
-// HW3 — Homework 1, Problem 3  (instructor's video name: "P3")
-//
-// Task: connect a wire to a touch pin (as in Example 4) and write code so that:
-//   1) when ESP32 starts, it connects to your WiFi access point and shows its
-//      IP address on the serial monitor (similar to Example 6);
-//   2) thereafter, if you touch the wire, ESP32 will restart.
-//
-// STATUS: NEEDS CLARIFICATION — see QUESTIONS.md.
-// The touch threshold below is NOT specified anywhere in the supplied material.
-//
-// Circuit (Lecture Note 3, Example 4, slide 39):
-//   a plain wire from GPIO 32 (a touch-sensor pin). No other components.
-//
-// Board: ThaiEasyElec's ESPino32. Serial baud must be 115200 (Lecture Note 3, slide 19).
-//
-// TODO: replace "Your_SSID" / "Your_Password" with your own WiFi credentials.
-
 #include <WiFi.h>
 
 const char* ssid     = "Your_SSID";
