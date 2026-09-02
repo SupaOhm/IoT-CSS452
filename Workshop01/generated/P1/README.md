@@ -22,6 +22,10 @@ Classroom. Stated due date: **20th Aug., before 11.59am**.
 
 ## Source basis
 
+`P1.ino` is a verbatim transcription of the instructor's `Digital_InOut.ino`
+listing (Lecture Note 3, slide 27) — same lines, comments, and spacing. Nothing
+was added or reworded, and no syntax fix was needed.
+
 Every fact below is taken from `Lecture Note 3 - Introduction to ESP32.pdf`:
 
 | Fact | Source |
