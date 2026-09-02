@@ -23,6 +23,11 @@ From `CSS452 - Homework 1.pdf`:
 
 ## Source basis
 
+`HW1.ino` is a verbatim transcription of the instructor's `Analog_PWM.ino`
+listing (Lecture Note 3, slide 36) — same lines, comments, and spacing, including
+the misspelling `functionalitites` in the `setup()` comment. Nothing was added
+or reworded, and no syntax fix was needed.
+
 | Fact | Source |
 | --- | --- |
 | Potentiometer to A0, LED on GPIO 17 | slide 35 diagram, slide 36 code |
