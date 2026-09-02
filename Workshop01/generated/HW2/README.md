@@ -30,6 +30,12 @@ Output format is `%A, %B %d %Y %H:%M:%S`, e.g. `Sunday, August 01 2021 10:38:35`
 
 ## Source basis
 
+`HW2.ino` is a verbatim transcription of the instructor's `DateTimerNTP.ino`
+listing (Lecture Note 3, slides 54–56) — same lines, comments, and spacing.
+Nothing was added or reworded, and no syntax fix was needed. The WiFi
+placeholders `"Your SSID"` / `"Your Password"` are the instructor's own; see
+**Before you run it**.
+
 | Fact | Source |
 | --- | --- |
 | `#include <WiFi.h>`, `#include "time.h"` | slide 54 code |
