@@ -1,0 +1,7 @@
+# sha256	original	category	converter	fidelity	stored_as
+1e5d746886ea5453eb2bab875048da3a6a3519319fdac01ac6952ff14fede379	html example - Control code -OFF.html	02_example-code	markitdown	CLEAN	Workshop03/materials/02_example-code/html example - Control code -OFF.html
+e589cb574749566ef105401e2e6dd237fce12ba3bf87cb0fdfb670edbb2b05e4	html example - Control code -ON.html	02_example-code	markitdown	CLEAN	Workshop03/materials/02_example-code/html example - Control code -ON.html
+88eab25f6123cce15038c66634ed68314433d46548876742acb3af6cb435869b	Lecture Note 5 - ESP32 - Web Servers and Clients.pdf	01_lecture-notes	markitdown	CLEAN	Workshop03/materials/01_lecture-notes/Lecture Note 5 - ESP32 - Web Servers and Clients.pdf
+e42c8c8002ab7dc34b07ca099b5845da18ec266c94701c35cbb0f068f27ffc5a	WebClient_ThingSpeak.ino	02_example-code	none	NATIVE	Workshop03/materials/02_example-code/WebClient_ThingSpeak.ino
+73fca3776d09a7f4597e769643774da9263354300699afc9dec0b26e84bb5129	WebServer_ControlOutputs.ino	02_example-code	none	NATIVE	Workshop03/materials/02_example-code/WebServer_ControlOutputs.ino
+21c0aa8341e71ea0ae672166a5920ae0202bcd6691602af97d19a17cebdbec69	WebServer_MonitorSensor.ino	02_example-code	none	NATIVE	Workshop03/materials/02_example-code/WebServer_MonitorSensor.ino
