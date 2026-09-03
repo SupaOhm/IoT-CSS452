@@ -123,15 +123,22 @@ droppable_count() {
   echo "$n"
 }
 
-# A workshop is "finished" once it has generated at least one task folder.
-# INDEX.md alone is not enough: it is written as soon as any material lands, so
-# a workshop still waiting for its exercise or homework sheet has one and must
-# keep receiving drops.
+# A workshop is "finished" once both task sheets have arrived and at least one
+# task folder has been generated. Sheets are dropped separately — the exercise
+# often lands days before the homework — so a workshop can hold generated tasks
+# and still be owed material; advancing the pointer then would file the missing
+# sheet into the next workshop. INDEX.md is no evidence at all: it is written as
+# soon as any material lands.
+has_material() {
+  [[ -n "$(find "$root/$1/materials/$2" -mindepth 1 -maxdepth 1 -type f \
+             ! -name '.gitkeep' -print -quit 2>/dev/null)" ]]
+}
+
 workshop_is_finished() {
-  local g="$root/$1/generated"
-  [[ -d "$g" ]] || return 1
-  [[ -n "$(find "$g" -mindepth 1 -maxdepth 1 -type d \
-             \( -name 'P[0-9]*' -o -name 'Exercise[0-9]*' \) -print -quit)" ]]
+  has_material "$1" 03_in-class-exercises || return 1
+  has_material "$1" 04_homework || return 1
+  [[ -n "$(find "$root/$1/generated" -mindepth 1 -maxdepth 1 -type d \
+             \( -name 'P[0-9]*' -o -name 'Exercise[0-9]*' \) -print -quit 2>/dev/null)" ]]
 }
 
 cmd_scan() {
