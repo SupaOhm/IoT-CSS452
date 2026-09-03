@@ -123,9 +123,15 @@ droppable_count() {
   echo "$n"
 }
 
-# A workshop is "finished" once it has generated output.
+# A workshop is "finished" once it has generated at least one task folder.
+# INDEX.md alone is not enough: it is written as soon as any material lands, so
+# a workshop still waiting for its exercise or homework sheet has one and must
+# keep receiving drops.
 workshop_is_finished() {
-  [[ -f "$root/$1/generated/INDEX.md" ]]
+  local g="$root/$1/generated"
+  [[ -d "$g" ]] || return 1
+  [[ -n "$(find "$g" -mindepth 1 -maxdepth 1 -type d \
+             \( -name 'P[0-9]*' -o -name 'Exercise[0-9]*' \) -print -quit)" ]]
 }
 
 cmd_scan() {
