@@ -11,6 +11,8 @@ files under `.converted/` are extracted text used for reading only.
 | `WebClient_ThingSpeak.ino` | 02_example-code | none | **NATIVE** | `Workshop03/materials/02_example-code/WebClient_ThingSpeak.ino` |
 | `WebServer_ControlOutputs.ino` | 02_example-code | none | **NATIVE** | `Workshop03/materials/02_example-code/WebServer_ControlOutputs.ino` |
 | `WebServer_MonitorSensor.ino` | 02_example-code | none | **NATIVE** | `Workshop03/materials/02_example-code/WebServer_MonitorSensor.ino` |
+| `CSS452 - Exercise 3.pdf` | 03_in-class-exercises | markitdown | **CLEAN** | `Workshop03/materials/03_in-class-exercises/CSS452 - Exercise 3.pdf` |
+| `CSS452 - Homework 3.pdf` | 04_homework | markitdown | **CLEAN** | `Workshop03/materials/04_homework/CSS452 - Homework 3.pdf` |
 
 ## Fidelity and what it permits
 
