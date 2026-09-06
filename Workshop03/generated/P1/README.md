@@ -11,10 +11,20 @@ Status: READY FOR REVIEW
 | --- | --- |
 | `P1/P1.ino` | the sketch — open this folder in the Arduino IDE |
 | `wiring.md` | circuit, pin table, component values |
+| `demo.html` | the same page with a working knob and Refresh — a teaching aid, not a deliverable |
 | `page.html` | the page the sketch serves |
 | `README.md` | this file |
 
 Everything the task needs is here; nothing has to be fetched from `materials/`.
+
+**`page.html` is a frozen snapshot.** The value in it never changes, because on
+the board the sketch reads `analogRead(A0)` only while it is answering a
+request.
+
+`demo.html` is there for that: it gives you a knob and a Refresh button, so you
+can see the value stay frozen until the page reloads — the exact behaviour
+Problem 1 asks you to demonstrate. It is a teaching aid — **not** part of your
+submission, and nothing like it goes on the board.
 
 **`page.html` is not uploaded.** The ESP32 has no filesystem in this project —
 the sketch prints the page with `client.println()` on every request (`P1.ino`

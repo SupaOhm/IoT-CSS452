@@ -44,12 +44,12 @@ None is hardware-tested. Compiling is not testing.
 Every folder is a complete package — sketch, wiring, the page the sketch serves,
 and a README. Nothing has to be pulled out of `materials/` to work on a task.
 
-| Task | Sketch | Wiring | Page files | README |
-| --- | --- | --- | --- | --- |
-| `Exercise1` | yes | yes | `page-leds-off.html`, `page-leds-on.html` | yes |
-| `P1` | yes | yes | `page.html` | yes |
-| `P2` | yes | yes | none — see below | yes |
-| `P3` | yes | yes | `page-leds-off.html`, `page-leds-on.html` | yes |
+| Task | Sketch | Wiring | Page files | Offline demo | README |
+| --- | --- | --- | --- | --- | --- |
+| `Exercise1` | yes | yes | `page-leds-off.html`, `page-leds-on.html` | `demo.html` | yes |
+| `P1` | yes | yes | `page.html` | `demo.html` | yes |
+| `P2` | yes | yes | none — see below | none — see below | yes |
+| `P3` | yes | yes | `page-leds-off.html`, `page-leds-on.html` | `demo.html` | yes |
 
 The `.html` files are **not uploaded to the board**. These projects keep no
 filesystem on the ESP32: the sketch prints the whole document with
@@ -59,8 +59,23 @@ powering the board. Each was generated from its sketch and diffed against it
 line by line; `P1/page.html` carries `2048` where the sketch prints
 `analogRead(A0)`, a stand-in, not a measured reading.
 
-`P2` has no page because the ESP32 is a **client** there, not a server: it posts
-to `api.thingspeak.com/update` and ThingSpeak renders the charts.
+`P2` has no page and no demo because the ESP32 is a **client** there, not a
+server: it posts to `api.thingspeak.com/update` and ThingSpeak renders the
+charts. There is no markup of its own to preview or simulate.
+
+The page files are **inert on purpose**. Their buttons are root-relative URLs
+such as `/26/on`, which mean something only while the ESP32 is answering them;
+opened from disk the browser resolves them against `file://` and reports *file
+was not found*. Slide 24 makes the same point about the Section 2 walkthrough:
+"you get the error 'file was not found' because you do not have any file to that
+URL … later, this will be solved on the Arduino IDE". Each `demo.html` closes
+that gap — the same page, with a few lines of JavaScript standing in for the
+server so the buttons work offline. `Exercise1/demo.html` and `P3/demo.html`
+generate their markup with the same logic as the preview files and were checked
+byte-identical to them; `P1/demo.html` adds a knob and a Refresh button to show
+the reading staying frozen until the page reloads, which is what Problem 1 asks
+you to demonstrate. The demos are teaching aids: not deliverables, and nothing
+resembling them is uploaded to the board.
 
 **Section 2 of the lecture note is covered by these files.** Slides 13–37 are a
 step-by-step HTML/CSS walkthrough — create `index.html`, add a title, heading,

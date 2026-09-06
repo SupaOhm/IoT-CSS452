@@ -1,0 +1,59 @@
+<!-- Offline simulation. Not part of the submission and not uploaded to the ESP32. -->
+<!DOCTYPE html><html>
+<head><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exercise1 — offline demo</title>
+<link rel="icon" href="data:,">
+<style>html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}
+.button { background-color: #4CAF50; border: none; color: white; padding: 16px 40px;
+text-decoration: none; font-size: 30px; margin: 2px; cursor: pointer;}
+.button2 {background-color: #555555;}
+.sim { font-family: Helvetica; font-size: 13px; color: #666; line-height: 1.5;
+       border-top: 1px solid #ccc; margin: 40px auto 0; padding-top: 12px; max-width: 34em; }
+.sim code { color: #111; }
+</style></head>
+<body><h1>ESP32 Web Server</h1>
+<div id="page"></div>
+
+<div class="sim">
+Offline simulation — no ESP32 involved. On the board every press is a full page
+load: the browser requests the URL, the sketch switches the GPIO and answers with
+the updated page. Here a few lines of JavaScript stand in for the server so you
+can click through the flow without hardware.<br><br>
+Last request: <code id="log">(none yet)</code><br>
+Serial monitor would show: <code id="serial">(nothing yet)</code>
+</div>
+
+<script>
+var pins = ["26", "27"];
+var state = {};
+pins.forEach(function (p) { state[p] = "off"; });
+
+function render() {
+  var html = "";
+  pins.forEach(function (pin) {
+    html += "<p>GPIO " + pin + " - State " + state[pin] + "</p>";
+    if (state[pin] === "off") {
+      html += '<p><a href="/' + pin + '/on"><button class="button">ON</button></a></p>';
+    } else {
+      html += '<p><a href="/' + pin + '/off"><button class="button button2">OFF</button></a></p>';
+    }
+  });
+  document.getElementById("page").innerHTML = html;
+}
+
+document.addEventListener("click", function (e) {
+  var a = e.target.closest ? e.target.closest("a") : null;
+  if (!a) return;
+  e.preventDefault();
+  var href = a.getAttribute("href");
+  var m = href.match(/^\/(\d+)\/(on|off)$/);
+  if (!m) return;
+  state[m[1]] = m[2];
+  document.getElementById("log").textContent = "GET " + href + " HTTP/1.1";
+  document.getElementById("serial").textContent = "GPIO " + m[1] + " " + m[2];
+  render();
+});
+
+render();
+</script>
+</body></html>

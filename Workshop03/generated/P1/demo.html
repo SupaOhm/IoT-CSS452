@@ -1,0 +1,50 @@
+<!-- Offline simulation. Not part of the submission and not uploaded to the ESP32. -->
+<!DOCTYPE html><html>
+<head><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>P1 — offline demo</title>
+<link rel="icon" href="data:,">
+<style>html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}
+table, th, td { border: 1px solid black; margin-left:auto; margin-right:auto;}
+.sim { font-family: Helvetica; font-size: 13px; color: #666; line-height: 1.5;
+       border-top: 1px solid #ccc; margin: 40px auto 0; padding-top: 12px; max-width: 34em; }
+.sim code { color: #111; }
+.sim input[type=range] { vertical-align: middle; width: 200px; }
+</style></head>
+<body><h1>ESP32 Web Server</h1>
+<table>
+<tr><th>Sensor</th><th>Value</th></tr>
+<tr><td>Potentiometer</td><td id="shown">0</td></tr>
+</table>
+
+<div class="sim">
+Offline simulation — no ESP32 involved. The knob below stands in for the
+potentiometer and <code>Refresh</code> stands in for the browser's reload
+button.<br><br>
+Turn the knob and watch the table: <b>nothing changes.</b> The sketch reads
+<code>analogRead(A0)</code> only while it is answering a request, so the value
+on screen is frozen at whatever it was when the page was served. Press
+<code>Refresh</code> and the table catches up. That is exactly the behaviour
+Problem 1 asks you to demonstrate in the video.<br><br>
+Knob — <code>analogRead(A0)</code>, 0–4095:
+<input id="knob" type="range" min="0" max="4095" value="0">
+<code id="knobval">0</code>
+<button id="refresh">Refresh</button><br>
+Last request: <code id="log">(none yet)</code>
+</div>
+
+<script>
+var knob = document.getElementById("knob");
+var knobval = document.getElementById("knobval");
+var shown = document.getElementById("shown");
+var log = document.getElementById("log");
+
+knob.addEventListener("input", function () {
+  knobval.textContent = knob.value;
+});
+
+document.getElementById("refresh").addEventListener("click", function () {
+  shown.textContent = knob.value;
+  log.textContent = "GET / HTTP/1.1  →  served with analogRead(A0) = " + knob.value;
+});
+</script>
+</body></html>
