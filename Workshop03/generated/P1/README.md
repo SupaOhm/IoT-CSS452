@@ -5,6 +5,25 @@ Status: READY FOR REVIEW
 > **Video name:** `"P1"` — this folder is named after the video the
 > instructor asks you to submit, so the two always match.
 
+## Files in this folder
+
+| File | What it is |
+| --- | --- |
+| `P1/P1.ino` | the sketch — open this folder in the Arduino IDE |
+| `wiring.md` | circuit, pin table, component values |
+| `page.html` | the page the sketch serves |
+| `README.md` | this file |
+
+Everything the task needs is here; nothing has to be fetched from `materials/`.
+
+**`page.html` is not uploaded.** The ESP32 has no filesystem in this project —
+the sketch prints the page with `client.println()` on every request (`P1.ino`
+lines 66–85). The file is that same markup written out so you can open it in a
+browser and see the table and its `1px solid black` borders without powering the
+board. The value `2048` in the second row is a stand-in: the sketch prints
+`analogRead(A0)` there, which is 0–4095 depending on where the knob sits. No
+reading was measured.
+
 ## Task
 
 From `CSS452 - Homework 3.pdf`, Problem 1:

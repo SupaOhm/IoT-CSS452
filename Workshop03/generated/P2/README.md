@@ -5,6 +5,23 @@ Status: READY FOR REVIEW
 > **Video name:** `"P2"` — this folder is named after the video the
 > instructor asks you to submit, so the two always match.
 
+## Files in this folder
+
+| File | What it is |
+| --- | --- |
+| `P2/P2.ino` | the sketch — open this folder in the Arduino IDE |
+| `wiring.md` | circuit, pin table, component values |
+| `README.md` | this file |
+
+Everything the task needs is here; nothing has to be fetched from `materials/`.
+
+**There is no `.html` file for this task, and none is missing.** P2 is the only
+task in Workshop03 where the ESP32 is a *client*, not a server: it posts to
+`api.thingspeak.com/update` every 10 s and serves no page of its own. The
+display is the ThingSpeak channel's own charts in your browser, which
+ThingSpeak renders — the demonstration in your video is that site, not a page
+this sketch produces.
+
 ## Task
 
 From `CSS452 - Homework 3.pdf`, Problem 2:

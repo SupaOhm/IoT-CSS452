@@ -2,6 +2,33 @@
 
 Status: READY FOR REVIEW
 
+## Files in this folder
+
+| File | What it is |
+| --- | --- |
+| `Exercise1/Exercise1.ino` | the sketch — open this folder in the Arduino IDE |
+| `wiring.md` | circuit, pin table, component values |
+| `page-leds-off.html` | the page the sketch serves while both LEDs are off |
+| `page-leds-on.html` | the page the sketch serves while both LEDs are on |
+| `README.md` | this file |
+
+Everything the task needs is here; nothing has to be fetched from `materials/`.
+
+**The `.html` files are not uploaded.** The ESP32 has no filesystem in this
+project — the sketch prints the page with `client.println()` on every request
+(`Exercise1.ino` lines 100–130). The two files are that same markup written out
+so you can open it in a browser, read the CSS, or show the page design in your
+video without powering the board. Both were generated from the sketch and
+checked line by line against it.
+
+They differ from the instructor's supplied `html example - Control code -ON.html`
+and `-OFF.html`, which are hand-written illustrations rather than the sketch's
+actual output. Two differences: the supplied files capitalise the state
+(`State Off`) where the sketch prints `output26State` verbatim and so emits
+`State off`; and in `-OFF.html` both OFF buttons link to `/26/on` and `/27/on`,
+which would fail to switch a LED off. The sketch is correct — it emits
+`/26/off` and `/27/off` in that state. The files here follow the sketch.
+
 ## Task
 
 From `CSS452 - Exercise 3.pdf`:

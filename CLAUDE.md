@@ -51,6 +51,16 @@ not sort them.
      values, and power/ground connections.
    - `README.md` — task summary, behavior, source basis, how to test, and limitations.
    - `QUESTIONS.md` only when information is missing, conflicting, unreadable, or ambiguous.
+   - **every companion file the task involves**, alongside `README.md`: a web
+     page the sketch serves, a supplied data file, a config, a schematic the
+     task hands you. A task folder is a self-contained package the student can
+     work from and submit; they must never have to go digging in `materials/`
+     for a file the task needs. Where a companion file is generated rather than
+     supplied — an HTML page the sketch prints with `client.println()`, for
+     instance — derive it mechanically from the sketch, verify it against the
+     sketch line by line, and say in `README.md` that it is not uploaded to the
+     board. Where a task genuinely has no such file, say so in `README.md` so
+     its absence reads as deliberate rather than as an omission.
 6. Finish by updating `generated/INDEX.md` with a concise completion status for
    every task.
 

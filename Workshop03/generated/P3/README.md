@@ -5,6 +5,26 @@ Status: READY FOR REVIEW
 > **Video name:** `"P3"` — this folder is named after the video the
 > instructor asks you to submit, so the two always match.
 
+## Files in this folder
+
+| File | What it is |
+| --- | --- |
+| `P3/P3.ino` | the sketch — open this folder in the Arduino IDE |
+| `wiring.md` | circuit, pin table, component values |
+| `page-leds-off.html` | the page the sketch serves while all three LEDs are off |
+| `page-leds-on.html` | the page the sketch serves while all three LEDs are on |
+| `README.md` | this file |
+
+Everything the task needs is here; nothing has to be fetched from `materials/`.
+
+**The `.html` files are not uploaded.** The ESP32 has no filesystem in this
+project — the sketch prints the page with `client.println()` on every request
+(`P3.ino` lines 112–151). The two files are that same markup written out so you
+can open it in a browser and check the three rows against the mock-up beside
+Problem 3 without powering the board. Both were generated from the sketch and
+checked line by line against it. The page has eight possible states in all;
+these are the two extremes.
+
 ## Task
 
 From `CSS452 - Homework 3.pdf`, Problem 3:

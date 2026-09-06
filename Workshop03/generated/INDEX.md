@@ -39,6 +39,37 @@ and caveats live in each task's `README.md` and `wiring.md`.
 
 None is hardware-tested. Compiling is not testing.
 
+### What each task folder holds
+
+Every folder is a complete package — sketch, wiring, the page the sketch serves,
+and a README. Nothing has to be pulled out of `materials/` to work on a task.
+
+| Task | Sketch | Wiring | Page files | README |
+| --- | --- | --- | --- | --- |
+| `Exercise1` | yes | yes | `page-leds-off.html`, `page-leds-on.html` | yes |
+| `P1` | yes | yes | `page.html` | yes |
+| `P2` | yes | yes | none — see below | yes |
+| `P3` | yes | yes | `page-leds-off.html`, `page-leds-on.html` | yes |
+
+The `.html` files are **not uploaded to the board**. These projects keep no
+filesystem on the ESP32: the sketch prints the whole document with
+`client.println()` on every request. Each file is that same markup written out
+so the page can be opened in a browser, read, or shown in a video without
+powering the board. Each was generated from its sketch and diffed against it
+line by line; `P1/page.html` carries `2048` where the sketch prints
+`analogRead(A0)`, a stand-in, not a measured reading.
+
+`P2` has no page because the ESP32 is a **client** there, not a server: it posts
+to `api.thingspeak.com/update` and ThingSpeak renders the charts.
+
+**Section 2 of the lecture note is covered by these files.** Slides 13–37 are a
+step-by-step HTML/CSS walkthrough — create `index.html`, add a title, heading,
+paragraph, buttons, hyperlinks, then CSS syntax, the `html` selector, `.button`,
+`.button2`, and metadata. Its end product is the two-LED control page, which is
+exactly what `Exercise1/page-leds-*.html` hold. Neither `CSS452 - Exercise 3.pdf`
+nor `CSS452 - Homework 3.pdf` sets a task from Section 2, so it has no task ID of
+its own.
+
 ## Circuits at a glance
 
 | Task | Circuit |
@@ -122,4 +153,5 @@ None of these blocks a task; all four are READY FOR REVIEW.
 | 2 | Section 3's two sources disagree on lines 5–6 | The call-out box on **slide 53** prints `const char* ssid = "Your SSID";` / `"Your Password";`, while the full listing on **slide 54** and the supplied `WebServer_ControlOutputs.ino` both carry the instructor's own network. Slides 78 and 98 carry his network too. `Exercise1.ino` follows the supplied file, so all four sketches in this workshop are consistent and each is byte-identical to a file the instructor supplied. Either way item 1 applies. |
 | 3 | `A0` is never given as a GPIO number | The Section 4 and 5.2 schematics label the pin `A0` and the code says `analogRead(A0)`; neither the lecture nor the sketches name a GPIO. Wire to the pin your board labels `A0` — the Arduino ESP32 core resolves the name. No GPIO number was invented. |
 | 4 | The potentiometer's resistance is not stated | Slides 76 and 96 label the part only as "Potentiometer". Any common linear pot divides 3.3 V the same way and the sketch does not depend on the value. |
-| 5 | ThingSpeak free-tier rate limit | The free tier accepts one write per 15 s; the instructor's `timerDelay` is 10 s, so some `P2` requests may be rejected. The listing's own comment on lines 13–14 warns about API call limits. Kept unchanged. |
+| 5 | The supplied `-OFF.html` links its OFF buttons to `/26/on` | `html example - Control code -OFF.html` shows both OFF buttons as `<a href="/26/on">` and `<a href="/27/on">`, which would not switch a LED off, and it capitalises the state as `State Off` where the sketch prints `output26State` and so emits `State off`. The supplied `.html` files are hand-written illustrations of the design, not the sketch's output; the sketch itself is correct. `Exercise1/page-leds-*.html` follow the sketch. Nothing to fix in any `.ino`. |
+| 6 | ThingSpeak free-tier rate limit | The free tier accepts one write per 15 s; the instructor's `timerDelay` is 10 s, so some `P2` requests may be rejected. The listing's own comment on lines 13–14 warns about API call limits. Kept unchanged. |
