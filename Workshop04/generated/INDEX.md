@@ -11,12 +11,8 @@ Thammasat University.
 | ID | Type | Source | Based on | Video name | Status |
 | --- | --- | --- | --- | --- | --- |
 | `Exercise1` | In-class | `CSS452 - Exercise 4.pdf` | Lecture Note 6, Section 3 (slides 16–35) | `Q1` | READY FOR REVIEW |
-| `Q1` | Homework | `CSS452 - Homework 4`, Problem 1 | Lecture Note 6, Section 4 (slides 36–51) | `Q1` | NOT STARTED |
-| `Q2` | Homework | `CSS452 - Homework 4`, Problem 2 | Section 4 revised for two mutual nodes | `Q2` | NOT STARTED |
-
-Only the in-class exercise was requested so far. The two homework problems are
-recorded here because `INDEX.md` lists every discovered task; neither has been
-generated.
+| `Q1` | Homework | `CSS452 - Homework 4`, Problem 1 | Lecture Note 6, Section 4 (slides 36–51) | `Q1` | READY FOR REVIEW |
+| `Q2` | Homework | `CSS452 - Homework 4`, Problem 2 | Section 4 revised for two mutual nodes | `Q2` | READY FOR REVIEW |
 
 ### Naming — read this, it changed for Workshop04
 
@@ -40,56 +36,85 @@ of Workshops 01–03.
 
 ## Completion
 
-| Task | Sketches | Lines | Compiles (`esp32:esp32:esp32`) | Flash | RAM |
+| Task | Sketch | Lines | Compiles (`esp32:esp32:esp32`) | Flash | RAM |
 | --- | --- | --- | --- | --- | --- |
 | `Exercise1` | `PubNode/PubNode.ino` | 65 | yes | 56% | 13% |
 | `Exercise1` | `SubNode/SubNode.ino` | 84 | yes | 55% | 13% |
+| `Q1` | `Q1/Q1.ino` | 94 | yes | 56% | 13% |
+| `Q2` | `Node1/Node1.ino` | 95 | yes | 56% | 13% |
+| `Q2` | `Node2/Node2.ino` | 95 | yes | 56% | 13% |
 
-Neither is hardware-tested. Compiling is not testing — and this task especially
-cannot be verified here, since it needs two boards, two people, and a live
-public broker.
+None is hardware-tested. Compiling is not testing — and `Exercise1` and `Q2`
+especially cannot be verified here, since each needs two boards, two people, and
+a live public broker.
 
-### What the task folder holds
+### What the task folders hold
 
-`Exercise1` is the first task in this repo that ships **two sketches**, because
-it drives two boards:
+Workshop04 is the first workshop whose tasks ship **more than one sketch**,
+because two of the three drive two boards each:
 
 ```
-Exercise1/
-  PubNode/PubNode.ino    potentiometer board — publishes
-  SubNode/SubNode.ino    LED board — subscribes
-  wiring.md              both circuits
-  README.md
+Exercise1/  PubNode/PubNode.ino   potentiometer board — publishes
+            SubNode/SubNode.ino   LED board — subscribes
+Q1/         Q1/Q1.ino             one board doing both jobs
+Q2/         Node1/Node1.ino       pot + LED, crossed over with Node2
+            Node2/Node2.ino       pot + LED, crossed over with Node1
 ```
 
-Each sketch keeps its own folder so the Arduino IDE opens it alone, the same
-reason every other task nests `<ID>/<ID>.ino`.
+Every sketch keeps its own folder so the Arduino IDE opens it alone — the same
+reason every other task in this repo nests `<ID>/<ID>.ino`.
 
-There are no companion page files this time. Workshop03's tasks served HTML;
+There are no companion page files this workshop. Workshop03's tasks served HTML;
 MQTT has no web page at all — the payload is a bare number on a topic.
 
-## Two sketches, one line changed in each
+## How each sketch relates to the supplied code
 
-Both are the instructor's supplied files, byte-identical **except line 8**,
-CRLF line endings included:
+All three supplied `.ino` files are used, one per task. Two tasks are near-verbatim; one is written.
 
-| Task file | Supplied file | Line 8 as supplied | Line 8 here |
+| Task file | Supplied file | Differs in | Why |
 | --- | --- | --- | --- |
-| `PubNode/PubNode.ino` | `Public_HiveMQ_PubNode.ino` | `"Client_YourStudentID"` | `"Client_PubNode_YourStudentID"` |
-| `SubNode/SubNode.ino` | `Public_HiveMQ_SubNode.ino` | `"Client_YourStudentID"` | `"Client_SubNode_YourStudentID"` |
+| `Exercise1/PubNode/PubNode.ino` | `Public_HiveMQ_PubNode.ino` | line 8 | client IDs must differ |
+| `Exercise1/SubNode/SubNode.ino` | `Public_HiveMQ_SubNode.ino` | line 8 | client IDs must differ |
+| `Q1/Q1/Q1.ino` | `Public_HiveMQ_PubSub.ino` | **nothing — byte-identical** | single node, no clash to fix |
+| `Q2/Node1/Node1.ino` | `Public_HiveMQ_PubSub.ino` | lines 8, 9–10, 51, 64 | written task; topic crossover |
+| `Q2/Node2/Node2.ino` | `Public_HiveMQ_PubSub.ino` | lines 8, 9–10, 51, 64 | same, with the topics swapped |
 
-The change is mandatory, not stylistic. Both supplied files carry the *same*
-client ID, and slide 23 requires the two nodes to differ:
+CRLF line endings are preserved throughout.
+
+### `Exercise1` — one mandatory line
+
+Both supplied node files carry the *same* client ID, and slide 23 requires the
+two to differ:
 
 > 3.1) *ClentID: PubNode and SubNode have different ClientIDs and different from
 > other students.
 
 MQTT permits one live connection per client ID, so two boards sharing one would
-disconnect each other in a loop. The instructor's own `YourStudentID`
-placeholder is kept, so what must still be edited stays obvious.
+disconnect each other in a loop. Line 8 became `"Client_PubNode_YourStudentID"`
+and `"Client_SubNode_YourStudentID"`, keeping the instructor's own
+`YourStudentID` placeholder so the remaining edit stays obvious.
 
-`Public_HiveMQ_PubSub.ino`, the third supplied sketch, belongs to Section 4 and
-is used by the homework, not by this exercise. It stays in `materials/`.
+### `Q2` — the only written task in this workshop
+
+The instructor supplied no listing for Problem 2, only the hint to revise
+`Public_HiveMQ_PubSub.ino`. `Q1` publishes and subscribes on one topic, so its
+value returns to its own LED; Problem 2 needs each knob to reach the *other*
+board's LED. One shared topic cannot express that — both boards would receive
+both values. So the single `Topic` constant became two:
+
+| | publishes to | listens on |
+| --- | --- | --- |
+| `Node1` | `IoT/PotenValue_Node1_<ID>` | `IoT/PotenValue_Node2_<ID>` |
+| `Node2` | `IoT/PotenValue_Node2_<ID>` | `IoT/PotenValue_Node1_<ID>` |
+
+`publish(Topic, …)` became `publish(TopicPub, …)` and `subscribe(Topic)` became
+`subscribe(TopicSub)`. Nothing else changed — no new library, no new call, no
+technique absent from the lecture. `Node2.ino` is `Node1.ino` with `Node1` and
+`Node2` exchanged on lines 8–10 and nothing else.
+
+The topic *names* are a choice, not a requirement: slide 32 says "The publisher
+name, subscriber name, or Topic can be any name". Only uniqueness per student
+and an exact match across the pair matter.
 
 ## Facts taken from the materials
 
@@ -107,6 +132,11 @@ is used by the homework, not by this exercise. It stays in `materials/`.
 | SubNode circuit | GPIO 26 → LED long leg, short leg → 330 Ω → GND | LN6 slide 20 (schematic image) |
 | Networks | the two boards may be on different access points and in different places | LN6 slide 17 |
 | ClientID / Topic rules | IDs differ per node; topic identical across nodes, unique per student | LN6 slide 23 |
+| Section 4 role | one ESP32 as publisher *and* subscriber, "to send the data to itself" | LN6 slide 37 |
+| Section 4 circuit | potentiometer **and** LED on one board, same pins as Section 3 | LN6 slide 41 (schematic image) |
+| Section 4 threshold and interval | > 500 → LED on; publish every 2 seconds | LN6 slide 40 |
+| Topic names are free-form | "The publisher name, subscriber name, or Topic can be any name" | LN6 slide 32 |
+| `Q2` starting point | revise `Public_HiveMQ_PubSub.ino`, upload to both boards | Homework 4 Problem 2 hint |
 
 ## Conversion notes
 
@@ -118,6 +148,11 @@ is used by the homework, not by this exercise. It stays in `materials/`.
   rendered (`pdftoppm -f 20 -l 20 -r 150 -png`) and read to confirm the
   potentiometer's wiper goes to `A0`, and that GPIO 26 drives the LED's long leg
   with the 330 Ω resistor on the cathode side to GND.
+- **Slide 41's schematic is also an image**, flattened by extraction to
+  `Pin 3v3 of ESP32 ESP32 26 Potentiometer A0 LED 330 Pin GND of ESP32`. It is
+  the Section 3 pair merged onto one board — same pins, same 330 Ω — and the
+  prose on slide 40 states the threshold and interval independently, so `Q1`'s
+  wiring rests on both.
 - Slides 24–31 are annotated screenshots of the two listings. They were not
   transcribed: the instructor supplied both `.ino` files directly, so the files
   are the source of truth for the code.
@@ -126,7 +161,7 @@ is used by the homework, not by this exercise. It stays in `materials/`.
 
 ## Open questions and notes
 
-Nothing blocks `Exercise1`; it is READY FOR REVIEW.
+Nothing blocks any task; all three are READY FOR REVIEW.
 
 | # | Item | Detail |
 | --- | --- | --- |
@@ -135,4 +170,7 @@ Nothing blocks `Exercise1`; it is READY FOR REVIEW.
 | 3 | Nothing states which board is "yours" in a pair | The sheet says work in a group of two with two ESP32s. Which partner supplies which board, and whether both students submit the same video, is not specified. |
 | 4 | The potentiometer's resistance is not stated | Slide 20 labels the part only "Potentiometer", as in Workshop03. Any common linear pot divides 3.3 V the same way. |
 | 5 | `A0` is never given as a GPIO number | Same as Workshop03: the schematic labels the pin `A0` and the code says `analogRead(A0)`. Wire to the pin your board labels `A0`. No GPIO number was invented. |
-| 6 | `setCallback` is called twice in `SubNode.ino` | Once in `setup()` (line 32) and again in `ConnectMQTT()` (line 52). Harmless; it is the instructor's code and was left as supplied. |
+| 6 | `setCallback` is called twice | Once in `setup()` and again in `ConnectMQTT()`, in every sketch this workshop supplies. Harmless; it is the instructor's code and was left as supplied. |
+| 7 | **`Q2` is written, not transcribed** | No listing exists for Homework 4 Problem 2 — only the hint to revise `Public_HiveMQ_PubSub.ino`. The two-topic crossover is the minimal change satisfying the four bullets, but another shape (one topic, filtering on the payload) would also work. Read it before submitting. |
+| 8 | `Q2`'s topic names are a choice | `IoT/PotenValue_Node1_…` / `_Node2_…` are not required by any source. Slide 32 allows any name; only uniqueness and an exact match across the pair matter. |
+| 9 | Nothing states whether both partners submit the same video | `Exercise1` and `Q2` are both group tasks. Whether each student uploads their own copy is unspecified. |
