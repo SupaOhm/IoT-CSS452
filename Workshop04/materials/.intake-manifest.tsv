@@ -1,0 +1,7 @@
+# sha256	original	category	converter	fidelity	stored_as
+408614bfb05d2495a0d9e69fb41e82f72fac22755fc1473db637cc582d034511	CSS452 - Exercise 4.pdf	03_in-class-exercises	markitdown	CLEAN	Workshop04/materials/03_in-class-exercises/CSS452 - Exercise 4.pdf
+f333fe2aaee17ee1c2e0b5398ca1f55ea005578eb25e64ef967c4ea77adf038a	CSS452 - Homework 4 - ESP32 MQTT Client.pdf	04_homework	markitdown	CLEAN	Workshop04/materials/04_homework/CSS452 - Homework 4 - ESP32 MQTT Client.pdf
+839e4e9ba7b01537a0c279c8a2dd2d7dbef91964961197c641af16e8b29daf7f	Lecture Note 6 - ESP32 - MQTT Clients.pdf	01_lecture-notes	markitdown	CLEAN	Workshop04/materials/01_lecture-notes/Lecture Note 6 - ESP32 - MQTT Clients.pdf
+df0fd9e6bd979a8f3b2b9b768d2b34c2e6d80bc2096e4758b966a98889215b3d	Public_HiveMQ_PubNode.ino	02_example-code	none	NATIVE	Workshop04/materials/02_example-code/Public_HiveMQ_PubNode.ino
+bd8b496c6b1c179cd64421bf324e6cd1da4025674236a96054d5822df7935da6	Public_HiveMQ_PubSub.ino	02_example-code	none	NATIVE	Workshop04/materials/02_example-code/Public_HiveMQ_PubSub.ino
+c2c984e89401f68ef041af747bb02e8ca168ce3496018993c602e8547eaabc23	Public_HiveMQ_SubNode.ino	02_example-code	none	NATIVE	Workshop04/materials/02_example-code/Public_HiveMQ_SubNode.ino
