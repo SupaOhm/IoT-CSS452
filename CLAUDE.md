@@ -33,11 +33,23 @@ not sort them.
    task, its source file/page (where available), chosen output ID, source facts
    used, and unresolved items.
 4. Produce one directory per task, named for what the student submits:
-   - **Homework** tasks are `P1`, `P2`, … — the instructor's own video names, so
-     the folder you open is the video you hand in.
+   - **Homework** tasks carry **the instructor's own video name, verbatim**, so
+     the folder you open is the video you hand in. Read the name off the sheet
+     for that workshop — do not assume a letter. Workshops 01–03 say "Name your
+     video as P1", so the folders are `P1`, `P2`, `P3`; Homework 4 says "Name it
+     as Q1", so they are `Q1`, `Q2`. If a sheet uses some other name again, use
+     that. `P` is not the convention; matching the sheet is.
    - **In-class** tasks are `Exercise1`, `Exercise2`, … numbered by task within
      that workshop's exercise sheet. The sheet's own number follows the lecture
-     note, not the workshop, so it is not part of the folder name.
+     note, not the workshop, so it is not part of the folder name. When an
+     exercise sheet *also* names its video — Exercise 4 says "Name it as Q1" —
+     keep the `ExerciseN` folder and put the required video name at the top of
+     its `README.md`, since in-class numbering has to stay stable across a
+     workshop whether or not the sheet names a file.
+   - If two sheets in one workshop give **the same** video name to different
+     videos, as Exercise 4 and Homework 4 both do with `Q1`, the folders still
+     differ (`Exercise1` vs `Q1`), but raise it in `INDEX.md` as an open
+     question: the student cannot upload two files under one name.
 
    Use the order in the supplied material. Do not renumber an existing task
    unless correcting an explicit mistake.
