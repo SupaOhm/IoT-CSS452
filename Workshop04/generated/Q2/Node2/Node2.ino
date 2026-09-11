@@ -1,13 +1,13 @@
 #include <WiFi.h>
 #include <PubSubClient.h>
 
-const char* ssid = "Your SSID";
-const char* password = "Your Password";
+const char* ssid = "Hej";
+const char* password = "Begforit";
 const char* mqtt_server = "broker.hivemq.com";
 const int mqtt_port = 1883;
-const char* ClientID = "Client_Node2_YourStudentID";
-const char* TopicPub = "IoT/PotenValue_Node2_YourStudentID";
-const char* TopicSub = "IoT/PotenValue_Node1_YourStudentID";
+const char* ClientID = "Client_Node2_6622781860";
+const char* TopicPub = "IoT/PotenValue_Node2_6622781860";
+const char* TopicSub = "IoT/PotenValue_Node1_6622781084";
 long lastMsg = 0;
 
 WiFiClient ClientNode;
