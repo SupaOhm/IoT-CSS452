@@ -10,3 +10,6 @@ dropper/*
 !dropper/_unsorted/
 dropper/_unsorted/*
 !dropper/_unsorted/.gitkeep
+
+# Exam guideline: carries the full class roster by name. Keep it local.
+Midterm/CSS452 - Information of the Midterm Examination.pdf

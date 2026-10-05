@@ -1,0 +1,3295 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSS452 Practical Midterm: Cheatsheet</title><style>
+:root{--bg:#fbfaf7;--panel:#f1efe9;--ink:#1c1b19;--muted:#6a665e;--line:#d9d5cb;
+--accent:#0b5c8a;--code:#f4f1ea;--warn:#fff4d6;--warnline:#d9a400}
+@media (prefers-color-scheme:dark){:root{--bg:#16181b;--panel:#1e2125;--ink:#e6e3dc;
+--muted:#9a968c;--line:#33373d;--accent:#7cc1ea;--code:#1f2327;--warn:#33290a;--warnline:#b08900}}
+*{box-sizing:border-box}
+html{scroll-padding-top:12px}
+body{margin:0;background:var(--bg);color:var(--ink);
+font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+.layout{display:grid;grid-template-columns:290px minmax(0,1fr);min-height:100vh}
+nav{position:sticky;top:0;height:100vh;overflow-y:auto;background:var(--panel);
+border-right:1px solid var(--line);padding:14px 12px 40px}
+nav input{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:6px;
+background:var(--bg);color:var(--ink);font:inherit;margin-bottom:10px}
+nav ul{list-style:none;margin:0;padding:0}
+nav ul ul{padding-left:12px;margin-bottom:6px}
+nav a{display:block;padding:3px 6px;border-radius:4px;color:var(--ink);text-decoration:none;font-size:13.5px}
+nav>div>ul>li>a{font-weight:650;margin-top:6px}
+nav a:hover{background:var(--line)}
+main{padding:28px 40px 120px;max-width:980px}
+h1{font-size:28px;line-height:1.2;margin:0 0 12px}
+h2{font-size:22px;margin:48px 0 12px;padding-top:14px;border-top:2px solid var(--line)}
+h3{font-size:17px;margin:32px 0 8px}
+a{color:var(--accent)}
+p,li{max-width:78ch}
+code{font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--code);
+padding:1px 4px;border-radius:3px}
+pre{position:relative;background:var(--code);border:1px solid var(--line);border-radius:6px;
+padding:12px 14px;overflow-x:auto;margin:10px 0 18px}
+pre code{background:none;padding:0;white-space:pre}
+button.copy{position:absolute;top:6px;right:6px;font:12px/1 inherit;padding:5px 9px;
+border:1px solid var(--line);border-radius:5px;background:var(--bg);color:var(--ink);cursor:pointer}
+button.copy:hover{border-color:var(--accent);color:var(--accent)}
+.tablewrap{overflow-x:auto;margin:10px 0 18px}
+table{border-collapse:collapse;font-size:14px}
+th,td{border:1px solid var(--line);padding:5px 9px;text-align:left;vertical-align:top}
+th{background:var(--panel)}
+blockquote{margin:12px 0;padding:8px 14px;background:var(--warn);border-left:4px solid var(--warnline);border-radius:0 6px 6px 0}
+blockquote p{margin:4px 0}
+li.task{list-style:none;margin-left:-20px}
+@media (max-width:860px){.layout{display:block}nav{position:static;height:auto;max-height:40vh}
+main{padding:18px 16px 80px}}
+@media print{nav,button.copy{display:none}.layout{display:block}main{padding:0;max-width:none}
+body{font-size:11px}pre{white-space:pre-wrap;page-break-inside:avoid;border-color:#999}
+pre code{white-space:pre-wrap;font-size:9.5px}h2{page-break-before:always}h2:first-of-type{page-break-before:auto}
+table{font-size:10px}a{color:inherit;text-decoration:none}}
+</style></head>
+<body><div class="layout">
+<nav><input id="q" type="search" placeholder="Filter sections…" aria-label="Filter sections"><div class="toc">
+<ul>
+<li><a href="#0-the-exam-in-one-screen">0. The exam in one screen</a><ul>
+<li><a href="#before-you-walk-in">Before you walk in</a></li>
+<li><a href="#sixty-minutes-three-questions">Sixty minutes, three questions</a></li>
+</ul>
+</li>
+<li><a href="#1-find-it-fast">1. Find it fast</a></li>
+<li><a href="#2-board-pins-and-circuits">2. Board, pins and circuits</a><ul>
+<li><a href="#21-the-board">2.1 The board</a></li>
+<li><a href="#22-pin-labels--gpio-numbers">2.2 Pin labels → GPIO numbers</a></li>
+<li><a href="#23-what-each-pin-can-do">2.3 What each pin can do</a></li>
+<li><a href="#24-circuits">2.4 Circuits</a></li>
+</ul>
+</li>
+<li><a href="#3-lecture-note-3-basics-and-wifi">3. Lecture Note 3: basics and WiFi</a><ul>
+<li><a href="#ln3-command-reference">LN3 command reference</a></li>
+<li><a href="#31-example-1-digital-in-and-out">3.1 Example 1: digital in and out</a></li>
+<li><a href="#32-example-2-analog-in">3.2 Example 2: analog in</a></li>
+<li><a href="#33-example-3-pwm-brightness">3.3 Example 3: PWM brightness</a></li>
+<li><a href="#34-example-4-touch-pin">3.4 Example 4: touch pin</a></li>
+<li><a href="#35-example-5-hall-sensor">3.5 Example 5: hall sensor</a></li>
+<li><a href="#36-software-reset">3.6 Software reset</a></li>
+<li><a href="#37-example-6-wifi-connection">3.7 Example 6: WiFi connection</a></li>
+<li><a href="#38-example-7-soft-access-point">3.8 Example 7: soft access point</a></li>
+<li><a href="#39-example-8-date-and-time-from-ntp">3.9 Example 8: date and time from NTP</a></li>
+<li><a href="#310-homework-1-problem-3">3.10 Homework 1 Problem 3</a></li>
+</ul>
+</li>
+<li><a href="#4-lecture-note-4-multitasking-and-deep-sleep">4. Lecture Note 4: multitasking and deep sleep</a><ul>
+<li><a href="#ln4-command-reference">LN4 command reference</a></li>
+<li><a href="#41-example-1-millis">4.1 Example 1: millis</a></li>
+<li><a href="#42-example-2-pin-change-interrupt">4.2 Example 2: pin-change interrupt</a></li>
+<li><a href="#43-example-3-tasks">4.3 Example 3: tasks</a></li>
+<li><a href="#44-example-4-show-the-running-core">4.4 Example 4: show the running core</a></li>
+<li><a href="#45-example-5-assign-a-core">4.5 Example 5: assign a core</a></li>
+<li><a href="#46-example-6-deep-sleep">4.6 Example 6: deep sleep</a></li>
+<li><a href="#47-example-7-timer-wake-up">4.7 Example 7: timer wake-up</a></li>
+<li><a href="#48-example-8-touch-wake-up">4.8 Example 8: touch wake-up</a></li>
+<li><a href="#49-example-9-ext0-wake-up">4.9 Example 9: ext0 wake-up</a></li>
+<li><a href="#410-example-10-ext1-wake-up">4.10 Example 10: ext1 wake-up</a></li>
+<li><a href="#411-homework-2-problem-3">4.11 Homework 2 Problem 3</a></li>
+</ul>
+</li>
+<li><a href="#5-lecture-note-5-web-servers-and-clients">5. Lecture Note 5: web servers and clients</a><ul>
+<li><a href="#ln5-essentials">LN5 essentials</a></li>
+<li><a href="#51-section-3-web-server-controlling-leds">5.1 Section 3: web server controlling LEDs</a></li>
+<li><a href="#52-section-4-web-server-showing-a-sensor">5.2 Section 4: web server showing a sensor</a></li>
+<li><a href="#53-homework-3-problem-3-three-leds">5.3 Homework 3 Problem 3: three LEDs</a></li>
+<li><a href="#54-buttons-and-a-sensor-on-one-page">5.4 Buttons and a sensor on one page</a></li>
+<li><a href="#55-section-52-thingspeak">5.5 Section 5.2: ThingSpeak</a></li>
+</ul>
+</li>
+<li><a href="#6-lecture-note-6-mqtt">6. Lecture Note 6: MQTT</a><ul>
+<li><a href="#ln6-essentials">LN6 essentials</a></li>
+<li><a href="#61-section-3-publisher-node">6.1 Section 3: publisher node</a></li>
+<li><a href="#62-section-3-subscriber-node">6.2 Section 3: subscriber node</a></li>
+<li><a href="#63-section-4-one-board-both-roles">6.3 Section 4: one board, both roles</a></li>
+<li><a href="#64-homework-4-q2-two-boards-crossed-over">6.4 Homework 4 Q2: two boards, crossed over</a></li>
+<li><a href="#mqtt-failures-and-what-they-mean">MQTT failures and what they mean</a></li>
+</ul>
+</li>
+<li><a href="#7-changing-an-example-to-fit-the-question">7. Changing an example to fit the question</a></li>
+<li><a href="#8-when-it-does-not-work">8. When it does not work</a></li>
+<li><a href="#9-before-you-hand-in">9. Before you hand in</a></li>
+</ul>
+</div>
+</nav>
+<main><h1 id="css452-practical-midterm-cheatsheet">CSS452 Practical Midterm: Cheatsheet</h1>
+<p>Open-book reference for the practical exam. Everything here comes from Lecture
+Notes 3–6, Exercises 1–4 and Homework 1–4. Where a line is <strong>not</strong> from the
+course material it is marked <em>(not in the lecture)</em>.</p>
+<p>Every code listing below also exists as a ready-to-open sketch in
+<code>Midterm/sketches/&lt;name&gt;/&lt;name&gt;.ino</code>. In the exam, open the sketch, change the
+pins, upload. Do not retype.</p>
+<h2 id="0-the-exam-in-one-screen">0. The exam in one screen</h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>What</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Length / weight</td>
+<td>1 hour, 42 points, 10% of the course</td>
+</tr>
+<tr>
+<td>Questions</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Covers</td>
+<td>Lecture Notes 3–6, Quizzes 3–6, Exercises 1–4, Homework 1–4</td>
+</tr>
+<tr>
+<td>Format</td>
+<td>Open book. You connect circuits <strong>and</strong> write Arduino code</td>
+</tr>
+<tr>
+<td>Bring</td>
+<td>Notebook computer, your equipment box (no spares are provided)</td>
+</tr>
+<tr>
+<td>Hand in</td>
+<td>Paper work → the instructor. Code <strong>and</strong> recorded videos → Google Classroom</td>
+</tr>
+<tr>
+<td>Penalties</td>
+<td>Late arrival and late submission both lose points. Group 2 arriving late is not allowed in and scores 0</td>
+</tr>
+</tbody>
+</table></div>
+<p>Source: <code>CSS452 - Information of the Midterm Examination.pdf</code>, section 2.</p>
+<p><strong>Not covered by this sheet:</strong> Quizzes 3–6. They are in the exam scope but were
+never dropped into this repo, so nothing here is drawn from them.</p>
+<h3 id="before-you-walk-in">Before you walk in</h3>
+<ol>
+<li><strong>Do one full Verify + Upload on the laptop you will bring.</strong> Not last
+   month's — today's. An OS update can break the toolchain without telling you.</li>
+<li><code>PubSubClient</code> library installed (Sketch → Include Library → Manage
+   Libraries). Without it no MQTT sketch compiles. (LN6 slide 15)</li>
+<li>Board: Tools → Board → <strong>ThaiEasyElec's ESPino32</strong>. Serial Monitor at
+   <strong>115200</strong>. (LN3 slides 18, 21)</li>
+<li>Phone hotspot on <strong>2.4 GHz</strong>, screen kept awake, name and password known by
+   heart. The ESP32 cannot join 5 GHz.</li>
+<li>ThingSpeak channel already created with <strong>Field 1 and Field 2 ticked</strong>, Write
+   API Key copied somewhere you can paste from. (LN5 slides 94–95)</li>
+<li>Your student ID ready to paste into MQTT <code>ClientID</code> and <code>Topic</code>.</li>
+<li>Equipment box: ESP32, USB cable, breadboard, LEDs, 330 Ω, 10 kΩ, push
+   switches, potentiometer, jumper wires, and a second ESP32 if you own one.</li>
+<li>This folder available <strong>offline</strong> (<code>CHEATSHEET.html</code> opens without internet).</li>
+</ol>
+<h3 id="sixty-minutes-three-questions">Sixty minutes, three questions</h3>
+<p>About 20 minutes each, including wiring, code, video and upload to Classroom.
+<em>(My suggestion, not from the guideline.)</em> Record the video the moment a
+question works — do not leave three videos for the last five minutes. If a
+question stalls for more than a few minutes, move on and come back.</p>
+<p>Each video in the homework showed the same three things; expect the same:
+circuit connection, Arduino code, demonstration.</p>
+<h2 id="1-find-it-fast">1. Find it fast</h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>The question mentions</th>
+<th>Open this sketch</th>
+<th>Section</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>switch turns LED on/off</td>
+<td><code>LN3_Ex1_Digital_InOut</code></td>
+<td><a href="#31-example-1-digital-in-and-out">3.1</a></td>
+</tr>
+<tr>
+<td>read potentiometer, show on serial monitor</td>
+<td><code>LN3_Ex2_Analog_In</code></td>
+<td><a href="#32-example-2-analog-in">3.2</a></td>
+</tr>
+<tr>
+<td>LED brightness, PWM, dimming</td>
+<td><code>LN3_Ex3_Analog_PWM</code></td>
+<td><a href="#33-example-3-pwm-brightness">3.3</a></td>
+</tr>
+<tr>
+<td>touch a wire / touch pin</td>
+<td><code>LN3_Ex4_Touch_Pin</code>, <code>MIX_Touch_Controls_LED</code></td>
+<td><a href="#34-example-4-touch-pin">3.4</a></td>
+</tr>
+<tr>
+<td>hall sensor, magnet</td>
+<td><code>LN3_Ex5_Hall_Effect</code></td>
+<td><a href="#35-example-5-hall-sensor">3.5</a></td>
+</tr>
+<tr>
+<td>restart / reset the ESP32</td>
+<td><code>LN3_Soft_Reset</code>, <code>HW1_P3_WiFi_Touch_Restart</code></td>
+<td><a href="#36-software-reset">3.6</a></td>
+</tr>
+<tr>
+<td>connect to WiFi, show IP address</td>
+<td><code>LN3_Ex6_WiFi_Connection</code></td>
+<td><a href="#37-example-6-wifi-connection">3.7</a></td>
+</tr>
+<tr>
+<td>ESP32 as access point, count stations</td>
+<td><code>LN3_Ex7_WiFi_SoftAccessPoint</code></td>
+<td><a href="#38-example-7-soft-access-point">3.8</a></td>
+</tr>
+<tr>
+<td>date and time, NTP</td>
+<td><code>LN3_Ex8_DateTimerNTP</code></td>
+<td><a href="#39-example-8-date-and-time-from-ntp">3.9</a></td>
+</tr>
+<tr>
+<td>blink without <code>delay()</code>, <code>millis()</code></td>
+<td><code>LN4_Ex1_millis</code></td>
+<td><a href="#41-example-1-millis">4.1</a></td>
+</tr>
+<tr>
+<td>interrupt, toggle on press</td>
+<td><code>LN4_Ex2_Interrupts</code></td>
+<td><a href="#42-example-2-pin-change-interrupt">4.2</a></td>
+</tr>
+<tr>
+<td>tasks, <code>xTaskCreate</code></td>
+<td><code>LN4_Ex3_Multitasking</code></td>
+<td><a href="#43-example-3-tasks">4.3</a></td>
+</tr>
+<tr>
+<td>which core is running</td>
+<td><code>LN4_Ex4_ShowCore</code></td>
+<td><a href="#44-example-4-show-the-running-core">4.4</a></td>
+</tr>
+<tr>
+<td>assign a task to core 0 / core 1</td>
+<td><code>LN4_Ex5_AssignCore</code></td>
+<td><a href="#45-example-5-assign-a-core">4.5</a></td>
+</tr>
+<tr>
+<td>deep sleep</td>
+<td><code>LN4_Ex6_DeepSleep</code></td>
+<td><a href="#46-example-6-deep-sleep">4.6</a></td>
+</tr>
+<tr>
+<td>wake up after N seconds</td>
+<td><code>LN4_Ex7_TimerWakeUp</code></td>
+<td><a href="#47-example-7-timer-wake-up">4.7</a></td>
+</tr>
+<tr>
+<td>wake up by touching</td>
+<td><code>LN4_Ex8_TouchWakeUp</code></td>
+<td><a href="#48-example-8-touch-wake-up">4.8</a></td>
+</tr>
+<tr>
+<td>wake up by one switch</td>
+<td><code>LN4_Ex9_ext0WakeUp</code></td>
+<td><a href="#49-example-9-ext0-wake-up">4.9</a></td>
+</tr>
+<tr>
+<td>wake up by several switches</td>
+<td><code>LN4_Ex10_ext1WakeUp</code></td>
+<td><a href="#410-example-10-ext1-wake-up">4.10</a></td>
+</tr>
+<tr>
+<td>button puts it to sleep, timer wakes it</td>
+<td><code>HW2_P3_Tasks_SleepButton_TimerWake</code></td>
+<td><a href="#411-homework-2-problem-3">4.11</a></td>
+</tr>
+<tr>
+<td>web page with buttons controlling LEDs</td>
+<td><code>LN5_S3_WebServer_ControlOutputs</code>, <code>HW3_P3_WebServer_ThreeLEDs</code></td>
+<td><a href="#51-section-3-web-server-controlling-leds">5.1</a></td>
+</tr>
+<tr>
+<td>web page showing a sensor value</td>
+<td><code>LN5_S4_WebServer_MonitorSensor</code></td>
+<td><a href="#52-section-4-web-server-showing-a-sensor">5.2</a></td>
+</tr>
+<tr>
+<td>web page with buttons <strong>and</strong> a sensor</td>
+<td><code>MIX_WebServer_LEDs_and_Sensor</code></td>
+<td><a href="#54-buttons-and-a-sensor-on-one-page">5.4</a></td>
+</tr>
+<tr>
+<td>ThingSpeak, cloud, charts</td>
+<td><code>LN5_S5_WebClient_ThingSpeak</code></td>
+<td><a href="#55-section-52-thingspeak">5.5</a></td>
+</tr>
+<tr>
+<td>MQTT publisher</td>
+<td><code>LN6_S3_PubNode</code></td>
+<td><a href="#61-section-3-publisher-node">6.1</a></td>
+</tr>
+<tr>
+<td>MQTT subscriber</td>
+<td><code>LN6_S3_SubNode</code></td>
+<td><a href="#62-section-3-subscriber-node">6.2</a></td>
+</tr>
+<tr>
+<td>MQTT publish and subscribe on one board</td>
+<td><code>LN6_S4_PubSub</code></td>
+<td><a href="#63-section-4-one-board-both-roles">6.3</a></td>
+</tr>
+<tr>
+<td>two boards controlling each other</td>
+<td><code>HW4_Q2_Node1</code>, <code>HW4_Q2_Node2</code></td>
+<td><a href="#64-homework-4-q2-two-boards-crossed-over">6.4</a></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="2-board-pins-and-circuits">2. Board, pins and circuits</h2>
+<h3 id="21-the-board">2.1 The board</h3>
+<p>ThaiEasyElec's <strong>ESPino32</strong> (ESP-WROOM-32). Dual-core 240 MHz, 2.4 GHz WiFi and
+Bluetooth. There is an <strong>on-board LED on pin 16</strong>, a RESET button and a PROGRAM
+button. (LN3 slides 5–6)</p>
+<p><strong>Upload stuck at <code>Connecting…</code></strong> → press the <strong>PROGRAM</strong> button on the board.
+(LN3 slide 20)</p>
+<h3 id="22-pin-labels--gpio-numbers">2.2 Pin labels → GPIO numbers</h3>
+<p>The board prints labels; the code needs GPIO numbers (or the <code>A0</code> name for
+analog). (LN3 slides 8–9)</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Header P1 (label)</th>
+<th>GPIO</th>
+<th></th>
+<th>Header P2 (label)</th>
+<th>GPIO</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GND</td>
+<td>—</td>
+<td></td>
+<td>3V3</td>
+<td>—</td>
+</tr>
+<tr>
+<td>3V3</td>
+<td>—</td>
+<td></td>
+<td>GND</td>
+<td>—</td>
+</tr>
+<tr>
+<td>EN</td>
+<td>enable</td>
+<td></td>
+<td>SCL / 22</td>
+<td>22</td>
+</tr>
+<tr>
+<td><strong>A0</strong> / 36</td>
+<td>36</td>
+<td></td>
+<td>SDA / 21</td>
+<td>21</td>
+</tr>
+<tr>
+<td>A3 / 39</td>
+<td>39</td>
+<td></td>
+<td>Tx</td>
+<td>3</td>
+</tr>
+<tr>
+<td>A4 / T9 / <strong>32</strong></td>
+<td>32</td>
+<td></td>
+<td>Rx</td>
+<td>1</td>
+</tr>
+<tr>
+<td>A5 / T8 / 33</td>
+<td>33</td>
+<td></td>
+<td><strong>17</strong></td>
+<td>17</td>
+</tr>
+<tr>
+<td>A6 / <strong>34</strong></td>
+<td>34</td>
+<td></td>
+<td><strong>16</strong></td>
+<td>16</td>
+</tr>
+<tr>
+<td>A7 / 35</td>
+<td>35</td>
+<td></td>
+<td>SCK / 18</td>
+<td>18</td>
+</tr>
+<tr>
+<td>A10 / T0 / 4</td>
+<td>4</td>
+<td></td>
+<td>MISO / 19</td>
+<td>19</td>
+</tr>
+</tbody>
+</table></div>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Header P3 (label)</th>
+<th>GPIO</th>
+<th></th>
+<th>Header P4 (label)</th>
+<th>GPIO</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A11 / T1 / 0</td>
+<td>0</td>
+<td></td>
+<td>MOSI / 23</td>
+<td>23</td>
+</tr>
+<tr>
+<td>A12 / T2 / <strong>2</strong></td>
+<td>2</td>
+<td></td>
+<td>SS / 5</td>
+<td>5</td>
+</tr>
+<tr>
+<td>A13 / T3 / 15</td>
+<td>15</td>
+<td></td>
+<td>SD2 / 9</td>
+<td>9</td>
+</tr>
+<tr>
+<td>A14 / T4 / 13</td>
+<td>13</td>
+<td></td>
+<td>SD3 / 10</td>
+<td>10</td>
+</tr>
+<tr>
+<td>A15 / T5 / 12</td>
+<td>12</td>
+<td></td>
+<td>CMD / 11</td>
+<td>11</td>
+</tr>
+<tr>
+<td>A16 / T6 / 14</td>
+<td>14</td>
+<td></td>
+<td>CLK / 6</td>
+<td>6</td>
+</tr>
+<tr>
+<td>A17 / T7 / <strong>27</strong></td>
+<td>27</td>
+<td></td>
+<td>SD0 / 7</td>
+<td>7</td>
+</tr>
+<tr>
+<td>A18 / DAC1 / 25</td>
+<td>25</td>
+<td></td>
+<td>SD1 / 8</td>
+<td>8</td>
+</tr>
+<tr>
+<td>A19 / DAC2 / <strong>26</strong></td>
+<td>26</td>
+<td></td>
+<td>GND</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Vin</td>
+<td>—</td>
+<td></td>
+<td>VBAT</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<p>Pins the course actually used: <strong>16, 17</strong> (LEDs), <strong>26, 27</strong> (LEDs / SW1),
+<strong>32</strong> (touch wire, wake switch, third LED), <strong>34</strong> (switch), <strong>2</strong> (ext1
+switch), <strong>A0</strong> (potentiometer).</p>
+<h3 id="23-what-each-pin-can-do">2.3 What each pin can do</h3>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>Pins</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Analog input</td>
+<td><code>A0</code>–<code>A19</code>; 0–3.3 V reads as 0–4095</td>
+<td>LN3 slide 28</td>
+</tr>
+<tr>
+<td>PWM output</td>
+<td>GPIO 0–19, 21–23, 25–27, 32–33; value 0–255</td>
+<td>LN3 slide 32</td>
+</tr>
+<tr>
+<td>Touch</td>
+<td>GPIO 0, 2, 4, 12, 13, 14, 15, 27, 32, 33</td>
+<td>LN3 slide 37</td>
+</tr>
+<tr>
+<td>Pin-change interrupt</td>
+<td>every GPIO <strong>except 6–11</strong></td>
+<td>LN4 slide 14</td>
+</tr>
+<tr>
+<td>ext0 / ext1 wake-up</td>
+<td>GPIO 0, 2, 4, 12–15, 25–27, 32–39</td>
+<td>LN4 slides 56, 61</td>
+</tr>
+<tr>
+<td>Hall sensor</td>
+<td>built in, no pin</td>
+<td>LN3 slide 41</td>
+</tr>
+</tbody>
+</table></div>
+<p>Three traps <em>(general ESP32 facts, not in the lecture)</em>:</p>
+<ul>
+<li><strong>GPIO 34, 35, 36, 39 are input-only.</strong> They cannot drive an LED. Slide 7
+  calls these "I pins → only input".</li>
+<li><strong>Analog pins A10–A19 stop working while WiFi is on</strong> (they sit on ADC2,
+  which WiFi takes over). With any WiFi, web or MQTT sketch, read analog on
+  <strong>A0, A3, A4, A5, A6 or A7</strong>. Every course example uses <code>A0</code>.</li>
+<li><strong>GPIO 6–11 are wired to the flash chip.</strong> Leave them alone.</li>
+</ul>
+<h3 id="24-circuits">2.4 Circuits</h3>
+<p>All from the lecture schematics. Resistor values are the lecture's: <strong>10 kΩ</strong>
+with a switch, <strong>330 Ω</strong> with an LED.</p>
+<p><strong>LED</strong> — long leg to the GPIO, short leg through 330 Ω to GND. <code>HIGH</code> lights it.</p>
+<pre><code>GPIO ------&gt;|------[330]------ GND
+       long   short
+       leg    leg
+</code></pre>
+<p><strong>Switch, pressing gives LOW</strong> — 10 kΩ pull-up to 3v3, switch to GND. Used with
+GPIO 34 (LN3 Ex 1, LN4 Ex 1–5), GPIO 32 (LN4 Ex 9), GPIO 26 (HW2 P3).</p>
+<pre><code>3v3 ---[10k]---+-------- GPIO       not pressed -&gt; HIGH
+               |                    pressed     -&gt; LOW
+              [SW]
+               |
+              GND
+</code></pre>
+<p><strong>Potentiometer</strong> — outer legs to 3v3 and GND, centre leg (wiper) to <code>A0</code>.</p>
+<pre><code>3v3 ------ outer leg  \
+                       [POT]  centre leg (wiper) ------ A0
+GND ------ outer leg  /
+</code></pre>
+<p><strong>Touch wire</strong> — one bare jumper wire in GPIO 32. Nothing else. (LN3 slide 39)</p>
+<p><strong>Two switches for ext1, pressing gives HIGH</strong> — LN4 slide 64, GPIO 2 and 32.</p>
+<pre><code>3v3 ---[10k]---[SW]---+-------- GPIO 2     (and the same again on GPIO 32)
+                      |
+                    [330]
+                      |
+                     GND
+</code></pre>
+<blockquote>
+<p><strong>Check this one on the bench.</strong> The slide labels the top resistor 10K and
+the bottom one 330, and says pressing gives HIGH. With those values a pressed
+switch puts only about 0.1 V on the pin (3.3 V × 330 / 10 330), which reads
+LOW. A pull-down normally has the <em>large</em> resistor at the bottom. If
+<code>ESP_EXT1_WAKEUP_ANY_HIGH</code> never wakes the board, that is the first thing to
+suspect; ask the instructor rather than guess on the paper.</p>
+</blockquote>
+<p><strong>The standard breadboards</strong></p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Topic</th>
+<th>Wiring</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LN3 Ex 1</td>
+<td>SW → 34, LED → 17</td>
+<td>LN3 slide 26</td>
+</tr>
+<tr>
+<td>LN3 Ex 2</td>
+<td>pot → A0</td>
+<td>LN3 slide 30</td>
+</tr>
+<tr>
+<td>LN3 Ex 3</td>
+<td>pot → A0, LED → 17</td>
+<td>LN3 slide 35</td>
+</tr>
+<tr>
+<td>LN3 Ex 4, LN4 Ex 8</td>
+<td>wire → 32</td>
+<td>LN3 slide 39, LN4 slide 53</td>
+</tr>
+<tr>
+<td>LN4 Ex 1–5</td>
+<td>SW → 34, LED1 → 16, LED2 → 17</td>
+<td>LN4 slides 4, 9, 15, 24</td>
+</tr>
+<tr>
+<td>LN4 Ex 9</td>
+<td>SW → 32</td>
+<td>LN4 slide 57</td>
+</tr>
+<tr>
+<td>LN4 Ex 10</td>
+<td>SW1 → 2, SW2 → 32 (press = HIGH)</td>
+<td>LN4 slide 64</td>
+</tr>
+<tr>
+<td>HW2 P3</td>
+<td>LN4 Ex 5 board + SW1 → 26</td>
+<td>Homework 2</td>
+</tr>
+<tr>
+<td>LN5 §3</td>
+<td>LED1 → 26, LED2 → 27</td>
+<td>LN5 slide 52</td>
+</tr>
+<tr>
+<td>LN5 §4, §5.2</td>
+<td>pot → A0</td>
+<td>LN5 slides 76, 96</td>
+</tr>
+<tr>
+<td>HW3 P3</td>
+<td>LED1 → 16, LED2 → 17, LED3 → 32</td>
+<td>Homework 3</td>
+</tr>
+<tr>
+<td>LN6 §3</td>
+<td>PubNode: pot → A0. SubNode: LED → 26</td>
+<td>LN6 slide 20</td>
+</tr>
+<tr>
+<td>LN6 §4, HW4 Q2</td>
+<td>pot → A0 and LED → 26 on the same board</td>
+<td>LN6 slide 41</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="3-lecture-note-3-basics-and-wifi">3. Lecture Note 3: basics and WiFi</h2>
+<h3 id="ln3-command-reference">LN3 command reference</h3>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Do this</th>
+<th>Command</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Serial</td>
+<td><code>Serial.begin(115200);</code></td>
+<td><strong>115200, not 9600</strong> (slide 19)</td>
+</tr>
+<tr>
+<td>Pin as output</td>
+<td><code>pinMode(pin, OUTPUT);</code></td>
+<td>in <code>setup()</code></td>
+</tr>
+<tr>
+<td>Pin as input</td>
+<td><code>pinMode(pin, INPUT);</code></td>
+<td>in <code>setup()</code></td>
+</tr>
+<tr>
+<td>Write digital</td>
+<td><code>digitalWrite(pin, HIGH);</code></td>
+<td>HIGH ≈ 3.3 V, LOW ≈ 0 V</td>
+</tr>
+<tr>
+<td>Read digital</td>
+<td><code>X = digitalRead(pin);</code></td>
+<td>1 or 0</td>
+</tr>
+<tr>
+<td>Read analog</td>
+<td><code>X = analogRead(A0);</code></td>
+<td>0–4095, no <code>pinMode</code> needed</td>
+</tr>
+<tr>
+<td>PWM set-up</td>
+<td><code>ledcSetup(ledChannel, freq, resolution);</code></td>
+<td>channel 0–15, freq 5000, resolution 8</td>
+</tr>
+<tr>
+<td>PWM attach</td>
+<td><code>ledcAttachPin(PWMpin, ledChannel);</code></td>
+<td>in <code>setup()</code></td>
+</tr>
+<tr>
+<td>PWM write</td>
+<td><code>ledcWrite(ledChannel, dutycycle);</code></td>
+<td>0–255</td>
+</tr>
+<tr>
+<td>Scale a range</td>
+<td><code>map(value, 0, 4095, 0, 255);</code></td>
+<td>analog → PWM</td>
+</tr>
+<tr>
+<td>Touch</td>
+<td><code>X = touchRead(pin);</code></td>
+<td>0–1023; <strong>touched = low</strong>, untouched = high</td>
+</tr>
+<tr>
+<td>Hall</td>
+<td><code>X = hallRead();</code></td>
+<td>−500 … 500</td>
+</tr>
+<tr>
+<td>Restart</td>
+<td><code>ESP.restart();</code></td>
+<td></td>
+</tr>
+<tr>
+<td>WiFi header</td>
+<td><code>#include &lt;WiFi.h&gt;</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Station mode</td>
+<td><code>WiFi.mode(WIFI_STA);</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Connect</td>
+<td><code>WiFi.begin("ssid", "password");</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Status</td>
+<td><code>WiFi.status()</code></td>
+<td><code>WL_CONNECTED</code> = 3</td>
+</tr>
+<tr>
+<td>Own IP</td>
+<td><code>WiFi.localIP()</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Be an access point</td>
+<td><code>WiFi.softAP("ssid", "password");</code></td>
+<td>password ≥ 8 characters</td>
+</tr>
+<tr>
+<td>Stations joined</td>
+<td><code>WiFi.softAPgetStationNum()</code></td>
+<td></td>
+</tr>
+<tr>
+<td>NTP</td>
+<td><code>configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);</code></td>
+<td>Thailand: <code>7*3600</code>, <code>0</code>, <code>"pool.ntp.org"</code></td>
+</tr>
+<tr>
+<td>Read the clock</td>
+<td><code>getLocalTime(&amp;timeinfo)</code></td>
+<td>fills a <code>struct tm</code></td>
+</tr>
+</tbody>
+</table></div>
+<p><code>WiFi.status()</code> codes (slide 47): 0 idle · 1 SSID not found · 3 connected ·
+4 wrong password · 6 disconnected / not in station mode.</p>
+<h3 id="31-example-1-digital-in-and-out">3.1 Example 1: digital in and out</h3>
+<p>Press the switch → LED on. Circuit: SW → 34 (press = LOW), LED → 17. (slides 26–27)</p>
+<p>Sketch: <code>sketches/LN3_Ex1_Digital_InOut/LN3_Ex1_Digital_InOut.ino</code></p>
+<pre><code class="language-cpp">// set pin numbers
+const int buttonPin = 34;  // the push button pin
+const int ledPin =  17;    // the LED pin
+
+// variable for storing the pushbutton status
+int buttonState = 0;
+
+void setup() {
+  Serial.begin(115200);
+  // initialize the pushbutton pin as an input
+  pinMode(buttonPin, INPUT);
+  // initialize the LED pin as an output
+  pinMode(ledPin, OUTPUT);
+}
+
+void loop() {
+  // read the state of the pushbutton value
+  buttonState = digitalRead(buttonPin);
+  Serial.println(buttonState);
+  // check if the pushbutton is pressed.
+  // if it is, the buttonState is LOW
+  if (buttonState == LOW) {
+    // turn LED on
+    digitalWrite(ledPin, HIGH);
+  } else {
+    // turn LED off
+    digitalWrite(ledPin, LOW);
+  }
+}
+</code></pre>
+<h3 id="32-example-2-analog-in">3.2 Example 2: analog in</h3>
+<p>Print the potentiometer value every second. Circuit: pot → A0. (slides 30–31)</p>
+<p>Sketch: <code>sketches/LN3_Ex2_Analog_In/LN3_Ex2_Analog_In.ino</code></p>
+<pre><code class="language-cpp">const int potPin = A0; //Potentiometer pin
+
+// Variable for storing the potentiometer value
+int Value = 0;
+
+void setup() {
+  Serial.begin(115200);
+  delay(1000);
+}
+
+void loop() {
+  // Reading potentiometer value
+  Value = analogRead(potPin);
+  Serial.println(Value);
+  delay(1000);
+}
+</code></pre>
+<h3 id="33-example-3-pwm-brightness">3.3 Example 3: PWM brightness</h3>
+<p>Potentiometer sets LED brightness. Circuit: pot → A0, LED → 17. (slides 35–36)</p>
+<p>Sketch: <code>sketches/LN3_Ex3_Analog_PWM/LN3_Ex3_Analog_PWM.ino</code></p>
+<pre><code class="language-cpp">const int potPin = A0; //Potentiometer pin
+const int ledPin = 17;  // LED pin
+
+// setting PWM properties
+const int freq = 5000;
+const int ledChannel = 0;
+const int resolution = 8;
+
+// Variable for storing the potentiometer value
+int potValue = 0;
+int ledValue = 0;
+
+void setup() {
+  // configure LED PWM functionalitites
+  ledcSetup(ledChannel, freq, resolution);
+
+  // attach the channel to the GPIO to be controlled
+  ledcAttachPin(ledPin, ledChannel);
+}
+
+void loop() {
+  // Reading potentiometer value
+  potValue = analogRead(potPin);
+  ledValue = map(potValue, 0, 4095, 0, 255);
+
+  // changing the LED brightness with PWM
+  ledcWrite(ledChannel, ledValue);
+}
+</code></pre>
+<p>The three PWM steps: <strong>declare</strong> channel/freq/resolution → <strong><code>ledcSetup</code> +
+<code>ledcAttachPin</code></strong> in <code>setup()</code> → <strong><code>ledcWrite</code></strong> in <code>loop()</code>.</p>
+<blockquote>
+<p>If the compiler says <code>'ledcSetup' was not declared in this scope</code>, the laptop
+has ESP32 core 3.x, where these two calls were replaced. Use
+<code>ledcAttach(ledPin, freq, resolution);</code> in <code>setup()</code> and
+<code>ledcWrite(ledPin, ledValue);</code> in <code>loop()</code>. <em>(Not in the lecture — the
+lecture's code is for core 2.x.)</em></p>
+</blockquote>
+<h3 id="34-example-4-touch-pin">3.4 Example 4: touch pin</h3>
+<p>Print the touch value every second. Circuit: one wire in GPIO 32. (slides 39–40)</p>
+<p>Sketch: <code>sketches/LN3_Ex4_Touch_Pin/LN3_Ex4_Touch_Pin.ino</code></p>
+<pre><code class="language-cpp">void setup() {
+  Serial.begin(115200);
+  delay(1000); // give me time to bring up serial monitor
+  Serial.println(&quot;ESP32 Touch Test&quot;);
+}
+
+void loop() {
+  Serial.println(touchRead(32));  // Touch sensor from Pin 32
+  delay(1000);
+}
+</code></pre>
+<p>The slide's sample output: about <strong>38–46 not touched</strong>, <strong>6–9 touched</strong>. The
+lecture never states a threshold — read your own board's two bands on the
+serial monitor first and pick a number between them.</p>
+<p><strong>Touch as a switch</strong> <em>(written for this sheet; combines Example 4 and Example 1)</em>:</p>
+<p>Sketch: <code>sketches/MIX_Touch_Controls_LED/MIX_Touch_Controls_LED.ino</code></p>
+<pre><code class="language-cpp">const int touchPin = 32;  // touch-sensor pin
+const int ledPin = 17;    // the LED pin
+
+// TODO: set from your own readings. The lecture gives no threshold;
+// slide 40 only shows about 38-46 untouched and 6-9 touched.
+const int Threshold = 20;
+
+int Value = 0;
+
+void setup() {
+  Serial.begin(115200);
+  delay(1000); // give me time to bring up serial monitor
+  pinMode(ledPin, OUTPUT);
+}
+
+void loop() {
+  Value = touchRead(touchPin);
+  Serial.println(Value);
+  if (Value &lt; Threshold) {
+    // touching the wire returns a low value
+    digitalWrite(ledPin, HIGH);
+  } else {
+    digitalWrite(ledPin, LOW);
+  }
+  delay(100);
+}
+</code></pre>
+<h3 id="35-example-5-hall-sensor">3.5 Example 5: hall sensor</h3>
+<p>No circuit. Bring a magnet near the metal cap. (slides 41–42)</p>
+<p>Sketch: <code>sketches/LN3_Ex5_Hall_Effect/LN3_Ex5_Hall_Effect.ino</code></p>
+<pre><code class="language-cpp">void setup() {
+  Serial.begin(115200);
+  delay(1000); // give me time to bring up serial monitor
+  Serial.println(&quot;ESP32 Hall Effect Test&quot;);
+}
+
+void loop() {
+  Serial.println(hallRead());  // Read the hall effect
+  delay(1000);
+}
+</code></pre>
+<blockquote>
+<p><code>hallRead()</code> does not exist in ESP32 core 3.x. <em>(Not in the lecture.)</em></p>
+</blockquote>
+<h3 id="36-software-reset">3.6 Software reset</h3>
+<p>Restarts every 10 seconds. No circuit. (slide 43)</p>
+<p>Sketch: <code>sketches/LN3_Soft_Reset/LN3_Soft_Reset.ino</code></p>
+<pre><code class="language-cpp">void setup() {
+  Serial.begin(115200);
+  Serial.println(&quot;Restarting in 10 seconds&quot;);
+  delay(10000);
+  ESP.restart();
+}
+
+void loop() {
+}
+</code></pre>
+<h3 id="37-example-6-wifi-connection">3.7 Example 6: WiFi connection</h3>
+<p>Join an access point and print the IP address. (slide 48)</p>
+<p>Sketch: <code>sketches/LN3_Ex6_WiFi_Connection/LN3_Ex6_WiFi_Connection.ino</code></p>
+<pre><code class="language-cpp">#include &lt;WiFi.h&gt;
+
+void setup() {
+  Serial.begin(115200);
+  Serial.println();
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(&quot;Your_SSID&quot;, &quot;Your_Password&quot;);
+  Serial.print(&quot;Connecting&quot;);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(&quot;.&quot;);
+  }
+  Serial.println();
+  Serial.print(&quot;Connected, IP address: &quot;);
+  Serial.println(WiFi.localIP());
+}
+
+void loop() {
+}
+</code></pre>
+<p>This <code>WiFi.mode</code> → <code>WiFi.begin</code> → <code>while (WiFi.status() != WL_CONNECTED)</code> block
+is the opening of <strong>every</strong> WiFi, web, ThingSpeak and MQTT sketch in the course.</p>
+<h3 id="38-example-7-soft-access-point">3.8 Example 7: soft access point</h3>
+<p>The ESP32 becomes an access point; prints how many stations joined. (slide 52)</p>
+<p>Sketch: <code>sketches/LN3_Ex7_WiFi_SoftAccessPoint/LN3_Ex7_WiFi_SoftAccessPoint.ino</code></p>
+<pre><code class="language-cpp">#include &lt;WiFi.h&gt;
+
+void setup() {
+  Serial.begin(115200);
+  Serial.println();
+  Serial.print(&quot;Setting soft-AP ... &quot;);
+  boolean result = WiFi.softAP(&quot;Your_SSID&quot;, &quot;Your_Password&quot;);
+  if(result == true) {
+    Serial.println(&quot;Ready&quot;);
+  } else {
+    Serial.println(&quot;Failed!&quot;);
+  }
+}
+
+void loop() {
+  Serial.printf(&quot;Stations connected = %d\n&quot;, WiFi.softAPgetStationNum());
+  delay(3000);
+}
+</code></pre>
+<h3 id="39-example-8-date-and-time-from-ntp">3.9 Example 8: date and time from NTP</h3>
+<p>Prints local time every second. Needs internet. (slides 54–56)</p>
+<p>Sketch: <code>sketches/LN3_Ex8_DateTimerNTP/LN3_Ex8_DateTimerNTP.ino</code></p>
+<pre><code class="language-cpp">#include &lt;WiFi.h&gt;
+#include &quot;time.h&quot;
+
+const char* ssid       = &quot;Your SSID&quot;;
+const char* password   = &quot;Your Password&quot;;
+
+const char* ntpServer = &quot;pool.ntp.org&quot;;
+const long  gmtOffset_sec = 7*3600;
+const int   daylightOffset_sec = 0;
+
+void printLocalTime() {
+  struct tm timeinfo;
+  if(!getLocalTime(&amp;timeinfo)){
+    Serial.println(&quot;Failed to obtain time&quot;);
+    return;
+  }
+  Serial.println(&amp;timeinfo, &quot;%A, %B %d %Y %H:%M:%S&quot;);
+}
+
+void setup() {
+  Serial.begin(115200);
+
+  //connect to WiFi
+  Serial.printf(&quot;Connecting to %s &quot;, ssid);
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+      delay(500);
+      Serial.print(&quot;.&quot;);
+  }
+  Serial.println(&quot; CONNECTED&quot;);
+
+  //init and get the time
+  configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
+  printLocalTime();
+
+  //disconnect WiFi as it's no longer needed
+  WiFi.disconnect(true);
+  WiFi.mode(WIFI_OFF);
+}
+
+void loop() {
+  delay(1000);
+  printLocalTime();
+}
+</code></pre>
+<p>Format letters: <code>%A</code> weekday · <code>%B</code> month name · <code>%d</code> day · <code>%Y</code> year ·
+<code>%H</code> hour · <code>%M</code> minute · <code>%S</code> second. The NTP server is contacted once; after
+that the internal clock counts (slide 60).</p>
+<p>To keep a piece in a variable (slide 60):</p>
+<pre><code class="language-cpp">char timeHour[3];
+strftime(timeHour, 3, &quot;%H&quot;, &amp;timeinfo);
+</code></pre>
+<h3 id="310-homework-1-problem-3">3.10 Homework 1 Problem 3</h3>
+<p>Connect to WiFi and show the IP, then restart when the wire is touched.
+Circuit: wire → 32. <em>(Composed for the homework — Examples 4 and 6 plus the
+reset command. The threshold <code>20</code> is not from the lecture.)</em></p>
+<p>Sketch: <code>sketches/HW1_P3_WiFi_Touch_Restart/HW1_P3_WiFi_Touch_Restart.ino</code></p>
+<pre><code class="language-cpp">#include &lt;WiFi.h&gt;
+
+const char* ssid     = &quot;Your_SSID&quot;;
+const char* password = &quot;Your_Password&quot;;
+
+const int touchPin = 32;  // touch-sensor pin, per Example 4 (slide 39)
+
+// TODO: confirm the touch threshold with the instructor.
+// Lecture Note 3 gives no threshold value. Slide 40 only shows sample output:
+// roughly 38-46 when the wire is NOT touched, and roughly 6-9 when it IS touched.
+// The value below sits between those two observed bands but is NOT stated in
+// the course material. Verify it against your own board before relying on it.
+const int touchThreshold = 20;  // UNCONFIRMED - not from the supplied material
+
+void setup() {
+  Serial.begin(115200);
+  Serial.println();
+
+  // Task 1: connect to WiFi and show the IP address (as in Example 6, slide 48)
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+  Serial.print(&quot;Connecting&quot;);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(&quot;.&quot;);
+  }
+  Serial.println();
+  Serial.print(&quot;Connected, IP address: &quot;);
+  Serial.println(WiFi.localIP());
+}
+
+void loop() {
+  // Task 2: read the touch pin; a LOW value means the wire is being touched
+  // (slide 38: touching returns a low value, not touching returns a high value).
+  int touchValue = touchRead(touchPin);
+  Serial.println(touchValue);
+
+  if (touchValue &lt; touchThreshold) {
+    Serial.println(&quot;Touched - restarting&quot;);
+    ESP.restart();  // software reset (slide 43)
+  }
+
+  delay(1000);  // same 1 second sampling period as Example 4 (slide 40)
+}
+</code></pre>
+<h2 id="4-lecture-note-4-multitasking-and-deep-sleep">4. Lecture Note 4: multitasking and deep sleep</h2>
+<p>The shared breadboard for Examples 1–5: <strong>SW → 34</strong> (press = LOW),
+<strong>LED1 → 16</strong>, <strong>LED2 → 17</strong>. Task 1: LED1 on 2 s / off 2 s. Task 2: LED2
+follows the switch. (slide 4)</p>
+<h3 id="ln4-command-reference">LN4 command reference</h3>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Do this</th>
+<th>Command</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Elapsed time</td>
+<td><code>X = millis();</code></td>
+<td>milliseconds since start; does not block</td>
+</tr>
+<tr>
+<td>Interrupt</td>
+<td><code>attachInterrupt(digitalPinToInterrupt(GPIO), function, mode);</code></td>
+<td>in <code>setup()</code>; pin must be <code>INPUT</code></td>
+</tr>
+<tr>
+<td>Interrupt modes</td>
+<td><code>LOW</code> <code>HIGH</code> <code>CHANGE</code> <code>FALLING</code> <code>RISING</code></td>
+<td>FALLING = HIGH→LOW = the moment a pull-up switch is pressed</td>
+</tr>
+<tr>
+<td>Task function</td>
+<td><code>void Name(void * parameter) { for (;;) { … } vTaskDelete(NULL); }</code></td>
+<td><code>for (;;)</code> makes it run forever</td>
+</tr>
+<tr>
+<td>Create a task</td>
+<td><code>xTaskCreate(Name, "Name", 10000, NULL, 1, NULL);</code></td>
+<td>function, name, stack bytes, parameter, priority 0–24, handle</td>
+</tr>
+<tr>
+<td>Task on a core</td>
+<td><code>xTaskCreatePinnedToCore(Name, "Name", 10000, NULL, 1, NULL, 0);</code></td>
+<td>last argument: core <strong>0</strong> or <strong>1</strong></td>
+</tr>
+<tr>
+<td>Which core</td>
+<td><code>xPortGetCoreID()</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Survive sleep</td>
+<td><code>RTC_DATA_ATTR int bootCount = 0;</code></td>
+<td>global; kept in RTC memory</td>
+</tr>
+<tr>
+<td>Sleep</td>
+<td><code>esp_deep_sleep_start();</code></td>
+<td>nothing after it runs; waking is a <strong>reset</strong></td>
+</tr>
+<tr>
+<td>Wake by timer</td>
+<td><code>esp_sleep_enable_timer_wakeup(X*1000000);</code></td>
+<td>X in seconds</td>
+</tr>
+<tr>
+<td>Wake by touch</td>
+<td><code>touchAttachInterrupt(Tpin, callback, Threshold);</code> then <code>esp_sleep_enable_touchpad_wakeup();</code></td>
+<td>both, in that order</td>
+</tr>
+<tr>
+<td>Wake by one pin</td>
+<td><code>esp_sleep_enable_ext0_wakeup(GPIO_NUM_32, LOW);</code></td>
+<td>LOW or HIGH; no <code>pinMode</code> needed</td>
+</tr>
+<tr>
+<td>Wake by several pins</td>
+<td><code>esp_sleep_enable_ext1_wakeup(BUTTON_PIN_MASK, LOGIC_LEVEL);</code></td>
+<td><code>ESP_EXT1_WAKEUP_ANY_HIGH</code> or <code>ESP_EXT1_WAKEUP_ALL_LOW</code></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Rule for every wake-up source:</strong> call the <code>esp_sleep_enable_…</code> line <strong>before</strong>
+<code>esp_deep_sleep_start()</code>. Sources can be combined; any one of them wakes the
+board. (slide 48)</p>
+<h3 id="41-example-1-millis">4.1 Example 1: millis</h3>
+<p>LED1 blinks every 2 s while LED2 follows the switch, with no <code>delay()</code>. (slide 10)</p>
+<p>Sketch: <code>sketches/LN4_Ex1_millis/LN4_Ex1_millis.ino</code></p>
+<pre><code class="language-cpp">// set pin numbers
+const int buttonPin = 34;  // the push button pin
+const int led1Pin = 16;    // the LED1 pin
+const int led2Pin = 17;    // the LED2 pin
+
+// variable for storing the pushbutton status
+int buttonState = LOW;
+int led1State = LOW;
+unsigned long previousMillis = 0;
+const long interval = 2000; // 2 second
+
+void setup() {
+  pinMode(buttonPin, INPUT);
+  pinMode(led1Pin, OUTPUT);
+  pinMode(led2Pin, OUTPUT);
+}
+
+void loop() {
+  // To turn on/off the LED1
+  unsigned long currentMillis = millis();
+  if (currentMillis - previousMillis &gt;= interval) {
+    // save the last time you blinked the LED
+    previousMillis = currentMillis;
+    if (led1State == LOW) {
+      led1State = HIGH;
+    } else {
+      led1State = LOW;
+    }
+    digitalWrite(led1Pin, led1State);
+  }
+
+  // To turn on/off the LED2
+  buttonState = digitalRead(buttonPin);
+  if (buttonState == LOW) { // Press the switch
+    digitalWrite(led2Pin, HIGH); // LED2 on
+  } else {
+    digitalWrite(led2Pin, LOW); // LED2 off
+  }
+}
+</code></pre>
+<p>The pattern, reusable for anything periodic:</p>
+<pre><code class="language-cpp">unsigned long currentMillis = millis();
+if (currentMillis - previousMillis &gt;= interval) {
+  previousMillis = currentMillis;
+  // do the periodic thing
+}
+</code></pre>
+<h3 id="42-example-2-pin-change-interrupt">4.2 Example 2: pin-change interrupt</h3>
+<p>LED1 blinks; each press <strong>toggles</strong> LED2. (slides 16–17)</p>
+<p>Sketch: <code>sketches/LN4_Ex2_Interrupts/LN4_Ex2_Interrupts.ino</code></p>
+<pre><code class="language-cpp">// set pin numbers
+const int buttonPin = 34;  // the push button pin
+const int led1Pin = 16;    // the LED1 pin
+const int led2Pin = 17;    // the LED2 pin
+
+// variable for storing the pushbutton status
+int led1State = LOW;
+int led2State = LOW;
+unsigned long previousMillis = 0;
+const long interval = 2000; // 2 second
+
+void toggle() {
+  led2State = !led2State;
+  digitalWrite(led2Pin, led2State);
+}
+
+void setup() {
+  pinMode(buttonPin, INPUT);
+  pinMode(led1Pin, OUTPUT);
+  pinMode(led2Pin, OUTPUT);
+  attachInterrupt(digitalPinToInterrupt(buttonPin), toggle, FALLING);
+}
+
+void loop() {
+  // To turn on/off the LED1
+  unsigned long currentMillis = millis();
+  if (currentMillis - previousMillis &gt;= interval) {
+    // save the last time you blinked the LED
+    previousMillis = currentMillis;
+    if (led1State == LOW) {
+      led1State = HIGH;
+    } else {
+      led1State = LOW;
+    }
+    digitalWrite(led1Pin, led1State);
+  }
+}
+</code></pre>
+<p>Step 1: write the function (<code>toggle</code>). Step 2: <code>attachInterrupt(…)</code> in
+<code>setup()</code>. There is no debounce, so a bouncy press can toggle twice — that is
+the instructor's behaviour.</p>
+<h3 id="43-example-3-tasks">4.3 Example 3: tasks</h3>
+<p>Same two jobs, each as its own task. <code>loop()</code> stays empty. (slides 25–26)</p>
+<p>Sketch: <code>sketches/LN4_Ex3_Multitasking/LN4_Ex3_Multitasking.ino</code></p>
+<pre><code class="language-cpp">// set pin numbers
+const int buttonPin = 34;  // the push button pin
+const int led1Pin = 16;    // the LED1 pin
+const int led2Pin = 17;    // the LED2 pin
+
+// variable for storing the pushbutton status
+int buttonState = LOW;
+int led1State = LOW;
+int led2State = LOW;
+unsigned long previousMillis = 0;
+const long interval = 2000; // 2 second
+
+void TimerLED(void * parameter){
+  for (;;) {
+    unsigned long currentMillis = millis();
+    if (currentMillis - previousMillis &gt;= interval) {
+      // save the last time you blinked the LED
+      previousMillis = currentMillis;
+      if (led1State == LOW) {
+        led1State = HIGH;
+      } else {
+        led1State = LOW;
+      }
+    }
+    digitalWrite(led1Pin, led1State);
+  }
+  vTaskDelete(NULL);
+}
+
+void SwitchLED(void * parameter) {
+  for (;;) {
+    buttonState = digitalRead(buttonPin);
+    if (buttonState == LOW) { // Press the switch
+      digitalWrite(led2Pin, HIGH); // LED2 on
+    } else {
+      digitalWrite(led2Pin, LOW); // LED2 off
+    }
+  }
+  vTaskDelete(NULL);
+}
+
+void setup() {
+  pinMode(buttonPin, INPUT);
+  pinMode(led1Pin, OUTPUT);
+  pinMode(led2Pin, OUTPUT);
+  xTaskCreate(TimerLED, &quot;TimerLED&quot;, 1024, NULL, 1, NULL);
+  xTaskCreate(SwitchLED, &quot;SwitchLED&quot;, 1024, NULL, 1, NULL);
+}
+
+void loop() {
+}
+</code></pre>
+<h3 id="44-example-4-show-the-running-core">4.4 Example 4: show the running core</h3>
+<p>Example 3 plus a print of the core number in each task. (slides 30–31; lines
+1–12 are printed only on slide 25)</p>
+<p>Sketch: <code>sketches/LN4_Ex4_ShowCore/LN4_Ex4_ShowCore.ino</code></p>
+<pre><code class="language-cpp">// set pin numbers
+const int buttonPin = 34;  // the push button pin
+const int led1Pin = 16;    // the LED1 pin
+const int led2Pin = 17;    // the LED2 pin
+
+// variable for storing the pushbutton status
+int buttonState = LOW;
+int led1State = LOW;
+int led2State = LOW;
+unsigned long previousMillis = 0;
+const long interval = 2000; // 2 second
+
+void TimerLED(void * parameter){
+  for (;;) {
+    Serial.print(&quot;TimerLED() running on core &quot;);
+    Serial.println(xPortGetCoreID());
+    delay(100);
+    unsigned long currentMillis = millis();
+    if (currentMillis - previousMillis &gt;= interval) {
+      // save the last time you blinked the LED
+      previousMillis = currentMillis;
+      if (led1State == LOW) {
+        led1State = HIGH;
+      } else {
+        led1State = LOW;
+      }
+    }
+    digitalWrite(led1Pin, led1State);
+  }
+  vTaskDelete(NULL);
+}
+
+void SwitchLED(void * parameter) {
+  for (;;) {
+    Serial.print(&quot;SwitchLED() running on core &quot;);
+    Serial.println(xPortGetCoreID());
+    delay(100);
+    buttonState = digitalRead(buttonPin);
+    if (buttonState == LOW) { // Press the switch
+      digitalWrite(led2Pin, HIGH); // LED2 on
+    } else {
+      digitalWrite(led2Pin, LOW); // LED2 off
+    }
+  }
+  vTaskDelete(NULL);
+}
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(buttonPin, INPUT);
+  pinMode(led1Pin, OUTPUT);
+  pinMode(led2Pin, OUTPUT);
+  xTaskCreate(TimerLED, &quot;TimerLED&quot;, 1024, NULL, 1, NULL);
+  xTaskCreate(SwitchLED, &quot;SwitchLED&quot;, 1024, NULL, 1, NULL);
+}
+
+void loop() {
+}
+</code></pre>
+<h3 id="45-example-5-assign-a-core">4.5 Example 5: assign a core</h3>
+<p>TimerLED on <strong>core 0</strong>, SwitchLED on <strong>core 1</strong>. (slides 35–36)</p>
+<p>Sketch: <code>sketches/LN4_Ex5_AssignCore/LN4_Ex5_AssignCore.ino</code></p>
+<pre><code class="language-cpp">// set pin numbers
+const int buttonPin = 34;  // the push button pin
+const int led1Pin = 16;    // the LED1 pin
+const int led2Pin = 17;    // the LED2 pin
+
+// variable for storing the pushbutton status
+int buttonState = LOW;
+int led1State = LOW;
+int led2State = LOW;
+unsigned long previousMillis = 0;
+const long interval = 2000; // 2 second
+
+void TimerLED(void * parameter){
+  for (;;) {
+    Serial.print(&quot;TimerLED() running on core &quot;);
+    Serial.println(xPortGetCoreID());
+    delay(100);
+    unsigned long currentMillis = millis();
+    if (currentMillis - previousMillis &gt;= interval) {
+      // save the last time you blinked the LED
+      previousMillis = currentMillis;
+      if (led1State == LOW) {
+        led1State = HIGH;
+      } else {
+        led1State = LOW;
+      }
+    }
+    digitalWrite(led1Pin, led1State);
+  }
+  vTaskDelete(NULL);
+}
+
+void SwitchLED(void * parameter) {
+  for (;;) {
+    Serial.print(&quot;SwitchLED() running on core &quot;);
+    Serial.println(xPortGetCoreID());
+    delay(100);
+    buttonState = digitalRead(buttonPin);
+    if (buttonState == LOW) { // Press the switch
+      digitalWrite(led2Pin, HIGH); // LED2 on
+    } else {
+      digitalWrite(led2Pin, LOW); // LED2 off
+    }
+  }
+  vTaskDelete(NULL);
+}
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(buttonPin, INPUT);
+  pinMode(led1Pin, OUTPUT);
+  pinMode(led2Pin, OUTPUT);
+  xTaskCreatePinnedToCore(TimerLED, &quot;TimerLED&quot;, 1024, NULL, 1, NULL, 0);
+  xTaskCreatePinnedToCore(SwitchLED, &quot;SwitchLED&quot;, 1024, NULL, 1, NULL, 1);
+}
+
+void loop() {
+}
+</code></pre>
+<p>Only the two <code>xTaskCreate…</code> lines differ from Example 4. If the board resets
+with a stack-overflow message, raise <code>1024</code> to <code>10000</code> — the value the
+lecture's own syntax slide uses (slide 23).</p>
+<h3 id="46-example-6-deep-sleep">4.6 Example 6: deep sleep</h3>
+<p>Sleeps forever after 10 s. No circuit. Only RESET wakes it. (slide 46)</p>
+<p>Sketch: <code>sketches/LN4_Ex6_DeepSleep/LN4_Ex6_DeepSleep.ino</code></p>
+<pre><code class="language-cpp">void setup(){
+  Serial.begin(115200);
+  delay(1000); //Take some time to open up the Serial Monitor
+  Serial.println(&quot;ESP32 will enter the deep sleep in 10 s.&quot;);
+  delay(10000);
+  //Go to sleep now
+  Serial.println(&quot;... Now, in the deep sleep mode.&quot;);
+  esp_deep_sleep_start();
+  Serial.println(&quot;This sentence will never be printed.&quot;);
+}
+
+void loop(){
+  //ESP32 will never come here.
+}
+</code></pre>
+<h3 id="47-example-7-timer-wake-up">4.7 Example 7: timer wake-up</h3>
+<p>Awake 10 s, asleep 5 s, repeating. <code>bootCount</code> survives each sleep. No circuit.
+(slide 50)</p>
+<p>Sketch: <code>sketches/LN4_Ex7_TimerWakeUp/LN4_Ex7_TimerWakeUp.ino</code></p>
+<pre><code class="language-cpp">#define TIME_TO_SLEEP 5
+RTC_DATA_ATTR int bootCount = 0;
+
+void setup(){
+  // Declare the timer wake up
+  esp_sleep_enable_timer_wakeup(TIME_TO_SLEEP*1000000);
+
+  // Tasks to do before going to deep sleep
+  Serial.begin(115200);
+  delay(1000); //Take some time to open up the Serial Monitor
+  ++bootCount;
+  Serial.println(&quot;Boot number: &quot; + String(bootCount));
+  Serial.println(&quot;ESP32 will enter the deep sleep in 10 s.&quot;);
+  delay(10000);
+
+  //Go to sleep now
+  Serial.println(&quot;... Now, in the deep sleep mode.&quot;);
+  esp_deep_sleep_start();
+  Serial.println(&quot;This sentence will never be printed.&quot;);
+}
+
+void loop(){
+  //ESP32 will never come here.
+}
+</code></pre>
+<h3 id="48-example-8-touch-wake-up">4.8 Example 8: touch wake-up</h3>
+<p>Sleeps, wakes when the wire on GPIO 32 is touched. (slide 54)</p>
+<p>Sketch: <code>sketches/LN4_Ex8_TouchWakeUp/LN4_Ex8_TouchWakeUp.ino</code></p>
+<pre><code class="language-cpp">#define Threshold 40 // higher value, higer sensitivity
+RTC_DATA_ATTR int bootCount = 0;
+
+void callback(){
+  //placeholder callback function
+}
+void setup(){
+  // Declare the touch wake up - use GPIO32 (TOUCH9)
+  touchAttachInterrupt(32, callback, Threshold);
+  esp_sleep_enable_touchpad_wakeup();
+
+  // Tasks to do before going to deep sleep
+  Serial.begin(115200);
+  delay(1000); //Take some time to open up the Serial Monitor
+  ++bootCount;
+  Serial.println(&quot;Boot number: &quot; + String(bootCount));
+  Serial.println(&quot;ESP32 will enter the deep sleep in 10 s.&quot;);
+  delay(10000);
+
+  //Go to sleep now
+  Serial.println(&quot;... Now, in the deep sleep mode.&quot;);
+  esp_deep_sleep_start();
+  Serial.println(&quot;This sentence will never be printed.&quot;);
+}
+void loop(){
+  //ESP32 will never come here.
+}
+</code></pre>
+<p>The interrupt fires when the touch value drops <strong>below</strong> <code>Threshold</code> (slide 52).
+The callback can be empty but must exist.</p>
+<h3 id="49-example-9-ext0-wake-up">4.9 Example 9: ext0 wake-up</h3>
+<p>Sleeps, wakes when the switch on GPIO 32 is pressed (LOW). Circuit: SW → 32
+with 10 kΩ pull-up. (slide 58)</p>
+<p>Sketch: <code>sketches/LN4_Ex9_ext0WakeUp/LN4_Ex9_ext0WakeUp.ino</code></p>
+<pre><code class="language-cpp">RTC_DATA_ATTR int bootCount = 0;
+
+void setup(){
+  // Declare the ext0 wake up - use GPIO32
+  esp_sleep_enable_ext0_wakeup(GPIO_NUM_32,LOW);
+
+  // Tasks to do before going to deep sleep
+  Serial.begin(115200);
+  delay(1000); //Take some time to open up the Serial Monitor
+  ++bootCount;
+  Serial.println(&quot;Boot number: &quot; + String(bootCount));
+  Serial.println(&quot;ESP32 will enter the deep sleep in 10 s.&quot;);
+  delay(10000);
+
+  //Go to sleep now
+  Serial.println(&quot;... Now, in the deep sleep mode.&quot;);
+  esp_deep_sleep_start();
+  Serial.println(&quot;This sentence will never be printed.&quot;);
+}
+
+void loop(){
+  //ESP32 will never come here.
+}
+</code></pre>
+<h3 id="410-example-10-ext1-wake-up">4.10 Example 10: ext1 wake-up</h3>
+<p>Sleeps, wakes when <strong>either</strong> switch is pressed. Circuit: SW1 → 2, SW2 → 32,
+wired so pressing gives HIGH (see the caution in <a href="#24-circuits">2.4</a>). (slide 65)</p>
+<p>Sketch: <code>sketches/LN4_Ex10_ext1WakeUp/LN4_Ex10_ext1WakeUp.ino</code></p>
+<pre><code class="language-cpp">RTC_DATA_ATTR int bootCount = 0;
+
+void setup(){
+  // Declare the ext1 wake up - use GPIO2 and GPIO32
+  esp_sleep_enable_ext1_wakeup(0x0100000004, ESP_EXT1_WAKEUP_ANY_HIGH);
+
+  // Tasks to do before going to deep sleep
+  Serial.begin(115200);
+  delay(1000); //Take some time to open up the Serial Monitor
+  ++bootCount;
+  Serial.println(&quot;Boot number: &quot; + String(bootCount));
+  Serial.println(&quot;ESP32 will enter the deep sleep in 10 s.&quot;);
+  delay(10000);
+
+  //Go to sleep now
+  Serial.println(&quot;... Now, in the deep sleep mode.&quot;);
+  esp_deep_sleep_start();
+  Serial.println(&quot;This sentence will never be printed.&quot;);
+}
+
+void loop(){
+  //ESP32 will never come here.
+}
+</code></pre>
+<p><strong>Building <code>BUTTON_PIN_MASK</code>:</strong> one bit per GPIO, bit 0 = GPIO 0 … bit 39 =
+GPIO 39. Add the values of the pins you use. (slide 62)</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>GPIO</th>
+<th>Hex value</th>
+<th></th>
+<th>GPIO</th>
+<th>Hex value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td><code>0x1</code></td>
+<td></td>
+<td>26</td>
+<td><code>0x4000000</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>0x4</code></td>
+<td></td>
+<td>27</td>
+<td><code>0x8000000</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>0x10</code></td>
+<td></td>
+<td>32</td>
+<td><code>0x100000000</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td><code>0x1000</code></td>
+<td></td>
+<td>33</td>
+<td><code>0x200000000</code></td>
+</tr>
+<tr>
+<td>13</td>
+<td><code>0x2000</code></td>
+<td></td>
+<td>34</td>
+<td><code>0x400000000</code></td>
+</tr>
+<tr>
+<td>14</td>
+<td><code>0x4000</code></td>
+<td></td>
+<td>35</td>
+<td><code>0x800000000</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td><code>0x8000</code></td>
+<td></td>
+<td>36</td>
+<td><code>0x1000000000</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td><code>0x2000000</code></td>
+<td></td>
+<td>39</td>
+<td><code>0x8000000000</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>Checks against the lecture: GPIO 32 + 33 = <code>0x0300000000</code> (slide 62);
+GPIO 2 + 32 = <code>0x0100000004</code> (slide 64).</p>
+<h3 id="411-homework-2-problem-3">4.11 Homework 2 Problem 3</h3>
+<p>Example 5 plus: pressing <strong>SW1 (GPIO 26)</strong> sends the board to deep sleep through
+a pin-change interrupt, and a timer wakes it <strong>15 s</strong> later. <em>(Composed for the
+homework from Examples 2, 5 and 7.)</em></p>
+<p>Sketch: <code>sketches/HW2_P3_Tasks_SleepButton_TimerWake/HW2_P3_Tasks_SleepButton_TimerWake.ino</code></p>
+<pre><code class="language-cpp">#define TIME_TO_SLEEP 15   // wake up 15 seconds after entering deep sleep
+RTC_DATA_ATTR int bootCount = 0;
+
+// set pin numbers
+const int buttonPin = 34;      // the push button pin (SW)
+const int sleepButtonPin = 26; // the deep-sleep button pin (SW1)
+const int led1Pin = 16;        // the LED1 pin
+const int led2Pin = 17;        // the LED2 pin
+
+// variable for storing the pushbutton status
+int buttonState = LOW;
+int led1State = LOW;
+int led2State = LOW;
+unsigned long previousMillis = 0;
+const long interval = 2000; // 2 second
+
+// Set by the SW1 interrupt; acted on in loop(). Keeping the handler this small
+// follows the taught approach of a minimal interrupt function (Example 2).
+volatile bool sleepRequested = false;
+
+void requestSleep() {
+  sleepRequested = true;
+}
+
+void TimerLED(void * parameter){
+  for (;;) {
+    Serial.print(&quot;TimerLED() running on core &quot;);
+    Serial.println(xPortGetCoreID());
+    delay(100);
+    unsigned long currentMillis = millis();
+    if (currentMillis - previousMillis &gt;= interval) {
+      // save the last time you blinked the LED
+      previousMillis = currentMillis;
+      if (led1State == LOW) {
+        led1State = HIGH;
+      } else {
+        led1State = LOW;
+      }
+    }
+    digitalWrite(led1Pin, led1State);
+  }
+  vTaskDelete(NULL);
+}
+
+void SwitchLED(void * parameter) {
+  for (;;) {
+    Serial.print(&quot;SwitchLED() running on core &quot;);
+    Serial.println(xPortGetCoreID());
+    delay(100);
+    buttonState = digitalRead(buttonPin);
+    if (buttonState == LOW) { // Press the switch
+      digitalWrite(led2Pin, HIGH); // LED2 on
+    } else {
+      digitalWrite(led2Pin, LOW); // LED2 off
+    }
+  }
+  vTaskDelete(NULL);
+}
+
+void setup() {
+  Serial.begin(115200);
+  delay(1000); //Take some time to open up the Serial Monitor
+  ++bootCount;
+  Serial.println(&quot;Boot number: &quot; + String(bootCount));
+
+  pinMode(buttonPin, INPUT);
+  pinMode(sleepButtonPin, INPUT);
+  pinMode(led1Pin, OUTPUT);
+  pinMode(led2Pin, OUTPUT);
+
+  // (New) pressing SW1 requests deep sleep, via a pin-change interrupt
+  attachInterrupt(digitalPinToInterrupt(sleepButtonPin), requestSleep, FALLING);
+
+  // (New) declare the timer wake up, before going to deep sleep
+  esp_sleep_enable_timer_wakeup(TIME_TO_SLEEP*1000000);
+
+  // Declare the tasks and assign the cores.
+  xTaskCreatePinnedToCore(TimerLED, &quot;TimerLED&quot;, 1024, NULL, 1, NULL, 0);
+  xTaskCreatePinnedToCore(SwitchLED, &quot;SwitchLED&quot;, 1024, NULL, 1, NULL, 1);
+}
+
+void loop() {
+  if (sleepRequested) {
+    Serial.println(&quot;SW1 pressed ... Now, in the deep sleep mode.&quot;);
+    delay(100); // let the serial output leave the buffer before the CPU powers down
+    esp_deep_sleep_start();
+  }
+}
+</code></pre>
+<p>The handler only sets a flag; <code>loop()</code> does the sleeping. To change the wake
+source, swap the one <code>esp_sleep_enable_…</code> line.</p>
+<h2 id="5-lecture-note-5-web-servers-and-clients">5. Lecture Note 5: web servers and clients</h2>
+<h3 id="ln5-essentials">LN5 essentials</h3>
+<ul>
+<li>The ESP32 <strong>is</strong> the web server. Browser and ESP32 must be on the <strong>same
+  WiFi network</strong>. Type the IP printed on the serial monitor into the browser.
+  (slides 40, 43)</li>
+<li>The page is not a file. The sketch prints it with <code>client.println()</code> on every
+  request. (slide 65)</li>
+<li>A button is a link: <code>&lt;a href="/26/on"&gt;</code>. Pressing it sends <code>GET /26/on</code>, and
+  the sketch finds that text with <code>header.indexOf("GET /26/on") &gt;= 0</code>.
+  <code>indexOf</code> returns −1 when the text is absent. (slides 63–64)</li>
+<li><strong>Nothing updates by itself.</strong> A sensor value changes only when the page is
+  reloaded. (slide 83)</li>
+</ul>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Do this</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Server on port 80</td>
+<td><code>WiFiServer server(80);</code> then <code>server.begin();</code></td>
+</tr>
+<tr>
+<td>Wait for a browser</td>
+<td><code>WiFiClient client = server.available();</code></td>
+</tr>
+<tr>
+<td>Read the request</td>
+<td><code>char c = client.read(); header += c;</code></td>
+</tr>
+<tr>
+<td>Route</td>
+<td><code>if (header.indexOf("GET /26/on") &gt;= 0) { … }</code></td>
+</tr>
+<tr>
+<td>Send the page</td>
+<td><code>client.println("…");</code></td>
+</tr>
+<tr>
+<td>Finish</td>
+<td><code>header = ""; client.stop();</code></td>
+</tr>
+<tr>
+<td>HTTP client</td>
+<td><code>#include &lt;HTTPClient.h&gt;</code>, <code>HTTPClient http;</code></td>
+</tr>
+<tr>
+<td>Send a GET</td>
+<td><code>http.begin(client, url); int code = http.GET(); http.end();</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>HTML used: <code>&lt;h1&gt;</code> heading · <code>&lt;p&gt;</code> paragraph · <code>&lt;a href="…"&gt;</code> link ·
+<code>&lt;button class="button"&gt;</code> · <code>&lt;table&gt;</code>, <code>&lt;tr&gt;</code> row, <code>&lt;th&gt;</code> header cell, <code>&lt;td&gt;</code>
+cell · CSS in <code>&lt;style&gt;</code> · <code>.button</code> green <code>#4CAF50</code>, <code>.button2</code> grey <code>#555555</code>.</p>
+<h3 id="51-section-3-web-server-controlling-leds">5.1 Section 3: web server controlling LEDs</h3>
+<p>Two buttons, two LEDs. Circuit: LED1 → 26, LED2 → 27. (slides 52–59)</p>
+<p>Sketch: <code>sketches/LN5_S3_WebServer_ControlOutputs/LN5_S3_WebServer_ControlOutputs.ino</code></p>
+<pre><code class="language-cpp">// Load Wi-Fi library
+#include &lt;WiFi.h&gt;
+
+// Replace with your network credentials
+const char* ssid = &quot;Your SSID&quot;;
+const char* password = &quot;Your Password&quot;;
+
+// Set web server port number to 80
+WiFiServer server(80);
+
+// Variable to store the HTTP request
+String header;
+
+// Auxiliar variables to store the current output state
+String output26State = &quot;off&quot;;
+String output27State = &quot;off&quot;;
+
+// Assign output variables to GPIO pins
+const int output26 = 26;
+const int output27 = 27;
+
+// Current time
+unsigned long currentTime = millis();
+// Previous time
+unsigned long previousTime = 0; 
+// Define timeout time in milliseconds (example: 2000ms = 2s)
+const long timeoutTime = 2000;
+
+void setup() {
+  Serial.begin(115200);
+  // Initialize the output variables as outputs
+  pinMode(output26, OUTPUT);
+  pinMode(output27, OUTPUT);
+  // Set outputs to LOW
+  digitalWrite(output26, LOW);
+  digitalWrite(output27, LOW);
+
+  // Connect to Wi-Fi network with SSID and password
+  Serial.print(&quot;Connecting to &quot;);
+  Serial.println(ssid);
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(&quot;.&quot;);
+  }
+  // Print local IP address and start web server
+  Serial.println(&quot;&quot;);
+  Serial.println(&quot;WiFi connected.&quot;);
+  Serial.println(&quot;IP address: &quot;);
+  Serial.println(WiFi.localIP());
+  server.begin();
+}
+
+void loop(){
+  WiFiClient client = server.available();   // Listen for incoming clients
+
+  if (client) {                             // If a new client connects,
+    currentTime = millis();
+    previousTime = currentTime;
+    Serial.println(&quot;New Client.&quot;);          // print a message out in the serial port
+    String currentLine = &quot;&quot;;                // make a String to hold incoming data from the client
+    while (client.connected() &amp;&amp; currentTime - previousTime &lt;= timeoutTime) {  // loop while the client's connected
+      currentTime = millis();
+      if (client.available()) {             // if there's bytes to read from the client,
+        char c = client.read();             // read a byte, then
+        Serial.write(c);                    // print it out the serial monitor
+        header += c;
+        if (c == '\n') {                    // if the byte is a newline character
+          // if the current line is blank, you got two newline characters in a row.
+          // that's the end of the client HTTP request, so send a response:
+          if (currentLine.length() == 0) {
+            // HTTP headers always start with a response code (e.g. HTTP/1.1 200 OK)
+            // and a content-type so the client knows what's coming, then a blank line:
+            client.println(&quot;HTTP/1.1 200 OK&quot;);
+            client.println(&quot;Content-type:text/html&quot;);
+            client.println(&quot;Connection: close&quot;);
+            client.println();
+
+            // turns the GPIOs on and off
+            if (header.indexOf(&quot;GET /26/on&quot;) &gt;= 0) {
+              Serial.println(&quot;GPIO 26 on&quot;);
+              output26State = &quot;on&quot;;
+              digitalWrite(output26, HIGH);
+            } else if (header.indexOf(&quot;GET /26/off&quot;) &gt;= 0) {
+              Serial.println(&quot;GPIO 26 off&quot;);
+              output26State = &quot;off&quot;;
+              digitalWrite(output26, LOW);
+            } else if (header.indexOf(&quot;GET /27/on&quot;) &gt;= 0) {
+              Serial.println(&quot;GPIO 27 on&quot;);
+              output27State = &quot;on&quot;;
+              digitalWrite(output27, HIGH);
+            } else if (header.indexOf(&quot;GET /27/off&quot;) &gt;= 0) {
+              Serial.println(&quot;GPIO 27 off&quot;);
+              output27State = &quot;off&quot;;
+              digitalWrite(output27, LOW);
+            }
+
+            // Display the HTML web page
+            client.println(&quot;&lt;!DOCTYPE html&gt;&lt;html&gt;&quot;);
+            client.println(&quot;&lt;head&gt;&lt;meta name=\&quot;viewport\&quot; content=\&quot;width=device-width, initial-scale=1\&quot;&gt;&quot;);
+            client.println(&quot;&lt;link rel=\&quot;icon\&quot; href=\&quot;data:,\&quot;&gt;&quot;);
+            // CSS to style the on/off buttons 
+            // Feel free to change the background-color and font-size attributes to fit your preferences
+            client.println(&quot;&lt;style&gt;html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}&quot;);
+            client.println(&quot;.button { background-color: #4CAF50; border: none; color: white; padding: 16px 40px;&quot;);
+            client.println(&quot;text-decoration: none; font-size: 30px; margin: 2px; cursor: pointer;}&quot;);
+            client.println(&quot;.button2 {background-color: #555555;}&lt;/style&gt;&lt;/head&gt;&quot;);
+
+            // Web Page Heading
+            client.println(&quot;&lt;body&gt;&lt;h1&gt;ESP32 Web Server&lt;/h1&gt;&quot;);
+
+            // Display current state, and ON/OFF buttons for GPIO 26  
+            client.println(&quot;&lt;p&gt;GPIO 26 - State &quot; + output26State + &quot;&lt;/p&gt;&quot;);
+            // If the output26State is off, it displays the ON button       
+            if (output26State==&quot;off&quot;) {
+              client.println(&quot;&lt;p&gt;&lt;a href=\&quot;/26/on\&quot;&gt;&lt;button class=\&quot;button\&quot;&gt;ON&lt;/button&gt;&lt;/a&gt;&lt;/p&gt;&quot;);
+            } else {
+              client.println(&quot;&lt;p&gt;&lt;a href=\&quot;/26/off\&quot;&gt;&lt;button class=\&quot;button button2\&quot;&gt;OFF&lt;/button&gt;&lt;/a&gt;&lt;/p&gt;&quot;);
+            } 
+
+            // Display current state, and ON/OFF buttons for GPIO 27  
+            client.println(&quot;&lt;p&gt;GPIO 27 - State &quot; + output27State + &quot;&lt;/p&gt;&quot;);
+            // If the output27State is off, it displays the ON button       
+            if (output27State==&quot;off&quot;) {
+              client.println(&quot;&lt;p&gt;&lt;a href=\&quot;/27/on\&quot;&gt;&lt;button class=\&quot;button\&quot;&gt;ON&lt;/button&gt;&lt;/a&gt;&lt;/p&gt;&quot;);
+            } else {
+              client.println(&quot;&lt;p&gt;&lt;a href=\&quot;/27/off\&quot;&gt;&lt;button class=\&quot;button button2\&quot;&gt;OFF&lt;/button&gt;&lt;/a&gt;&lt;/p&gt;&quot;);
+            }
+            client.println(&quot;&lt;/body&gt;&lt;/html&gt;&quot;);
+
+            // The HTTP response ends with another blank line
+            client.println();
+            // Break out of the while loop
+            break;
+          } else { // if you got a newline, then clear currentLine
+            currentLine = &quot;&quot;;
+          }
+        } else if (c != '\r') {  // if you got anything else but a carriage return character,
+          currentLine += c;      // add it to the end of the currentLine
+        }
+      }
+    }
+    // Clear the header variable
+    header = &quot;&quot;;
+    // Close the connection
+    client.stop();
+    Serial.println(&quot;Client disconnected.&quot;);
+    Serial.println(&quot;&quot;);
+  }  
+}
+</code></pre>
+<h3 id="52-section-4-web-server-showing-a-sensor">5.2 Section 4: web server showing a sensor</h3>
+<p>A table with the potentiometer value; press refresh to update. Circuit: pot →
+A0. (slides 76–82)</p>
+<p>Sketch: <code>sketches/LN5_S4_WebServer_MonitorSensor/LN5_S4_WebServer_MonitorSensor.ino</code></p>
+<pre><code class="language-cpp">// Load Wi-Fi library
+#include &lt;WiFi.h&gt;
+
+// Replace with your network credentials
+const char* ssid = &quot;Your SSID&quot;;
+const char* password = &quot;Your Password&quot;;
+
+// Set web server port number to 80
+WiFiServer server(80);
+
+// Variable to store the HTTP request
+String header;
+
+// Current time
+unsigned long currentTime = millis();
+// Previous time
+unsigned long previousTime = 0; 
+// Define timeout time in milliseconds (example: 2000ms = 2s)
+const long timeoutTime = 2000;
+
+void setup() {
+  Serial.begin(115200);
+  // Connect to Wi-Fi network with SSID and password
+  Serial.print(&quot;Connecting to &quot;);
+  Serial.println(ssid);
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(&quot;.&quot;);
+  }
+  // Print local IP address and start web server
+  Serial.println(&quot;&quot;);
+  Serial.println(&quot;WiFi connected.&quot;);
+  Serial.println(&quot;IP address: &quot;);
+  Serial.println(WiFi.localIP());
+  server.begin();
+}
+
+void loop(){
+  WiFiClient client = server.available();   // Listen for incoming clients
+
+  if (client) {                             // If a new client connects,
+    currentTime = millis();
+    previousTime = currentTime;
+    Serial.println(&quot;New Client.&quot;);          // print a message out in the serial port
+    String currentLine = &quot;&quot;;                // make a String to hold incoming data from the client
+    while (client.connected() &amp;&amp; currentTime - previousTime &lt;= timeoutTime) {  // loop while the client's connected
+      currentTime = millis();
+      if (client.available()) {             // if there's bytes to read from the client,
+        char c = client.read();             // read a byte, then
+        Serial.write(c);                    // print it out the serial monitor
+        header += c;
+        if (c == '\n') {                    // if the byte is a newline character
+          // if the current line is blank, you got two newline characters in a row.
+          // that's the end of the client HTTP request, so send a response:
+          if (currentLine.length() == 0) {
+            // HTTP headers always start with a response code (e.g. HTTP/1.1 200 OK)
+            // and a content-type so the client knows what's coming, then a blank line:
+            client.println(&quot;HTTP/1.1 200 OK&quot;);
+            client.println(&quot;Content-type:text/html&quot;);
+            client.println(&quot;Connection: close&quot;);
+            client.println();
+
+            // Display the HTML web page
+            client.println(&quot;&lt;!DOCTYPE html&gt;&lt;html&gt;&quot;);
+            client.println(&quot;&lt;head&gt;&lt;meta name=\&quot;viewport\&quot; content=\&quot;width=device-width, initial-scale=1\&quot;&gt;&quot;);
+            client.println(&quot;&lt;link rel=\&quot;icon\&quot; href=\&quot;data:,\&quot;&gt;&quot;);
+            // CSS to style the on/off buttons 
+            // Feel free to change the background-color and font-size attributes to fit your preferences
+            client.println(&quot;&lt;style&gt;html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}&quot;);
+            client.println(&quot;table, th, td { border: 1px solid black; margin-left:auto; margin-right:auto;}&quot;);
+            client.println(&quot;&lt;/style&gt;&lt;/head&gt;&quot;);
+
+            // Web Page Heading
+            client.println(&quot;&lt;body&gt;&lt;h1&gt;ESP32 Web Server&lt;/h1&gt;&quot;);
+
+            // Create a table  
+            client.println(&quot;&lt;table&gt;&quot;);
+            client.println(&quot;&lt;tr&gt;&lt;th&gt;Sensor&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;/tr&gt;&quot;); // First row
+            client.print(&quot;&lt;tr&gt;&lt;td&gt;Potentiometer&lt;/td&gt;&lt;td&gt;&quot;); // Second row
+            client.print(analogRead(A0)); // Read the potentiometer value
+            client.println(&quot;&lt;/td&gt;&lt;/tr&gt;&quot;); // Second row
+            client.println(&quot;&lt;/table&gt;&quot;);  
+            client.println(&quot;&lt;/body&gt;&lt;/html&gt;&quot;);
+
+            // The HTTP response ends with another blank line
+            client.println();
+            // Break out of the while loop
+            break;
+          } else { // if you got a newline, then clear currentLine
+            currentLine = &quot;&quot;;
+          }
+        } else if (c != '\r') {  // if you got anything else but a carriage return character,
+          currentLine += c;      // add it to the end of the currentLine
+        }
+      }
+    }
+    // Clear the header variable
+    header = &quot;&quot;;
+    // Close the connection
+    client.stop();
+    Serial.println(&quot;Client disconnected.&quot;);
+    Serial.println(&quot;&quot;);
+  }  
+}
+</code></pre>
+<h3 id="53-homework-3-problem-3-three-leds">5.3 Homework 3 Problem 3: three LEDs</h3>
+<p>Section 3 revised: LED1 → 16, LED2 → 17, LED3 → 32, three buttons. <em>(Written
+for the homework.)</em></p>
+<p>Sketch: <code>sketches/HW3_P3_WebServer_ThreeLEDs/HW3_P3_WebServer_ThreeLEDs.ino</code></p>
+<pre><code class="language-cpp">// Load Wi-Fi library
+#include &lt;WiFi.h&gt;
+
+// Replace with your network credentials
+const char* ssid = &quot;Your SSID&quot;;
+const char* password = &quot;Your Password&quot;;
+
+// Set web server port number to 80
+WiFiServer server(80);
+
+// Variable to store the HTTP request
+String header;
+
+// Auxiliar variables to store the current output state
+String output16State = &quot;off&quot;;
+String output17State = &quot;off&quot;;
+String output32State = &quot;off&quot;;
+
+// Assign output variables to GPIO pins
+const int output16 = 16;
+const int output17 = 17;
+const int output32 = 32;
+
+// Current time
+unsigned long currentTime = millis();
+// Previous time
+unsigned long previousTime = 0; 
+// Define timeout time in milliseconds (example: 2000ms = 2s)
+const long timeoutTime = 2000;
+
+void setup() {
+  Serial.begin(115200);
+  // Initialize the output variables as outputs
+  pinMode(output16, OUTPUT);
+  pinMode(output17, OUTPUT);
+  pinMode(output32, OUTPUT);
+  // Set outputs to LOW
+  digitalWrite(output16, LOW);
+  digitalWrite(output17, LOW);
+  digitalWrite(output32, LOW);
+
+  // Connect to Wi-Fi network with SSID and password
+  Serial.print(&quot;Connecting to &quot;);
+  Serial.println(ssid);
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(&quot;.&quot;);
+  }
+  // Print local IP address and start web server
+  Serial.println(&quot;&quot;);
+  Serial.println(&quot;WiFi connected.&quot;);
+  Serial.println(&quot;IP address: &quot;);
+  Serial.println(WiFi.localIP());
+  server.begin();
+}
+
+void loop(){
+  WiFiClient client = server.available();   // Listen for incoming clients
+
+  if (client) {                             // If a new client connects,
+    currentTime = millis();
+    previousTime = currentTime;
+    Serial.println(&quot;New Client.&quot;);          // print a message out in the serial port
+    String currentLine = &quot;&quot;;                // make a String to hold incoming data from the client
+    while (client.connected() &amp;&amp; currentTime - previousTime &lt;= timeoutTime) {  // loop while the client's connected
+      currentTime = millis();
+      if (client.available()) {             // if there's bytes to read from the client,
+        char c = client.read();             // read a byte, then
+        Serial.write(c);                    // print it out the serial monitor
+        header += c;
+        if (c == '\n') {                    // if the byte is a newline character
+          // if the current line is blank, you got two newline characters in a row.
+          // that's the end of the client HTTP request, so send a response:
+          if (currentLine.length() == 0) {
+            // HTTP headers always start with a response code (e.g. HTTP/1.1 200 OK)
+            // and a content-type so the client knows what's coming, then a blank line:
+            client.println(&quot;HTTP/1.1 200 OK&quot;);
+            client.println(&quot;Content-type:text/html&quot;);
+            client.println(&quot;Connection: close&quot;);
+            client.println();
+
+            // turns the GPIOs on and off
+            if (header.indexOf(&quot;GET /16/on&quot;) &gt;= 0) {
+              Serial.println(&quot;GPIO 16 on&quot;);
+              output16State = &quot;on&quot;;
+              digitalWrite(output16, HIGH);
+            } else if (header.indexOf(&quot;GET /16/off&quot;) &gt;= 0) {
+              Serial.println(&quot;GPIO 16 off&quot;);
+              output16State = &quot;off&quot;;
+              digitalWrite(output16, LOW);
+            } else if (header.indexOf(&quot;GET /17/on&quot;) &gt;= 0) {
+              Serial.println(&quot;GPIO 17 on&quot;);
+              output17State = &quot;on&quot;;
+              digitalWrite(output17, HIGH);
+            } else if (header.indexOf(&quot;GET /17/off&quot;) &gt;= 0) {
+              Serial.println(&quot;GPIO 17 off&quot;);
+              output17State = &quot;off&quot;;
+              digitalWrite(output17, LOW);
+            } else if (header.indexOf(&quot;GET /32/on&quot;) &gt;= 0) {
+              Serial.println(&quot;GPIO 32 on&quot;);
+              output32State = &quot;on&quot;;
+              digitalWrite(output32, HIGH);
+            } else if (header.indexOf(&quot;GET /32/off&quot;) &gt;= 0) {
+              Serial.println(&quot;GPIO 32 off&quot;);
+              output32State = &quot;off&quot;;
+              digitalWrite(output32, LOW);
+            }
+
+            // Display the HTML web page
+            client.println(&quot;&lt;!DOCTYPE html&gt;&lt;html&gt;&quot;);
+            client.println(&quot;&lt;head&gt;&lt;meta name=\&quot;viewport\&quot; content=\&quot;width=device-width, initial-scale=1\&quot;&gt;&quot;);
+            client.println(&quot;&lt;link rel=\&quot;icon\&quot; href=\&quot;data:,\&quot;&gt;&quot;);
+            // CSS to style the on/off buttons 
+            // Feel free to change the background-color and font-size attributes to fit your preferences
+            client.println(&quot;&lt;style&gt;html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}&quot;);
+            client.println(&quot;.button { background-color: #4CAF50; border: none; color: white; padding: 16px 40px;&quot;);
+            client.println(&quot;text-decoration: none; font-size: 30px; margin: 2px; cursor: pointer;}&quot;);
+            client.println(&quot;.button2 {background-color: #555555;}&lt;/style&gt;&lt;/head&gt;&quot;);
+
+            // Web Page Heading
+            client.println(&quot;&lt;body&gt;&lt;h1&gt;ESP32 Web Server&lt;/h1&gt;&quot;);
+
+            // Display current state, and ON/OFF buttons for GPIO 16  
+            client.println(&quot;&lt;p&gt;GPIO 16 - State &quot; + output16State + &quot;&lt;/p&gt;&quot;);
+            // If the output16State is off, it displays the ON button       
+            if (output16State==&quot;off&quot;) {
+              client.println(&quot;&lt;p&gt;&lt;a href=\&quot;/16/on\&quot;&gt;&lt;button class=\&quot;button\&quot;&gt;ON&lt;/button&gt;&lt;/a&gt;&lt;/p&gt;&quot;);
+            } else {
+              client.println(&quot;&lt;p&gt;&lt;a href=\&quot;/16/off\&quot;&gt;&lt;button class=\&quot;button button2\&quot;&gt;OFF&lt;/button&gt;&lt;/a&gt;&lt;/p&gt;&quot;);
+            } 
+
+            // Display current state, and ON/OFF buttons for GPIO 17  
+            client.println(&quot;&lt;p&gt;GPIO 17 - State &quot; + output17State + &quot;&lt;/p&gt;&quot;);
+            // If the output17State is off, it displays the ON button       
+            if (output17State==&quot;off&quot;) {
+              client.println(&quot;&lt;p&gt;&lt;a href=\&quot;/17/on\&quot;&gt;&lt;button class=\&quot;button\&quot;&gt;ON&lt;/button&gt;&lt;/a&gt;&lt;/p&gt;&quot;);
+            } else {
+              client.println(&quot;&lt;p&gt;&lt;a href=\&quot;/17/off\&quot;&gt;&lt;button class=\&quot;button button2\&quot;&gt;OFF&lt;/button&gt;&lt;/a&gt;&lt;/p&gt;&quot;);
+            }
+
+            // Display current state, and ON/OFF buttons for GPIO 32  
+            client.println(&quot;&lt;p&gt;GPIO 32 - State &quot; + output32State + &quot;&lt;/p&gt;&quot;);
+            // If the output32State is off, it displays the ON button       
+            if (output32State==&quot;off&quot;) {
+              client.println(&quot;&lt;p&gt;&lt;a href=\&quot;/32/on\&quot;&gt;&lt;button class=\&quot;button\&quot;&gt;ON&lt;/button&gt;&lt;/a&gt;&lt;/p&gt;&quot;);
+            } else {
+              client.println(&quot;&lt;p&gt;&lt;a href=\&quot;/32/off\&quot;&gt;&lt;button class=\&quot;button button2\&quot;&gt;OFF&lt;/button&gt;&lt;/a&gt;&lt;/p&gt;&quot;);
+            }
+            client.println(&quot;&lt;/body&gt;&lt;/html&gt;&quot;);
+
+            // The HTTP response ends with another blank line
+            client.println();
+            // Break out of the while loop
+            break;
+          } else { // if you got a newline, then clear currentLine
+            currentLine = &quot;&quot;;
+          }
+        } else if (c != '\r') {  // if you got anything else but a carriage return character,
+          currentLine += c;      // add it to the end of the currentLine
+        }
+      }
+    }
+    // Clear the header variable
+    header = &quot;&quot;;
+    // Close the connection
+    client.stop();
+    Serial.println(&quot;Client disconnected.&quot;);
+    Serial.println(&quot;&quot;);
+  }  
+}
+</code></pre>
+<p><strong>Adding an LED to the Section 3 sketch takes four edits:</strong> a <code>String
+outputNNState = "off";</code> and <code>const int outputNN = NN;</code> · <code>pinMode</code> and
+<code>digitalWrite(…, LOW)</code> in <code>setup()</code> · two more <code>else if (header.indexOf("GET
+/NN/on") …)</code> branches · one more state-and-button block in the page.</p>
+<h3 id="54-buttons-and-a-sensor-on-one-page">5.4 Buttons and a sensor on one page</h3>
+<p>Sections 3 and 4 merged: LED buttons on 26 and 27 plus the potentiometer table.
+<em>(Written for this sheet. It is Section 3's file with the table CSS line and the
+table block from Section 4 added — nothing else changed.)</em></p>
+<p>Sketch: <code>sketches/MIX_WebServer_LEDs_and_Sensor/MIX_WebServer_LEDs_and_Sensor.ino</code></p>
+<pre><code class="language-cpp">// Load Wi-Fi library
+#include &lt;WiFi.h&gt;
+
+// Replace with your network credentials
+const char* ssid = &quot;Your SSID&quot;;
+const char* password = &quot;Your Password&quot;;
+
+// Set web server port number to 80
+WiFiServer server(80);
+
+// Variable to store the HTTP request
+String header;
+
+// Auxiliar variables to store the current output state
+String output26State = &quot;off&quot;;
+String output27State = &quot;off&quot;;
+
+// Assign output variables to GPIO pins
+const int output26 = 26;
+const int output27 = 27;
+
+// Current time
+unsigned long currentTime = millis();
+// Previous time
+unsigned long previousTime = 0; 
+// Define timeout time in milliseconds (example: 2000ms = 2s)
+const long timeoutTime = 2000;
+
+void setup() {
+  Serial.begin(115200);
+  // Initialize the output variables as outputs
+  pinMode(output26, OUTPUT);
+  pinMode(output27, OUTPUT);
+  // Set outputs to LOW
+  digitalWrite(output26, LOW);
+  digitalWrite(output27, LOW);
+
+  // Connect to Wi-Fi network with SSID and password
+  Serial.print(&quot;Connecting to &quot;);
+  Serial.println(ssid);
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(&quot;.&quot;);
+  }
+  // Print local IP address and start web server
+  Serial.println(&quot;&quot;);
+  Serial.println(&quot;WiFi connected.&quot;);
+  Serial.println(&quot;IP address: &quot;);
+  Serial.println(WiFi.localIP());
+  server.begin();
+}
+
+void loop(){
+  WiFiClient client = server.available();   // Listen for incoming clients
+
+  if (client) {                             // If a new client connects,
+    currentTime = millis();
+    previousTime = currentTime;
+    Serial.println(&quot;New Client.&quot;);          // print a message out in the serial port
+    String currentLine = &quot;&quot;;                // make a String to hold incoming data from the client
+    while (client.connected() &amp;&amp; currentTime - previousTime &lt;= timeoutTime) {  // loop while the client's connected
+      currentTime = millis();
+      if (client.available()) {             // if there's bytes to read from the client,
+        char c = client.read();             // read a byte, then
+        Serial.write(c);                    // print it out the serial monitor
+        header += c;
+        if (c == '\n') {                    // if the byte is a newline character
+          // if the current line is blank, you got two newline characters in a row.
+          // that's the end of the client HTTP request, so send a response:
+          if (currentLine.length() == 0) {
+            // HTTP headers always start with a response code (e.g. HTTP/1.1 200 OK)
+            // and a content-type so the client knows what's coming, then a blank line:
+            client.println(&quot;HTTP/1.1 200 OK&quot;);
+            client.println(&quot;Content-type:text/html&quot;);
+            client.println(&quot;Connection: close&quot;);
+            client.println();
+
+            // turns the GPIOs on and off
+            if (header.indexOf(&quot;GET /26/on&quot;) &gt;= 0) {
+              Serial.println(&quot;GPIO 26 on&quot;);
+              output26State = &quot;on&quot;;
+              digitalWrite(output26, HIGH);
+            } else if (header.indexOf(&quot;GET /26/off&quot;) &gt;= 0) {
+              Serial.println(&quot;GPIO 26 off&quot;);
+              output26State = &quot;off&quot;;
+              digitalWrite(output26, LOW);
+            } else if (header.indexOf(&quot;GET /27/on&quot;) &gt;= 0) {
+              Serial.println(&quot;GPIO 27 on&quot;);
+              output27State = &quot;on&quot;;
+              digitalWrite(output27, HIGH);
+            } else if (header.indexOf(&quot;GET /27/off&quot;) &gt;= 0) {
+              Serial.println(&quot;GPIO 27 off&quot;);
+              output27State = &quot;off&quot;;
+              digitalWrite(output27, LOW);
+            }
+
+            // Display the HTML web page
+            client.println(&quot;&lt;!DOCTYPE html&gt;&lt;html&gt;&quot;);
+            client.println(&quot;&lt;head&gt;&lt;meta name=\&quot;viewport\&quot; content=\&quot;width=device-width, initial-scale=1\&quot;&gt;&quot;);
+            client.println(&quot;&lt;link rel=\&quot;icon\&quot; href=\&quot;data:,\&quot;&gt;&quot;);
+            // CSS to style the on/off buttons 
+            // Feel free to change the background-color and font-size attributes to fit your preferences
+            client.println(&quot;&lt;style&gt;html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}&quot;);
+            client.println(&quot;.button { background-color: #4CAF50; border: none; color: white; padding: 16px 40px;&quot;);
+            client.println(&quot;text-decoration: none; font-size: 30px; margin: 2px; cursor: pointer;}&quot;);
+            client.println(&quot;.button2 {background-color: #555555;}&quot;);
+            client.println(&quot;table, th, td { border: 1px solid black; margin-left:auto; margin-right:auto;}&quot;);
+            client.println(&quot;&lt;/style&gt;&lt;/head&gt;&quot;);
+
+            // Web Page Heading
+            client.println(&quot;&lt;body&gt;&lt;h1&gt;ESP32 Web Server&lt;/h1&gt;&quot;);
+
+            // Display current state, and ON/OFF buttons for GPIO 26  
+            client.println(&quot;&lt;p&gt;GPIO 26 - State &quot; + output26State + &quot;&lt;/p&gt;&quot;);
+            // If the output26State is off, it displays the ON button       
+            if (output26State==&quot;off&quot;) {
+              client.println(&quot;&lt;p&gt;&lt;a href=\&quot;/26/on\&quot;&gt;&lt;button class=\&quot;button\&quot;&gt;ON&lt;/button&gt;&lt;/a&gt;&lt;/p&gt;&quot;);
+            } else {
+              client.println(&quot;&lt;p&gt;&lt;a href=\&quot;/26/off\&quot;&gt;&lt;button class=\&quot;button button2\&quot;&gt;OFF&lt;/button&gt;&lt;/a&gt;&lt;/p&gt;&quot;);
+            } 
+
+            // Display current state, and ON/OFF buttons for GPIO 27  
+            client.println(&quot;&lt;p&gt;GPIO 27 - State &quot; + output27State + &quot;&lt;/p&gt;&quot;);
+            // If the output27State is off, it displays the ON button       
+            if (output27State==&quot;off&quot;) {
+              client.println(&quot;&lt;p&gt;&lt;a href=\&quot;/27/on\&quot;&gt;&lt;button class=\&quot;button\&quot;&gt;ON&lt;/button&gt;&lt;/a&gt;&lt;/p&gt;&quot;);
+            } else {
+              client.println(&quot;&lt;p&gt;&lt;a href=\&quot;/27/off\&quot;&gt;&lt;button class=\&quot;button button2\&quot;&gt;OFF&lt;/button&gt;&lt;/a&gt;&lt;/p&gt;&quot;);
+            }
+
+            // Create a table  
+            client.println(&quot;&lt;table&gt;&quot;);
+            client.println(&quot;&lt;tr&gt;&lt;th&gt;Sensor&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;/tr&gt;&quot;); // First row
+            client.print(&quot;&lt;tr&gt;&lt;td&gt;Potentiometer&lt;/td&gt;&lt;td&gt;&quot;); // Second row
+            client.print(analogRead(A0)); // Read the potentiometer value
+            client.println(&quot;&lt;/td&gt;&lt;/tr&gt;&quot;); // Second row
+            client.println(&quot;&lt;/table&gt;&quot;);  
+            client.println(&quot;&lt;/body&gt;&lt;/html&gt;&quot;);
+
+            // The HTTP response ends with another blank line
+            client.println();
+            // Break out of the while loop
+            break;
+          } else { // if you got a newline, then clear currentLine
+            currentLine = &quot;&quot;;
+          }
+        } else if (c != '\r') {  // if you got anything else but a carriage return character,
+          currentLine += c;      // add it to the end of the currentLine
+        }
+      }
+    }
+    // Clear the header variable
+    header = &quot;&quot;;
+    // Close the connection
+    client.stop();
+    Serial.println(&quot;Client disconnected.&quot;);
+    Serial.println(&quot;&quot;);
+  }  
+}
+</code></pre>
+<h3 id="55-section-52-thingspeak">5.5 Section 5.2: ThingSpeak</h3>
+<p>Sends the potentiometer value and a random number every 10 s. Circuit: pot →
+A0. (slides 96–101)</p>
+<p>Sketch: <code>sketches/LN5_S5_WebClient_ThingSpeak/LN5_S5_WebClient_ThingSpeak.ino</code></p>
+<pre><code class="language-cpp">#include &lt;WiFi.h&gt;
+#include &lt;HTTPClient.h&gt;
+
+// Replace with your network credentials
+const char* ssid = &quot;Your SSID&quot;;
+const char* password = &quot;Your Password&quot;;
+
+// REPLACE WITH THINGSPEAK.COM API KEY
+String serverName = &quot;http://api.thingspeak.com/update?api_key=YourAPIkey&quot;;
+// EXAMPLE:
+//String serverName = &quot;http://api.thingspeak.com/update?api_key=7HQJM49R8JAPR&quot;;
+
+// THE DEFAULT TIMER IS SET TO 10 SECONDS FOR TESTING PURPOSES
+// For a final application, check the API call limits per hour/minute to avoid getting blocked/banned
+unsigned long lastTime = 0;
+// Set timer to 10 seconds (10000)
+unsigned long timerDelay = 10000;
+
+void setup() {
+  Serial.begin(115200); 
+  WiFi.begin(ssid, password);
+  Serial.println(&quot;Connecting&quot;);
+  while(WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(&quot;.&quot;);
+  }
+  Serial.println(&quot;&quot;);
+  Serial.print(&quot;Connected to WiFi network with IP Address: &quot;);
+  Serial.println(WiFi.localIP()); 
+  Serial.println(&quot;Timer set to 10 seconds (timerDelay variable), it will take 10 seconds before publishing the first reading.&quot;);
+}
+
+void loop() {
+  // Send an HTTP GET request
+  if ((millis() - lastTime) &gt; timerDelay) {
+    // Check WiFi connection status
+    if(WiFi.status()== WL_CONNECTED){
+      WiFiClient client;
+      HTTPClient http;
+      String HttpRequest = serverName + &quot;&amp;field1=&quot; + String(analogRead(A0)) + &quot;&amp;field2=&quot; + String(random(100));
+
+      // Create the HTTP Get request to ThingSpeak
+      Serial.print(&quot;HTTP Request: &quot;);
+      Serial.println(HttpRequest);
+      http.begin(client, HttpRequest);
+      //Another option --&gt; http.begin(client, HttpRequest.c_str());
+
+      // Send HTTP GET request
+      int httpResponseCode = http.GET();      
+      if (httpResponseCode&gt;0) {
+        Serial.print(&quot;HTTP Response code: &quot;);
+        Serial.println(httpResponseCode);
+      }
+      else {
+        Serial.print(&quot;Error code: &quot;);
+        Serial.println(httpResponseCode);
+      }
+      // Free resources
+      http.end();
+    }
+    else {
+      Serial.println(&quot;WiFi Disconnected&quot;);
+    }
+    lastTime = millis();
+  }
+}
+</code></pre>
+<p>The request it builds (slide 92):</p>
+<pre><code>http://api.thingspeak.com/update?api_key=YourAPIkey&amp;field1=250&amp;field2=40
+</code></pre>
+<p><strong>Four ways to break line 9 — all four happened on this project:</strong></p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Mistake</th>
+<th>Symptom</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pasting ThingSpeak's own example with <code>GET</code> in front</td>
+<td><code>Error code: -1</code></td>
+</tr>
+<tr>
+<td><code>https://</code> instead of <code>http://</code></td>
+<td><code>Error code: -1</code> — a plain <code>WiFiClient</code> cannot do TLS</td>
+</tr>
+<tr>
+<td>Leaving <code>&amp;field1=0</code> on the end</td>
+<td><code>field1</code> appears twice; ThingSpeak stores the first, so 0</td>
+</tr>
+<tr>
+<td>Someone else's API key</td>
+<td><code>HTTP Response code: 400</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>Line 9 must be exactly <code>"http://api.thingspeak.com/update?api_key=</code> + your Write
+API Key + <code>"</code>. The sketch adds <code>&amp;field1=…&amp;field2=…</code> itself.</p>
+<p><code>HTTP Response code: 200</code> means delivered. The free tier accepts one write per
+15 s <em>(not in the lecture)</em>, and the sketch sends every 10 s, so some writes are
+dropped; the charts still fill in. A third value is one more
+<code>+ "&amp;field3=" + String(…)</code> on line 40, with Field 3 ticked in the channel.</p>
+<h2 id="6-lecture-note-6-mqtt">6. Lecture Note 6: MQTT</h2>
+<h3 id="ln6-essentials">LN6 essentials</h3>
+<ul>
+<li>Three parts: <strong>publisher</strong>, <strong>broker</strong>, <strong>subscriber</strong>. Publisher and
+  subscriber never contact each other and do not know each other's IP. The
+  <strong>topic</strong> is what connects them. (slides 5–8)</li>
+<li>Broker: <code>broker.hivemq.com</code>, port <code>1883</code>. If HiveMQ misbehaves, the lecture
+  says to use Mosquitto instead. (slide 19) <em>(<code>test.mosquitto.org</code> is
+  Mosquitto's public broker — not in the lecture.)</em></li>
+<li><strong><code>ClientID</code>: different on every board, and different from other students.</strong>
+  <strong><code>Topic</code>: identical on the boards that must talk, and different from other
+  students.</strong> Add your student ID to both. (slide 23)</li>
+<li>The two boards do not need the same WiFi and can be anywhere. (slide 17)</li>
+<li>Topics are levels separated by <code>/</code>. Wildcards: <code>+</code> one level,
+  <code>#</code> all levels below. (slides 10–12)</li>
+<li>QoS 0 at most once · QoS 1 at least once · QoS 2 exactly once. Delivered at
+  the lower of publisher's and subscriber's level. (slide 13)</li>
+</ul>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Do this</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Headers</td>
+<td><code>#include &lt;WiFi.h&gt;</code> <code>#include &lt;PubSubClient.h&gt;</code></td>
+</tr>
+<tr>
+<td>Client objects</td>
+<td><code>WiFiClient ClientNode;</code> <code>PubSubClient ClientESP(ClientNode);</code></td>
+</tr>
+<tr>
+<td>Set the broker</td>
+<td><code>ClientESP.setServer(mqtt_server, mqtt_port);</code></td>
+</tr>
+<tr>
+<td>Connect</td>
+<td><code>ClientESP.connect(ClientID, NULL, NULL)</code></td>
+</tr>
+<tr>
+<td>Connected?</td>
+<td><code>ClientESP.connected()</code></td>
+</tr>
+<tr>
+<td>Publish</td>
+<td><code>ClientESP.publish(Topic, Val);</code> — <code>Val</code> is a <code>char</code> array</td>
+</tr>
+<tr>
+<td>Number → text</td>
+<td><code>char Val[8]; dtostrf(analogRead(A0), 1, 0, Val);</code></td>
+</tr>
+<tr>
+<td>Subscribe</td>
+<td><code>ClientESP.setCallback(callback);</code> then <code>ClientESP.subscribe(Topic);</code></td>
+</tr>
+<tr>
+<td>Keep receiving</td>
+<td><code>ClientESP.loop();</code> in <code>loop()</code> — <strong>subscribers need this</strong></td>
+</tr>
+<tr>
+<td>Receive</td>
+<td><code>void callback(char* topic, byte* payload, unsigned int length)</code></td>
+</tr>
+<tr>
+<td>Text → number</td>
+<td><code>int ValInt = ValString.toInt();</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>Wildcard answers for the lecture's six topics (<code>Home1/Room1..3/temp|humid</code>):
+<code>Home1/Room1/+</code> → Room1 temp and humid · <code>Home1/+/temp</code> → the three temps ·
+<code>Home1/Room1/#</code> → Room1 temp and humid · <code>Home1/#</code> → all six.</p>
+<h3 id="61-section-3-publisher-node">6.1 Section 3: publisher node</h3>
+<p>Publishes the potentiometer value every 2 s. Circuit: pot → A0. (slides 24–27)</p>
+<p>Sketch: <code>sketches/LN6_S3_PubNode/LN6_S3_PubNode.ino</code></p>
+<pre><code class="language-cpp">#include &lt;WiFi.h&gt;
+#include &lt;PubSubClient.h&gt;
+
+const char* ssid = &quot;Your SSID&quot;;
+const char* password = &quot;Your Password&quot;;
+const char* mqtt_server = &quot;broker.hivemq.com&quot;;
+const int mqtt_port = 1883;
+const char* ClientID = &quot;Client_PubNode_YourStudentID&quot;;
+const char* Topic = &quot;IoT/PotenValue_YourStudentID&quot;;
+long lastMsg = 0;
+
+WiFiClient ClientNode;
+PubSubClient ClientESP(ClientNode);
+
+void setup() {
+  Serial.begin(115200);
+  Serial.println();
+  Serial.print(&quot;Connecting to &quot;);
+  Serial.println(ssid);
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+  Serial.print(&quot;Connecting&quot;);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(&quot;.&quot;);
+  }
+  Serial.println();
+  Serial.print(&quot;Connected, IP address: &quot;);
+  Serial.println(WiFi.localIP());
+
+  ClientESP.setServer(mqtt_server, mqtt_port); //Specify the MQTT server and port.
+  ConnectMQTT(); //Connect to the MQTT server.
+}
+
+void loop() {
+  if (!ClientESP.connected()) {
+    ConnectMQTT();
+  }
+
+  long now = millis();
+  if (now - lastMsg &gt; 2000) {
+    lastMsg = now;
+    char Val[8];
+    dtostrf(analogRead(A0), 1, 0, Val); 
+    ClientESP.publish(Topic, Val);
+    Serial.print(&quot;Pub: &quot;);
+    Serial.println(Val);
+  }
+}
+
+void ConnectMQTT() {
+  while (!ClientESP.connected()) {
+    Serial.print(&quot;Attempting MQTT connection...&quot;);
+    // Attempt to connect to the broker
+    if (ClientESP.connect(ClientID, NULL, NULL)) {
+          Serial.println(&quot;connected&quot;);
+    } else {
+      Serial.print(&quot;failed, rc=&quot;);
+      Serial.print(ClientESP.state());
+      Serial.println(&quot; try again in 5 seconds&quot;);
+      // Wait 5 seconds before retrying
+      delay(5000);
+    }
+  }  
+}
+</code></pre>
+<h3 id="62-section-3-subscriber-node">6.2 Section 3: subscriber node</h3>
+<p>Lights the LED when the received value is above <strong>500</strong>. Circuit: LED → 26.
+(slides 28–31)</p>
+<p>Sketch: <code>sketches/LN6_S3_SubNode/LN6_S3_SubNode.ino</code></p>
+<pre><code class="language-cpp">#include &lt;WiFi.h&gt;
+#include &lt;PubSubClient.h&gt;
+
+const char* ssid = &quot;Your SSID&quot;;
+const char* password = &quot;Your Password&quot;;
+const char* mqtt_server = &quot;broker.hivemq.com&quot;;
+const int mqtt_port = 1883;
+const char* ClientID = &quot;Client_SubNode_YourStudentID&quot;;
+const char* Topic = &quot;IoT/PotenValue_YourStudentID&quot;;
+long lastMsg = 0;
+
+WiFiClient ClientNode;
+PubSubClient ClientESP(ClientNode);
+
+void setup() {
+  Serial.begin(115200);
+  Serial.println();
+  Serial.print(&quot;Connecting to &quot;);
+  Serial.println(ssid);
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+  Serial.print(&quot;Connecting&quot;);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(&quot;.&quot;);
+  }
+  Serial.println();
+  Serial.print(&quot;Connected, IP address: &quot;);
+  Serial.println(WiFi.localIP());
+
+  ClientESP.setServer(mqtt_server, mqtt_port); //Specify the MQTT server and port.
+  ClientESP.setCallback(callback);
+  ConnectMQTT(); //Connect to the MQTT server.
+
+  pinMode(26, OUTPUT); //Set the pin mode to the pin GPIO26
+  digitalWrite(26, LOW);
+}
+
+void loop() {
+  if (!ClientESP.connected()) {
+    ConnectMQTT();
+  }
+  ClientESP.loop();  
+}
+
+void ConnectMQTT() {
+  while (!ClientESP.connected()) {
+    Serial.print(&quot;Attempting MQTT connection...&quot;);
+    // Attempt to connect to the broker
+    if (ClientESP.connect(ClientID, NULL, NULL)) {
+          Serial.println(&quot;connected&quot;);
+          ClientESP.setCallback(callback);
+          ClientESP.subscribe(Topic);         
+    } else {
+      Serial.print(&quot;failed, rc=&quot;);
+      Serial.print(ClientESP.state());
+      Serial.println(&quot; try again in 5 seconds&quot;);
+      // Wait 5 seconds before retrying
+      delay(5000);
+    }
+  }  
+}
+
+void callback(char* topic, byte* payload, unsigned int length) {
+  Serial.print(&quot;Message arrived [&quot;);
+  Serial.print(topic);
+  Serial.print(&quot;] &quot;);
+  String ValString;
+  for (int i = 0; i &lt; length; i++) {
+    Serial.print((char)payload[i]);
+    ValString += (char)payload[i];
+  }
+  Serial.println();
+
+  int ValInt = ValString.toInt();  
+  Serial.print(&quot;Sub : &quot;);
+  Serial.println(ValInt);
+  Serial.println(&quot;============== Wait 2 seconds ===================&quot;);
+  if (ValInt &gt; 500) {
+    digitalWrite(26, HIGH);   // Turn the LED on 
+  } else {
+    digitalWrite(26, LOW);  // Turn the LED off
+  }
+}
+</code></pre>
+<p>Line 8 differs between the two nodes here on purpose: the instructor's two
+files ship the same <code>ClientID</code>, and slide 23 says they must differ.</p>
+<h3 id="63-section-4-one-board-both-roles">6.3 Section 4: one board, both roles</h3>
+<p>Publishes its own value and subscribes to the same topic, so the number goes to
+the broker and comes back to its own LED. Circuit: pot → A0 and LED → 26.
+(slides 43–47)</p>
+<p>Sketch: <code>sketches/LN6_S4_PubSub/LN6_S4_PubSub.ino</code></p>
+<pre><code class="language-cpp">#include &lt;WiFi.h&gt;
+#include &lt;PubSubClient.h&gt;
+
+const char* ssid = &quot;Your SSID&quot;;
+const char* password = &quot;Your Password&quot;;
+const char* mqtt_server = &quot;broker.hivemq.com&quot;;
+const int mqtt_port = 1883;
+const char* ClientID = &quot;Client_YourStudentID&quot;;
+const char* Topic = &quot;IoT/PotenValue_YourStudentID&quot;;
+long lastMsg = 0;
+
+WiFiClient ClientNode;
+PubSubClient ClientESP(ClientNode);
+
+void setup() {
+  Serial.begin(115200);
+  Serial.println();
+  Serial.print(&quot;Connecting to &quot;);
+  Serial.println(ssid);
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+  Serial.print(&quot;Connecting&quot;);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(&quot;.&quot;);
+  }
+  Serial.println();
+  Serial.print(&quot;Connected, IP address: &quot;);
+  Serial.println(WiFi.localIP());
+
+  ClientESP.setServer(mqtt_server, mqtt_port); //Specify the MQTT server and port.
+  ClientESP.setCallback(callback);
+  ConnectMQTT(); //Connect to the MQTT server.
+
+  pinMode(26, OUTPUT); //Set the pin mode to the pin GPIO26
+  digitalWrite(26, LOW);
+}
+
+void loop() {
+  if (!ClientESP.connected()) {
+    ConnectMQTT();
+  }
+  ClientESP.loop();
+
+  long now = millis();
+  if (now - lastMsg &gt; 2000) {
+    lastMsg = now;
+    char Val[8];
+    dtostrf(analogRead(A0), 1, 0, Val); 
+    ClientESP.publish(Topic, Val);
+    Serial.print(&quot;Pub: &quot;);
+    Serial.println(Val);
+  }
+}
+
+void ConnectMQTT() {
+  while (!ClientESP.connected()) {
+    Serial.print(&quot;Attempting MQTT connection...&quot;);
+    // Attempt to connect to the broker
+    if (ClientESP.connect(ClientID, NULL, NULL)) {
+          Serial.println(&quot;connected&quot;);
+          ClientESP.setCallback(callback);
+          ClientESP.subscribe(Topic);         
+    } else {
+      Serial.print(&quot;failed, rc=&quot;);
+      Serial.print(ClientESP.state());
+      Serial.println(&quot; try again in 5 seconds&quot;);
+      // Wait 5 seconds before retrying
+      delay(5000);
+    }
+  }  
+}
+
+void callback(char* topic, byte* payload, unsigned int length) {
+  Serial.print(&quot;Message arrived [&quot;);
+  Serial.print(topic);
+  Serial.print(&quot;] &quot;);
+  String ValString;
+  for (int i = 0; i &lt; length; i++) {
+    Serial.print((char)payload[i]);
+    ValString += (char)payload[i];
+  }
+  Serial.println();
+
+  int ValInt = ValString.toInt();  
+  Serial.print(&quot;Sub : &quot;);
+  Serial.println(ValInt);
+  Serial.println(&quot;============== Wait 2 seconds ===================&quot;);
+  if (ValInt &gt; 500) {
+    digitalWrite(26, HIGH);   // Turn the LED on 
+  } else {
+    digitalWrite(26, LOW);  // Turn the LED off
+  }
+}
+</code></pre>
+<h3 id="64-homework-4-q2-two-boards-crossed-over">6.4 Homework 4 Q2: two boards, crossed over</h3>
+<p>Each board has a potentiometer and an LED; each knob drives the <strong>other</strong>
+board's LED. One topic becomes two, swapped between the boards. <em>(Written for
+the homework.)</em></p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>publishes to</th>
+<th>listens on</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Node1</td>
+<td><code>IoT/PotenValue_Node1_&lt;ID&gt;</code></td>
+<td><code>IoT/PotenValue_Node2_&lt;ID&gt;</code></td>
+</tr>
+<tr>
+<td>Node2</td>
+<td><code>IoT/PotenValue_Node2_&lt;ID&gt;</code></td>
+<td><code>IoT/PotenValue_Node1_&lt;ID&gt;</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>Sketch: <code>sketches/HW4_Q2_Node1/HW4_Q2_Node1.ino</code></p>
+<pre><code class="language-cpp">#include &lt;WiFi.h&gt;
+#include &lt;PubSubClient.h&gt;
+
+const char* ssid = &quot;Your SSID&quot;;
+const char* password = &quot;Your Password&quot;;
+const char* mqtt_server = &quot;broker.hivemq.com&quot;;
+const int mqtt_port = 1883;
+const char* ClientID = &quot;Client_Node1_YourStudentID&quot;;
+const char* TopicPub = &quot;IoT/PotenValue_Node1_YourStudentID&quot;;
+const char* TopicSub = &quot;IoT/PotenValue_Node2_YourStudentID&quot;;
+long lastMsg = 0;
+
+WiFiClient ClientNode;
+PubSubClient ClientESP(ClientNode);
+
+void setup() {
+  Serial.begin(115200);
+  Serial.println();
+  Serial.print(&quot;Connecting to &quot;);
+  Serial.println(ssid);
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+  Serial.print(&quot;Connecting&quot;);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(&quot;.&quot;);
+  }
+  Serial.println();
+  Serial.print(&quot;Connected, IP address: &quot;);
+  Serial.println(WiFi.localIP());
+
+  ClientESP.setServer(mqtt_server, mqtt_port); //Specify the MQTT server and port.
+  ClientESP.setCallback(callback);
+  ConnectMQTT(); //Connect to the MQTT server.
+
+  pinMode(26, OUTPUT); //Set the pin mode to the pin GPIO26
+  digitalWrite(26, LOW);
+}
+
+void loop() {
+  if (!ClientESP.connected()) {
+    ConnectMQTT();
+  }
+  ClientESP.loop();
+
+  long now = millis();
+  if (now - lastMsg &gt; 2000) {
+    lastMsg = now;
+    char Val[8];
+    dtostrf(analogRead(A0), 1, 0, Val); 
+    ClientESP.publish(TopicPub, Val);
+    Serial.print(&quot;Pub: &quot;);
+    Serial.println(Val);
+  }
+}
+
+void ConnectMQTT() {
+  while (!ClientESP.connected()) {
+    Serial.print(&quot;Attempting MQTT connection...&quot;);
+    // Attempt to connect to the broker
+    if (ClientESP.connect(ClientID, NULL, NULL)) {
+          Serial.println(&quot;connected&quot;);
+          ClientESP.setCallback(callback);
+          ClientESP.subscribe(TopicSub);         
+    } else {
+      Serial.print(&quot;failed, rc=&quot;);
+      Serial.print(ClientESP.state());
+      Serial.println(&quot; try again in 5 seconds&quot;);
+      // Wait 5 seconds before retrying
+      delay(5000);
+    }
+  }  
+}
+
+void callback(char* topic, byte* payload, unsigned int length) {
+  Serial.print(&quot;Message arrived [&quot;);
+  Serial.print(topic);
+  Serial.print(&quot;] &quot;);
+  String ValString;
+  for (int i = 0; i &lt; length; i++) {
+    Serial.print((char)payload[i]);
+    ValString += (char)payload[i];
+  }
+  Serial.println();
+
+  int ValInt = ValString.toInt();  
+  Serial.print(&quot;Sub : &quot;);
+  Serial.println(ValInt);
+  Serial.println(&quot;============== Wait 2 seconds ===================&quot;);
+  if (ValInt &gt; 500) {
+    digitalWrite(26, HIGH);   // Turn the LED on 
+  } else {
+    digitalWrite(26, LOW);  // Turn the LED off
+  }
+}
+</code></pre>
+<p><code>HW4_Q2_Node2</code> is the same file with <code>Node1</code> and <code>Node2</code> exchanged on lines
+8–10.</p>
+<h3 id="mqtt-failures-and-what-they-mean">MQTT failures and what they mean</h3>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Serial monitor shows</th>
+<th>Cause</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Attempting MQTT connection...connected</code> repeating forever</td>
+<td>two boards share one <code>ClientID</code></td>
+</tr>
+<tr>
+<td><code>Pub:</code> lines but the other board never prints <code>Message arrived</code></td>
+<td>the topics differ by a character, or the subscriber has no <code>ClientESP.loop()</code></td>
+</tr>
+<tr>
+<td>LED reacts to nothing you did</td>
+<td>another student picked your topic</td>
+</tr>
+<tr>
+<td><code>failed, rc=-2</code></td>
+<td>cannot reach the broker — WiFi has no internet, or the broker is down</td>
+</tr>
+<tr>
+<td><code>failed, rc=-4</code></td>
+<td>connection timed out</td>
+</tr>
+</tbody>
+</table></div>
+<p><code>rc</code> values come from the PubSubClient library <em>(not in the lecture)</em>: −4
+timeout · −3 connection lost · −2 connect failed · −1 disconnected ·
+0 connected · 2 client ID rejected · 5 not authorised.</p>
+<h2 id="7-changing-an-example-to-fit-the-question">7. Changing an example to fit the question</h2>
+<p>Exam questions in this course have looked like the homework's last problems: an
+example with one thing changed or two examples joined. The changes that came up:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>The question wants</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>a different pin</td>
+<td>the <code>const int …Pin = NN;</code> line. Check <a href="#23-what-each-pin-can-do">2.3</a> that the pin can do the job</td>
+</tr>
+<tr>
+<td>pressing = OFF instead of ON</td>
+<td>swap <code>HIGH</code> and <code>LOW</code> in the <code>if</code>, or test <code>== HIGH</code></td>
+</tr>
+<tr>
+<td>a different blink time</td>
+<td><code>const long interval = 2000;</code></td>
+</tr>
+<tr>
+<td>a different threshold</td>
+<td><code>if (ValInt &gt; 500)</code> (MQTT) · <code>Threshold</code> (touch)</td>
+</tr>
+<tr>
+<td>a different publish period</td>
+<td><code>if (now - lastMsg &gt; 2000)</code></td>
+</tr>
+<tr>
+<td>a different ThingSpeak period</td>
+<td><code>unsigned long timerDelay = 10000;</code></td>
+</tr>
+<tr>
+<td>a different sleep time</td>
+<td><code>#define TIME_TO_SLEEP 5</code></td>
+</tr>
+<tr>
+<td>stay awake longer before sleeping</td>
+<td>the <code>delay(10000);</code> before <code>esp_deep_sleep_start();</code></td>
+</tr>
+<tr>
+<td>a different wake source</td>
+<td>swap the one <code>esp_sleep_enable_…</code> line (<a href="#ln4-command-reference">section 4</a>)</td>
+</tr>
+<tr>
+<td>wake by switch <strong>or</strong> timer</td>
+<td>call both enable lines before sleeping</td>
+</tr>
+<tr>
+<td>toggle instead of follow</td>
+<td>use the interrupt version (Example 2) with <code>FALLING</code></td>
+</tr>
+<tr>
+<td>count something across sleeps</td>
+<td><code>RTC_DATA_ATTR int count = 0;</code> and <code>++count;</code></td>
+</tr>
+<tr>
+<td>brightness instead of on/off</td>
+<td>replace <code>digitalWrite</code> with the three PWM steps</td>
+</tr>
+<tr>
+<td>touch instead of a switch</td>
+<td><code>if (touchRead(32) &lt; Threshold)</code> in place of <code>digitalRead(buttonPin) == LOW</code></td>
+</tr>
+<tr>
+<td>publish something other than the pot</td>
+<td>change the first argument of <code>dtostrf(…, 1, 0, Val);</code> — e.g. <code>touchRead(32)</code> or <code>digitalRead(34)</code></td>
+</tr>
+<tr>
+<td>show something other than the pot on the web page</td>
+<td>change <code>client.print(analogRead(A0));</code></td>
+</tr>
+<tr>
+<td>a second sensor row on the web page</td>
+<td>copy the three <code>client.print…</code> row lines and change the label and the value</td>
+</tr>
+<tr>
+<td>an extra LED on the web page</td>
+<td>the four edits listed in <a href="#53-homework-3-problem-3-three-leds">5.3</a></td>
+</tr>
+<tr>
+<td>restart on some event</td>
+<td><code>ESP.restart();</code> inside the <code>if</code></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Joining two examples:</strong> globals from both at the top · both <code>setup()</code> bodies
+into one <code>setup()</code> (one <code>Serial.begin</code>) · both <code>loop()</code> bodies into one
+<code>loop()</code>. If either part uses <code>delay()</code>, the other part waits for it — use the
+<code>millis()</code> pattern from <a href="#41-example-1-millis">4.1</a> for the periodic part.</p>
+<h2 id="8-when-it-does-not-work">8. When it does not work</h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Upload sits at <code>Connecting…</code></td>
+<td>press the <strong>PROGRAM</strong> button on the board (LN3 slide 20)</td>
+</tr>
+<tr>
+<td>No port in Tools → Port</td>
+<td>USB cable is charge-only, or the CP210x driver is missing (LN3 slide 16)</td>
+</tr>
+<tr>
+<td>Serial monitor shows garbage</td>
+<td>set it to <strong>115200</strong></td>
+</tr>
+<tr>
+<td>Garbage only at the instant of reset</td>
+<td>normal — the boot message is sent at another speed</td>
+</tr>
+<tr>
+<td><code>'ledcSetup' was not declared</code></td>
+<td>ESP32 core 3.x — see <a href="#33-example-3-pwm-brightness">3.3</a></td>
+</tr>
+<tr>
+<td><code>PubSubClient.h: No such file</code></td>
+<td>install the PubSubClient library, restart the IDE (LN6 slide 15)</td>
+</tr>
+<tr>
+<td><code>Bad CPU type in executable</code> while compiling (Mac)</td>
+<td>the Arduino tools need Rosetta — see the README</td>
+</tr>
+<tr>
+<td>Dots forever after <code>Connecting</code></td>
+<td>wrong SSID/password, or a 5 GHz-only network. Use a 2.4 GHz phone hotspot</td>
+</tr>
+<tr>
+<td><code>WiFi Disconnected</code>, random resets</td>
+<td>the phone hotspot went to sleep — keep its screen on</td>
+</tr>
+<tr>
+<td>Browser cannot open the IP</td>
+<td>phone/laptop is not on the same WiFi as the ESP32</td>
+</tr>
+<tr>
+<td>Web page value does not change</td>
+<td>press refresh — that is the design</td>
+</tr>
+<tr>
+<td>LED never lights</td>
+<td>long leg to the GPIO; and GPIO 34/35/36/39 cannot be outputs</td>
+</tr>
+<tr>
+<td>Switch always reads the same</td>
+<td>the 10 kΩ is missing, or the switch is rotated 90° on the breadboard</td>
+</tr>
+<tr>
+<td>Analog reads 0 or 4095 only</td>
+<td>wiper is not on <code>A0</code>, or an outer leg is unconnected</td>
+</tr>
+<tr>
+<td>Analog reads nonsense with WiFi on</td>
+<td>you used A10–A19; move to A0</td>
+</tr>
+<tr>
+<td>Touch value never changes</td>
+<td>the pin is not one of 0, 2, 4, 12–15, 27, 32, 33</td>
+</tr>
+<tr>
+<td>Board will not wake from sleep</td>
+<td>the <code>esp_sleep_enable_…</code> line is after <code>esp_deep_sleep_start()</code>, or missing</td>
+</tr>
+<tr>
+<td>Serial monitor dead after a wake-up</td>
+<td>close and reopen it</td>
+</tr>
+<tr>
+<td>Task version resets repeatedly</td>
+<td>raise the stack <code>1024</code> → <code>10000</code></td>
+</tr>
+<tr>
+<td>ThingSpeak <code>Error code: -1</code></td>
+<td>line 9 has <code>https://</code> or <code>GET</code> in it (<a href="#55-section-52-thingspeak">5.5</a>)</td>
+</tr>
+<tr>
+<td>ThingSpeak <code>400</code></td>
+<td>wrong Write API Key</td>
+</tr>
+<tr>
+<td>MQTT reconnects forever</td>
+<td>both boards have the same <code>ClientID</code></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="9-before-you-hand-in">9. Before you hand in</h2>
+<ul>
+<li class="task"><input type="checkbox"> Each question: circuit works, <strong>video recorded</strong> (circuit, code, demo).</li>
+<li class="task"><input type="checkbox"> Code files saved and uploaded to Google Classroom.</li>
+<li class="task"><input type="checkbox"> Videos uploaded, named as the question paper says.</li>
+<li class="task"><input type="checkbox"> Paper work has your name and ID and goes to the instructor.</li>
+<li class="task"><input type="checkbox"> Your WiFi password and API key are readable in the code on camera.
+      Change them afterwards if that matters to you.</li>
+</ul></main>
+</div><script>
+document.querySelectorAll('pre').forEach(function(pre){
+  var b=document.createElement('button');b.className='copy';b.textContent='Copy';
+  b.addEventListener('click',function(){
+    var t=pre.querySelector('code').innerText;
+    var done=function(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy'},1200)};
+    if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(t).then(done)}
+    else{var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();
+      try{document.execCommand('copy');done()}catch(e){}document.body.removeChild(a)}
+  });
+  pre.appendChild(b);
+});
+var q=document.getElementById('q');
+q.addEventListener('input',function(){
+  var s=q.value.trim().toLowerCase();
+  document.querySelectorAll('nav li').forEach(function(li){
+    li.hidden=s!==''&&li.textContent.toLowerCase().indexOf(s)===-1;
+  });
+});
+</script></body></html>
